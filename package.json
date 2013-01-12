@@ -1,0 +1,33 @@
+{
+  "name": "whereismycar",
+  "version": "0.0.0",
+  "description": "An HTML 5 \"where is my car\" application that stores your current location and helps you get back to a previously stored location.",
+  "author": "Kristof Neirynck",
+  "license": "MIT",
+  "readmeFilename": "README.txt",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.3.0",
+    "grunt-contrib-requirejs": "~0.3.0",
+    "grunt-hashres": "~0.2.0",
+    "grunt-jsvalidate": "~0.1.0",
+    "grunt-reload": "~0.2.0",
+    "grunt-contrib-jshint": "~0.1.0",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-watch": "~0.2.0"
+  },
+  "amd": {},
+  "volo": {
+    "baseUrl": "src/js/vendor",
+    "dependencies": {
+      "require": "github:jrburke/requirejs/2.1.2",
+      "domReady": "github:requirejs/domReady/2.0.1",
+      "json3": "github:bestiejs/json3/v3.2.4",
+      "signals": "github:millermedeiros/js-signals/v1.0.0",
+      "when": "github:cujojs/when/1.7.1",
+      "promises-a": "github:ForbesLindesay/promises-a/2.3.0",
+      "reqwest": "github:ded/reqwest/v0.6.3",
+      "microajax": "http://microajax.googlecode.com/svn/trunk/microajax.js"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+th, td {
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+th {
+    text-align: left;
+}
+img {
+    vertical-align: bottom;
+    background: #EAE6DC url("../img/checkered.png");
+    /*
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAJ0lEQVR4XsWOsQ0AAAjCwK/8P9GzdBBf0C4lTGVgcNmwnB4sjfztaAcBAuQ/nn/hAAAAAElFTkSuQmCC");
+    */
+}
+.debug_output {
+    font-size: 10px;
+}

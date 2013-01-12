@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320px" height="320px" viewBox="0 0 320 320" version="1.1">
+<defs>
+<linearGradient id="lg" gradientTransform="skewX(45)">
+<stop offset="0%" stop-color="#070" stop-opacity="0"/>
+<stop offset="100%" stop-color="#070" stop-opacity="1"/>
+</linearGradient>
+<radialGradient id="rg">
+<stop offset="0%" stop-color="#5D5" stop-opacity="1"/>
+<stop offset="25%" stop-color="#070" stop-opacity="1"/>
+<stop offset="100%" stop-color="#070" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect id="base" x="0px" y="0px" width="320px" height="320px" fill="#000"/>
+<g stroke="#070" stroke-width="2px" fill="none">
+<path id="crossTemplate" d="m160,160m-135,0h270m-135,-135v270"/>
+<circle cx="160px" cy="160px" r="135px"/>
+<circle cx="160px" cy="160px" r="90px"/>
+<circle cx="160px" cy="160px" r="45px"/>
+</g>
+<g fill="url(#lg)">
+<path d="m160,160 v-135 a135,135 0 0,0 -120,73"/>
+<animateTransform attributeName="transform" attributeType="XML"
+type="rotate" from="0 160,160" by="360 0,0"
+repeatCount="indefinite" dur="6s"/>
+</g>
+<g fill="url(#rg)">
+<circle id="dot" cx="160px" cy="160px" r="20px"/>
+</g>
+</svg>
