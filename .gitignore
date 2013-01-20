@@ -41,8 +41,8 @@ _notes/
 # eclipse
 .refactorings/
 .settings/
-.classpath$
-.project$
+.classpath
+.project
 
 # intellij
 .idea/

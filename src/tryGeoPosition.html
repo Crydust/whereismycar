@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html >
+    <head>
+        <meta charset="utf-8">
+        <title>try getJson</title>
+    </head>
+    <body>
+
+        <script src="js/vendor/require.js"></script>
+        <script>
+            require.config({
+                baseUrl: 'js/vendor',
+                packages: [
+                    {
+                        'name': 'app',
+                        'location': '../app'
+                    }
+                ],
+                paths: {
+                    'geoPosition': 'javascript-mobile-desktop-geolocation/js/geoPosition',
+                    'geoPositionSimulator': 'javascript-mobile-desktop-geolocation/js/geoPositionSimulator'
+                }
+            });
+
+            require(['geoPosition', 'domready!'], function(geoPosition) {
+                'use strict';
+                if (geoPosition.init()) {
+                    geoPosition.getCurrentPosition(function(pos) {
+                        console.log('success', pos);
+                    }, function() {
+                        console.log('error');
+                    });
+                } else {
+                    alert("Functionality not available");
+                }
+            });
+
+        </script>
+    </body>
+</html>

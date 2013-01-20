@@ -3,18 +3,20 @@
 
 //>>excludeStart("prod", pragmas.prod);
 require.config({
+    baseUrl: 'js/vendor',
     packages: [
-        'app'
+        {
+            'name': 'app',
+            'location': '../app'
+        }
     ],
     paths: {
-        'domready': 'vendor/domReady',
-        'json': 'vendor/json3',
-        'signals': 'vendor/signals'
+        'geoPosition': 'javascript-mobile-desktop-geolocation/js/geoPosition'
     }
 });
 //>>excludeEnd("prod");
 
-require(['app', 'domready!'], function (app, doc) {
+require(['app', 'domready!'], function (app) {
     'use strict';
     app();
 });

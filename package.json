@@ -14,7 +14,7 @@
     "grunt-reload": "~0.2.0",
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-watch": "~0.2.0",
-    "grunt-contrib-watch": "~0.2.0"
+    "grunt-jssemicoloned": "~0.0.4"
   },
   "amd": {},
   "volo": {
@@ -27,7 +27,9 @@
       "when": "github:cujojs/when/1.7.1",
       "promises-a": "github:ForbesLindesay/promises-a/2.3.0",
       "reqwest": "github:ded/reqwest/v0.6.3",
-      "microajax": "http://microajax.googlecode.com/svn/trunk/microajax.js"
+      "microajax": "http://microajax.googlecode.com/svn/trunk/microajax.js",
+      "store": "github:Crydust/store.js/v1.3.6",
+      "javascript-mobile-desktop-geolocation": "github:estebanav/javascript-mobile-desktop-geolocation/master"
     }
   }
 }

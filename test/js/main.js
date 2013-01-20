@@ -1,18 +1,17 @@
 //Main file for loading RequireJS necessary bits
 
 require.config({
-    baseUrl: '../src/js',
+    baseUrl: '../src/js/vendor',
     packages: [
-        'app',
+        {
+            name: 'app',
+            location: '../app'
+        },
         {
             name: 'apptest',
-            location: '../../test/js/apptest'
+            location: '../../../test/js/apptest'
         }
-    ],
-    paths: {
-        'domready': 'vendor/domReady',
-        'json': 'vendor/json3'
-    }
+    ]
 });
 
 require(['apptest'], function(){

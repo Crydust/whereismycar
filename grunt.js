@@ -6,9 +6,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-hashres');
     grunt.loadNpmTasks('grunt-reload');
+    grunt.loadNpmTasks('grunt-jssemicoloned');
 
     // Project configuration.
     grunt.initConfig({
+        jssemicoloned: {
+            files: ['src/**/*.js', 'test/**/*.js']
+        },
         lint: {
             src: ['grunt.js', 'src/js/*.js', 'src/js/app/**/*.js'],
             test: ['test/js/**/*.js'],
@@ -80,9 +84,9 @@ module.exports = function (grunt) {
                 options: {
                     mainConfigFile: 'src/js/main.js',
                     appDir: 'src',
-                    baseUrl: 'js',
+                    baseUrl: 'js/vendor',
                     dir: 'publish',
-                    name: 'main',
+                    name: '../main',
                     pragmas: {
                         prod: true
                     },
@@ -109,7 +113,7 @@ module.exports = function (grunt) {
 
     // Default task.
     grunt.registerTask('test', 'server qunit');
-    grunt.registerTask('default', 'jsvalidate:src lint:src test');
+    grunt.registerTask('default', 'jsvalidate:src lint:src test jssemicoloned');
     grunt.registerTask('publish', 'default requirejs hashres:publish jsvalidate:publish');
     grunt.registerTask('dev', 'server reload watch');
 
