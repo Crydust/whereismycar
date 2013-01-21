@@ -6,17 +6,19 @@ define(['./model', './dom', 'json3', './geolocation', './google', './geography']
     function main() {
         // 1. show stored location
         var data = model.get();
-        dom.byId('debug_output').innerHTML += JSON3.stringify(data, null, 4);
+        dom.byId('debug_output').innerHTML += JSON3.stringify(data, null, 4) + '\n';
         // 2. load current location
         var positionPromise = geolocation.getCurrentPosition();
-        positionPromise.then(function (position) {
-            dom.byId('debug_output').innerHTML += JSON3.stringify(position, null, 4);
+        positionPromise
+        .then(function (position) {
+            dom.byId('debug_output').innerHTML += JSON3.stringify(position, null, 4) + '\n';
         });
-        positionPromise.then(function (position) {
-            var latlng = new geography.LatLng(position.coords.latitude, position.coords.longitude);
-            return google.reverseGeocode(latlng);
-        }).then(function (address) {
-            dom.byId('debug_output').innerHTML += JSON3.stringify(address, null, 4);
+        var latlngPromise = positionPromise
+        .then(geolocation.convertPositionToLatLng);
+        latlngPromise
+        .then(google.reverseGeocode)
+        .then(function (address) {
+            dom.byId('debug_output').innerHTML += JSON3.stringify(address, null, 4) + '\n';
         }, function (reason) {
             dom.byId('debug_output').innerHTML += 'error ' + reason;
         });

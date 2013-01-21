@@ -1,6 +1,6 @@
 /*jslint browser: true */
 /*global define: false */
-define(['promises-a'], function (defer) {
+define(['promises-a', './geography'], function (defer, geography) {
     'use strict';
 /*
 nsIDOMGeoPosition
@@ -67,8 +67,16 @@ nsIDOMGeoPositionCoords
         return deferred.promise;
     }
 
+    function convertPositionToLatLng(position) {
+        var deferred = defer();
+        var latlng = new geography.LatLng(position.coords.latitude, position.coords.longitude);
+        deferred.fulfill(latlng);
+        return deferred.promise;
+    }
+
     return {
         isSupported: isGeolocationSupported,
-        getCurrentPosition: getCurrentPosition
+        getCurrentPosition: getCurrentPosition,
+        convertPositionToLatLng: convertPositionToLatLng
     };
 });
