@@ -25,13 +25,23 @@ define(['promises-a', './network', './geography'], function (defer, network, geo
             // it seems this url no longer returns a jsonp reply
             // so we use a proxy
             //var url = 'http://maps.google.com/maps/geo'
-            var url = 'geo/' +
-                '?q=' + latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE) +
-                '&callback=?';
+            
             //>>excludeStart("prod", pragmas.prod);
-            url = 'http://www.crydust.be/lab/whereismycar/' + url;
+            var hostname = window.location.hostname;
+            if (hostname === 'localhost') {
+                var url = 'http://www.crydust.be/lab/whereismycar/geo/' +
+                    '?q=' + latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE) +
+                    '&output=jsonp' +
+                    '&callback=?';
+                deferred.fulfill(network.getJsonp(url).then(extractAddress));
+            } else {
             //>>excludeEnd("prod");
-            deferred.fulfill(network.getJsonp(url).then(extractAddress));
+                var url = 'geo/?output=json&q=' +
+                latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE);
+                deferred.fulfill(network.getJson(url).then(extractAddress));
+            //>>excludeStart("prod", pragmas.prod);
+            }
+            //>>excludeEnd("prod");
         } else {
             deferred.reject(new Error('latlng is of wrong type'));
         }

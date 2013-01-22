@@ -60,7 +60,7 @@ function main() {
         if (isset($parts['host'])) {
             $hasReferrer = true;
             $host = $parts['host'];
-            $referrerIsValid = $host === 'crydust.be' || endsWith($host, '.crydust.be');
+            $referrerIsValid = $host === 'crydust.be' || endsWith($host, '.crydust.be') || $host === 'localhost';
         }
     }
     if ($hasReferrer && !$referrerIsValid) {
@@ -68,50 +68,62 @@ function main() {
         die('// invalid request');
     }
     
-    $callback = $_GET['callback'];
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
-    if (!isset($callback)) {
-        header('status: 400 Bad Request', true, 400);
-        die('// callback not set');
-    }
-    if (!is_valid_callback($callback)) {
-        header('status: 400 Bad Request', true, 400);
-        die('// callback is not valid');
-    }
+        $output = $_GET['output'];
+        $callback = $_GET['callback'];
 
-    $q = $_GET['q'];
-    if (!isset($q)) {
-        header('status: 400 Bad Request', true, 400);
-        die('// q not set');
-    }
-    
-    $googlemaps_key = 'REPLACEME';
-    
-    if(is_valid_callback($callback)) {
-        $url = "http://maps.google.com/maps/geo?q={$q}&output=json&sensor=true&key={$googlemaps_key}";
-        // 3 second timeout
-        $context = stream_context_create(array(
-            'http' => array(
-                'timeout' => 3
-            )
-        ));
-        $json = file_get_contents($url, false, $context);
-        
-        $json = @file_get_contents($url);
-        if ($json === false || empty($json)) {
-            header('status: 503 Service Temporarily Unavailable', true, 503);
-            die('error');
-        } else {
-            $maxage_days = 32;
-            $maxage_seconds = 60*60*24*$maxage_days;
-            $now = time();
-            header('Pragma: public');
-            header('Cache-Control: maxage=' . $expires);
-            header('Expires: ' . gmdate('D, d M Y H:i:s', $now + $maxage_seconds) . ' GMT');
-            //header('X-Json-Url: ' . $url);
-            echo $callback, '(', $json, ')';
-            exit();
+        if ($output === 'jsonp') {
+            if (!isset($callback)) {
+                header('status: 400 Bad Request', true, 400);
+                die('// callback not set');
+            }
+            if (!is_valid_callback($callback)) {
+                header('status: 400 Bad Request', true, 400);
+                die('// callback is not valid');
+            }
         }
+
+        $q = $_GET['q'];
+        if (!isset($q)) {
+            header('status: 400 Bad Request', true, 400);
+            die('// q not set');
+        }
+
+        $googlemaps_key = 'REPLACEME';
+
+        if($output !== 'jsonp' || is_valid_callback($callback)) {
+            $url = "http://maps.google.com/maps/geo?q={$q}&output=json&sensor=true&key={$googlemaps_key}";
+            // 3 second timeout
+            $context = stream_context_create(array(
+                'http' => array(
+                    'timeout' => 3
+                )
+            ));
+            $json = file_get_contents($url, false, $context);
+
+            $json = @file_get_contents($url);
+            if ($json === false || empty($json)) {
+                header('status: 503 Service Temporarily Unavailable', true, 503);
+                die('error');
+            } else {
+                $maxage_days = 32;
+                $maxage_seconds = 60*60*24*$maxage_days;
+                $now = time();
+                header('Pragma: public');
+                header('Cache-Control: maxage=' . $maxage_seconds);
+                header('Expires: ' . gmdate('D, d M Y H:i:s', $now + $maxage_seconds) . ' GMT');
+                if ($output === 'jsonp') {
+                    header('Content-Type: application/javascript');
+                    echo $callback, '(', $json, ')';
+                } else {
+                    header('Content-Type: application/json');
+                    echo $json;
+                }
+                exit();
+            }
+        }
+        
     }
     
     # Otherwise, bad request
