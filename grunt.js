@@ -70,10 +70,20 @@ module.exports = function (grunt) {
                         prod: true
                     },
                     optimize: 'uglify2',
-                    optimizeCss: 'standard',
-                    uglify: {
-                        max_line_length: 500
-                    }
+                    optimizeCss: 'standard'
+                }
+            },
+            compileAlmond: {
+                options: {
+                    mainConfigFile: 'src/js/main.js',
+                    baseUrl: 'src/js/vendor',
+                    out: 'publish/js/main.js',
+                    name: 'almond',
+                    include: '../main',
+                    pragmas: {
+                        prod: true
+                    },
+                    optimize: 'uglify2'
                 }
             }
         },
@@ -88,12 +98,20 @@ module.exports = function (grunt) {
             }
         }
     });
-    
+
+    grunt.registerTask('replaceDataMainBySrc', function () {
+        var original = grunt.file.read('publish/index.html');
+        var replacement = original.replace(
+            /<script data-main="([^"]+)" src="[^"]+"><\/script>/,
+            '<script src="$1"></script>');
+        grunt.file.write('publish/index.html', replacement);
+    });
 
     // Default task.
     grunt.registerTask('test', 'server qunit');
     grunt.registerTask('default', 'jsvalidate:src lint:src test jssemicoloned');
-    grunt.registerTask('publish', 'default requirejs hashres:publish jsvalidate:publish');
+    grunt.registerTask('publish', 'default requirejs:compile hashres:publish jsvalidate:publish');
+    grunt.registerTask('publishAlmond', 'default requirejs:compile requirejs:compileAlmond hashres:publish replaceDataMainBySrc jsvalidate:publish');
     grunt.registerTask('dev', 'server reload watch');
 
 };
