@@ -8,6 +8,18 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-reload');
     grunt.loadNpmTasks('grunt-jssemicoloned');
 
+    // readOptionalJSON
+    // by Ben Alman
+    // https://gist.github.com/2876125
+    function readOptionalJSON( filepath ) {
+        var data = {};
+        try {
+            data = grunt.file.readJSON( filepath );
+            grunt.verbose.write( "Reading " + filepath + "..." ).ok();
+        } catch(e) {}
+        return data;
+    }
+
     // Project configuration.
     grunt.initConfig({
         jssemicoloned: {
@@ -44,39 +56,7 @@ module.exports = function (grunt) {
             tasks: 'jsvalidate:src lint:src reload'
         },
         jshint: {
-            options: {
-                // Enforcing Options
-                bitwise: true,
-                //camelcase: true,
-                curly: true,
-                eqeqeq: true,
-                forin: true,
-                immed: true,
-                indent: 4,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                noempty: true,
-                quotmark: 'single',
-                undef: true,
-                //unused: true,
-                strict: true,
-                trailing: true,
-                maxparams: 7,
-                maxdepth: 2,
-                maxstatements: 50,
-                maxcomplexity: 4,
-                // Relaxing Options
-                //sub: true,
-                //boss: true,
-                //eqnull: true,
-                // Environments
-                browser: true,
-                // Legacy
-                nomen: true,
-                //onevar: true,
-                white: true
-            },
+            options: readOptionalJSON('.jshintrc'),
             globals: {}
         },
         requirejs: {

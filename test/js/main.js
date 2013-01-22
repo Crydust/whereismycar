@@ -2,18 +2,13 @@
 
 require.config({
     baseUrl: '../src/js/vendor',
-    packages: [
-        {
-            name: 'app',
-            location: '../app'
-        },
-        {
-            name: 'apptest',
-            location: '../../../test/js/apptest'
-        }
-    ]
+    paths: {
+        'app': '../app',
+        'apptest': '../../../test/js/apptest'
+    },
+    urlArgs: "bust=" + (+new Date())
 });
 
-require(['apptest'], function(){
+require(['apptest/suite'], function(){
     QUnit.start();
 });

@@ -25,19 +25,18 @@ define(['promises-a', './network', './geography'], function (defer, network, geo
             // it seems this url no longer returns a jsonp reply
             // so we use a proxy
             //var url = 'http://maps.google.com/maps/geo'
-            
+            var url;
             //>>excludeStart("prod", pragmas.prod);
             var hostname = window.location.hostname;
             if (hostname === 'localhost') {
-                var url = 'http://www.crydust.be/lab/whereismycar/geo/' +
-                    '?q=' + latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE) +
-                    '&output=jsonp' +
-                    '&callback=?';
+                url = 'http://www.crydust.be/lab/whereismycar/geo/' +
+                    '?output=jsonp&callback=?&q=' +
+                    latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE);
                 deferred.fulfill(network.getJsonp(url).then(extractAddress));
             } else {
             //>>excludeEnd("prod");
-                var url = 'geo/?output=json&q=' +
-                latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE);
+                url = 'geo/?output=json&q=' +
+                    latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE);
                 deferred.fulfill(network.getJson(url).then(extractAddress));
             //>>excludeStart("prod", pragmas.prod);
             }

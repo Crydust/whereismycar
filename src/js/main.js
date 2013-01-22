@@ -5,7 +5,6 @@
 require.config({
     baseUrl: 'js/vendor',
     paths: {
-        'geoPosition': 'javascript-mobile-desktop-geolocation/js/geoPosition',
         'app': '../app'
     }
 });
