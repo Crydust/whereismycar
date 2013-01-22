@@ -11,12 +11,12 @@ module.exports = function (grunt) {
     // readOptionalJSON
     // by Ben Alman
     // https://gist.github.com/2876125
-    function readOptionalJSON( filepath ) {
+    function readOptionalJSON(filepath) {
         var data = {};
         try {
-            data = grunt.file.readJSON( filepath );
-            grunt.verbose.write( "Reading " + filepath + "..." ).ok();
-        } catch(e) {}
+            data = grunt.file.readJSON(filepath);
+            grunt.verbose.write('Reading ' + filepath + '...').ok();
+        } catch (e) {}
         return data;
     }
 
@@ -64,7 +64,6 @@ module.exports = function (grunt) {
                 options: {
                     mainConfigFile: 'src/js/main.js',
                     appDir: 'src',
-                    baseUrl: 'js/vendor',
                     dir: 'publish',
                     name: '../main',
                     pragmas: {

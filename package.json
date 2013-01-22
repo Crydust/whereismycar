@@ -2,8 +2,14 @@
   "name": "whereismycar",
   "version": "0.0.0",
   "description": "An HTML 5 \"where is my car\" application that stores your current location and helps you get back to a previously stored location.",
-  "author": "Kristof Neirynck",
-  "license": "MIT",
+  "author": {
+    "name": "Kristof Neirynck"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
   "readmeFilename": "README.txt",
   "dependencies": {},
   "devDependencies": {
@@ -21,6 +27,7 @@
     "baseUrl": "src/js/vendor",
     "dependencies": {
       "require": "github:jrburke/requirejs/2.1.2",
+      "almond": "github:jrburke/almond/0.2.3",
       "domReady": "github:requirejs/domReady/2.0.1",
       "json3": "github:bestiejs/json3/v3.2.4",
       "signals": "github:millermedeiros/js-signals/v1.0.0",
