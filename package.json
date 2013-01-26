@@ -7,7 +7,8 @@
   },
   "licenses": [
     {
-      "type": "MIT"
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
     }
   ],
   "readmeFilename": "README.txt",
@@ -36,7 +37,8 @@
       "reqwest": "github:ded/reqwest/v0.6.3",
       "microajax": "http://microajax.googlecode.com/svn/trunk/microajax.js",
       "store": "github:Crydust/store.js/v1.3.6",
-      "javascript-mobile-desktop-geolocation": "github:estebanav/javascript-mobile-desktop-geolocation/master"
+      "javascript-mobile-desktop-geolocation": "github:estebanav/javascript-mobile-desktop-geolocation/master",
+      "qunit": "github:jquery/qunit/v1.11.0#qunit"
     }
   }
 }
