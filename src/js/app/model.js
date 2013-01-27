@@ -5,7 +5,7 @@ define(['store', './objects'], function (store, objects) {
     'use strict';
     
     var nullToDefault = objects.nullToDefault;
-
+    
     var model = {
         'current': {
             'timestamp': null,
@@ -31,19 +31,22 @@ define(['store', './objects'], function (store, objects) {
         'updateImageCount': 0,
         'updateAdressCount': 0
     };
+    
+    var defaults = objects.copy(model);
 
-    var storedModel = store.get('model');
-    model = nullToDefault(storedModel, model);
+    var storedModel = store.get('storedModel');
+    model.stored = nullToDefault(storedModel, model.stored);
     
     function getModel() {
         return model;
     }
     function storeModel() {
-        store.set('model', model);
+        store.set('storedModel', model.stored);
     }
 
     return {
         get: getModel,
-        store: storeModel
+        store: storeModel,
+        defaults: defaults
     };
 });

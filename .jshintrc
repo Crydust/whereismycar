@@ -14,9 +14,9 @@
 	"strict": true,
 	"trailing": true,
 	"maxparams": 7,
-	"maxdepth": 2,
+	"maxdepth": 3,
 	"maxstatements": 50,
-	"maxcomplexity": 4,
+	"maxcomplexity": 12,
 
 	"browser": true,
 

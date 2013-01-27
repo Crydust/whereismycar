@@ -47,8 +47,20 @@ define(['./defer', './network', './geography'], function (defer, network, geogra
         return deferred.promise;
     }
     
+    function staticImageUrl(latlng) {
+        return '' +
+            'http://maps.googleapis.com/maps/api/staticmap' +
+            '?sensor=true' +
+            '&size=160x104' +
+            (window.devicePixelRatio > 1 ? '&scale=2' : '') +
+            '&zoom=15' +
+            '&center=' + encodeURIComponent(latlng.toUrlValue()) +
+            '&markers=' + encodeURIComponent('color:0X44AAFF|size:tiny|' + latlng.toUrlValue());
+    }
+
     return {
-        'reverseGeocode': reverseGeocode
+        'reverseGeocode': reverseGeocode,
+        'staticImageUrl': staticImageUrl
     };
 
 });

@@ -109,7 +109,8 @@ module.exports = function (grunt) {
 
     // Default task.
     grunt.registerTask('test', 'server qunit');
-    grunt.registerTask('default', 'jsvalidate:src lint:src test jssemicoloned');
+    //removed jssemicoloned
+    grunt.registerTask('default', 'jsvalidate:src lint:src test');
     grunt.registerTask('publish', 'default requirejs:compile hashres:publish jsvalidate:publish');
     grunt.registerTask('publishAlmond', 'default requirejs:compile requirejs:compileAlmond hashres:publish replaceDataMainBySrc jsvalidate:publish');
     grunt.registerTask('dev', 'server reload watch');
