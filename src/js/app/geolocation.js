@@ -1,6 +1,6 @@
 /*jslint browser: true */
 /*global define: false */
-define(['promises-a', './geography'], function (defer, geography) {
+define(['./defer', './geography', './again'], function (defer, geography, again) {
     'use strict';
 /*
 nsIDOMGeoPosition
@@ -48,7 +48,7 @@ nsIDOMGeoPositionCoords
             };
             var successHandler = function (geoPosition) {
                 win.clearTimeout(timeoutid);
-                deferred.fulfill(geoPosition);
+                deferred.resolve(geoPosition);
             };
             var errorHandler = function (geoPositionError) {
                 win.clearTimeout(timeoutid);
@@ -62,6 +62,22 @@ nsIDOMGeoPositionCoords
             timeoutid = win.setTimeout(timeoutHandler, 5000);
             win.navigator.geolocation.getCurrentPosition(successHandler, errorHandler, options);
         } else {
+            /*
+            win.setTimeout(function () {
+                deferred.resolve({
+                    'timestamp': 1359302664666,
+                    'coords': {
+                        'speed': null,
+                        'heading': null,
+                        'altitudeAccuracy': null,
+                        'accuracy': 666,
+                        'altitude': null,
+                        'longitude': 3.7228666,
+                        'latitude': 51.0522666
+                    }
+                });
+            }, 1000);
+            */
             deferred.reject(new Error('Geolocation unsupported'));
         }
         return deferred.promise;
@@ -70,13 +86,13 @@ nsIDOMGeoPositionCoords
     function convertPositionToLatLng(position) {
         var deferred = defer();
         var latlng = new geography.LatLng(position.coords.latitude, position.coords.longitude);
-        deferred.fulfill(latlng);
+        deferred.resolve(latlng);
         return deferred.promise;
     }
 
     return {
         isSupported: isGeolocationSupported,
-        getCurrentPosition: getCurrentPosition,
+        getCurrentPosition: again(getCurrentPosition),
         convertPositionToLatLng: convertPositionToLatLng
     };
 });

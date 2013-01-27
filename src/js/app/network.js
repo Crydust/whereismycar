@@ -1,6 +1,6 @@
 /*jslint browser: true */
 /*global define: false */
-define(['promises-a', 'json3'], function (defer, JSON3) {
+define(['./defer', 'json3', './again'], function (defer, JSON3, again) {
     'use strict';
 
     var win = window;
@@ -31,7 +31,7 @@ define(['promises-a', 'json3'], function (defer, JSON3) {
                 if (request.readyState === 4 && request.status === 200) {
                     win.clearTimeout(timeoutid);
                     request.onreadystatechange = NOOP;
-                    deferred.fulfill(request.responseText);
+                    deferred.resolve(request.responseText);
                 }
             };
             timeoutid = win.setTimeout(timeoutHandler, 5000);
@@ -48,7 +48,7 @@ define(['promises-a', 'json3'], function (defer, JSON3) {
     function parseJson(text) {
         var deferred = defer();
         try {
-            deferred.fulfill(JSON3.parse(text));
+            deferred.resolve(JSON3.parse(text));
         } catch (e) {
             deferred.reject(e);
         }
@@ -59,25 +59,43 @@ define(['promises-a', 'json3'], function (defer, JSON3) {
         return getText(url).then(parseJson);
     }
     
-//TODO timeout
     var uniq = 0;
     function getJsonp(url) {
         uniq++;
         var deferred = defer(),
         callbackname = 'jsonpcallbackb_' + (+new Date()) + '_' + uniq,
-        re = /([\?&]callback=)\?/;
+        re = /([\?&]callback=)\?/,
+        timeoutid;
         if (re.test(url)) {
-            var callback = function (val) {
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            var cleanup = function () {
+                win.clearTimeout(timeoutid);
                 win[callbackname] = null;
-                deferred.fulfill(val);
+                script.onerror = null;
+                head.removeChild(script);
+                script = null;
             };
+            var timeoutHandler = function () {
+                cleanup();
+                deferred.reject(new Error('Timed out'));
+            };
+            var errorHandler = function () {
+                cleanup();
+                deferred.reject(new Error('Error loading jsonp'));
+            };
+            var callback = function (val) {
+                cleanup();
+                deferred.resolve(val);
+            };
+            script.onerror = errorHandler;
+            timeoutid = win.setTimeout(timeoutHandler, 5000);
             win[callbackname] = callback;
             url = url.replace(re, '$1' + callbackname);
-            var script = document.createElement('script');
             script.src = url;
             script.type = 'text/javascript';
             script.async = true;
-            document.getElementsByTagName('head')[0].appendChild(script);
+            head.appendChild(script);
         } else {
             deferred.reject(new Error('url must contain callback=?'));
         }
@@ -85,7 +103,9 @@ define(['promises-a', 'json3'], function (defer, JSON3) {
     }
 
     return {
-        getJson: getJson,
-        getJsonp: getJsonp
+        //>>excludeStart("prod", pragmas.prod);
+        getJsonp: again(getJsonp),
+        //>>excludeEnd("prod");
+        getJson: again(getJson)
     };
 });

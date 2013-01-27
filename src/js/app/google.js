@@ -1,7 +1,7 @@
 /*jslint browser: true, sloppy: true, vars: true */
 /*global define: false */
 
-define(['promises-a', './network', './geography'], function (defer, network, geography) {
+define(['./defer', './network', './geography'], function (defer, network, geography) {
     'use strict';
 
     /** @const @type {number} */
@@ -12,7 +12,7 @@ define(['promises-a', './network', './geography'], function (defer, network, geo
     function extractAddress(data) {
         var deferred = defer();
         if (data && data.Status && data.Status.code === 200) {
-            deferred.fulfill(data.Placemark[0].address);
+            deferred.resolve(data.Placemark[0].address);
         } else {
             deferred.reject(new Error('could not read address'));
         }
@@ -32,12 +32,12 @@ define(['promises-a', './network', './geography'], function (defer, network, geo
                 url = 'http://www.crydust.be/lab/whereismycar/geo/' +
                     '?output=jsonp&callback=?&q=' +
                     latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE);
-                deferred.fulfill(network.getJsonp(url).then(extractAddress));
+                deferred.resolve(network.getJsonp(url).then(extractAddress));
             } else {
             //>>excludeEnd("prod");
                 url = 'geo/?output=json&q=' +
                     latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE);
-                deferred.fulfill(network.getJson(url).then(extractAddress));
+                deferred.resolve(network.getJson(url).then(extractAddress));
             //>>excludeStart("prod", pragmas.prod);
             }
             //>>excludeEnd("prod");

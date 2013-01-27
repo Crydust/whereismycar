@@ -1,12 +1,12 @@
 /*jslint browser: true, sloppy: true, vars: true */
 /*global define: false */
-define(['./model', './dom', 'json3', './geolocation', './google', './geography'], function (model, dom, JSON3, geolocation, google, geography) {
+define(['./model', './dom', 'json3', './geolocation', './google'], function (model, dom, JSON3, geolocation, google) {
     'use strict';
     
     function main() {
         // 1. show stored location
         var data = model.get();
-        dom.byId('debug_output').innerHTML += JSON3.stringify(data, null, 4) + '\n';
+        //dom.byId('debug_output').innerHTML += JSON3.stringify(data, null, 4) + '\n';
         // 2. load current location
         var positionPromise = geolocation.getCurrentPosition();
         positionPromise
@@ -15,6 +15,9 @@ define(['./model', './dom', 'json3', './geolocation', './google', './geography']
         });
         var latlngPromise = positionPromise
         .then(geolocation.convertPositionToLatLng);
+        // 3. show distance and heading
+        
+        // 4. do reverse geolocation
         latlngPromise
         .then(google.reverseGeocode)
         .then(function (address) {
@@ -22,8 +25,6 @@ define(['./model', './dom', 'json3', './geolocation', './google', './geography']
         }, function (reason) {
             dom.byId('debug_output').innerHTML += 'error ' + reason;
         });
-        // 3. show distance and heading
-        // 4. do reverce geolocation
     }
     
     return main;

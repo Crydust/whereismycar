@@ -38,7 +38,8 @@
       "microajax": "http://microajax.googlecode.com/svn/trunk/microajax.js",
       "store": "github:Crydust/store.js/v1.3.6",
       "javascript-mobile-desktop-geolocation": "github:estebanav/javascript-mobile-desktop-geolocation/master",
-      "qunit": "github:jquery/qunit/v1.11.0#qunit"
+      "qunit": "github:jquery/qunit/v1.11.0#qunit",
+      "q": "github:kriskowal/q/v0.8.12"
     }
   }
 }
