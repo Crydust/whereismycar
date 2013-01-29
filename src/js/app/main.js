@@ -14,15 +14,20 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
     }
     
     function main() {
-        // 1. show stored location
         var data = model.get();
-        //log(data);
+        var isLoading = false;
         
-        // 2. load current location
-        var positionPromise = geolocation.getCurrentPosition();
-        positionPromise
-        .then(function (position) {
-            data.current.timestamp = position.timestamp;
+        function updatePosition() {
+            if (isLoading) {
+                return;
+            }
+            isLoading = true;
+
+            // load current location
+            var positionPromise = geolocation.getCurrentPosition();
+            positionPromise
+            .then(function (position) {
+                data.current.timestamp = position.timestamp;
             if (data.current.timestamp > 14000000000000) {
                 data.current.timestamp = Math.floor(data.current.timestamp / 1000);
             }
@@ -48,16 +53,22 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
         
         
         // 4. do reverse geolocation
-        latlngPromise
-        .then(google.reverseGeocode)
-        .then(function (address) {
-            data.current.address = address;
-            //log(data);
-            view.update(data);
-        }, function (reason) {
-            dom.byId('debug_output').innerHTML += 'error ' + reason;
-        });
+            latlngPromise
+            .then(google.reverseGeocode)
+            .then(function (address) {
+                data.current.address = address;
+                //log(data);
+                view.update(data);
+                isLoading = false;
+            }, function (reason) {
+                dom.byId('debug_output').innerHTML += '\nerror ' + reason + '\n';
+                isLoading = false;
+            });
+
+        }
         
+        updatePosition();
+
         // store
         dom.on(dom.byId('store_current_location_button'), 'click', function () {
             data.stored = objects.copy(data.current);
@@ -66,6 +77,12 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
             view.update(data);
             return false;
         });
+        //update
+        dom.on(dom.byId('update_current_location_button'), 'click', function () {
+            updatePosition();
+            return false;
+        });
+        
     }
 
     main();
