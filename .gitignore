@@ -65,3 +65,6 @@ node_modules/
 
 # volo
 src/js/vendor/
+
+# secrets
+secret.php

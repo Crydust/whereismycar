@@ -1,4 +1,6 @@
 <?php
+require_once('secret.php');
+
 function is_valid_callback($subject) {
 
     //way stricter then necesary
@@ -89,8 +91,6 @@ function main() {
             header('status: 400 Bad Request', true, 400);
             die('// q not set');
         }
-
-        $googlemaps_key = 'REPLACEME';
 
         if($output !== 'jsonp' || is_valid_callback($callback)) {
             $url = "http://maps.google.com/maps/geo?q={$q}&output=json&sensor=true&key={$googlemaps_key}";
