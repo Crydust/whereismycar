@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html >
+<html>
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8" />
         <title>Where is my car</title>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="dns-prefetch" href="http://maps.googleapis.com">
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="dns-prefetch" href="http://maps.googleapis.com" />
         
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <!--
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,10 +36,10 @@
             <tbody>
                 <tr>
                     <td>
-                        <img id="current_position_img" width="160" height="104" src="img/spacer.gif">
+                        <img id="current_position_img" class="position" width="160" height="104" alt="" src="img/spacer.gif" />
                     </td>
                     <td>
-                        <img id="stored_position_img" width="160" height="104" src="img/spacer.gif">
+                        <img id="stored_position_img" class="position" width="160" height="104" alt="" src="img/spacer.gif" />
                     </td>
                 </tr>
                 <tr>
@@ -48,8 +48,7 @@
                 </tr>
             </tbody>
         </table>
-        <p><a href="#" id="store_current_location_button">Store current location</a></p>
-        <p><a href="#" id="update_current_location_button">Update current location</a></p>
+        <p><a href="#" id="update_current_location_button" class="action action-reload">reload</a><a href="#" id="store_current_location_button" class="action action-save">save</a></p>
         <!--
         <p><a href="#" id="get_walking_directions_button">Get walking directions</a></p>
         -->

@@ -1,5 +1,3 @@
-/*jslint browser: true */
-/*global define: false */
 define(['./defer', './geography', './again'], function (defer, geography, again) {
     'use strict';
 /*

@@ -1,6 +1,3 @@
-/*jslint browser: true, vars: true */
-/*global define: false */
-
 define(['store', './objects'], function (store, objects) {
     'use strict';
     

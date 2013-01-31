@@ -1,5 +1,3 @@
-/*jslint browser: true */
-/*global define: false */
 define(['./defer', 'json3', './again'], function (defer, JSON3, again) {
     'use strict';
 

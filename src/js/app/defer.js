@@ -1,4 +1,3 @@
-/*global define: false */
 //20.994 bytes
 define(['promises-a'], function (defer) {
     'use strict';

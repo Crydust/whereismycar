@@ -14,14 +14,14 @@
   "readmeFilename": "README.txt",
   "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.3.0",
-    "grunt-contrib-requirejs": "~0.3.0",
-    "grunt-hashres": "~0.2.0",
-    "grunt-jsvalidate": "~0.1.0",
-    "grunt-reload": "~0.2.0",
+    "grunt": "~0.4.0rc7",
+    "grunt-contrib-requirejs": "~0.4.0rc7",
     "grunt-contrib-jshint": "~0.1.0",
-    "grunt-contrib-watch": "~0.2.0",
-    "grunt-jssemicoloned": "~0.0.4"
+    "grunt-contrib-watch": "~0.2.0rc7",
+    "grunt-contrib-qunit": "~0.1.1rc6",
+    "grunt-contrib-uglify": "~0.1.0",
+    "grunt-contrib-connect": "~0.1.0",
+    "grunt-reload": "git://github.com/webxl/grunt-reload.git"
   },
   "amd": {},
   "volo": {
@@ -32,8 +32,7 @@
       "domReady": "github:requirejs/domReady/2.0.1",
       "json3": "github:bestiejs/json3/v3.2.4",
       "promises-a": "github:ForbesLindesay/promises-a/2.3.0",
-      "store": "github:marcuswestin/store.js/v1.3.6",
-      "qunit": "github:jquery/qunit/v1.11.0#qunit"
+      "store": "github:marcuswestin/store.js/v1.3.6"
     }
   }
 }

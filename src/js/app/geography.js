@@ -1,6 +1,3 @@
-/*jslint browser: true, sloppy: true, vars: true */
-/*global define: false */
-
 define(['./geometry'], function (geometry) {
     'use strict';
 

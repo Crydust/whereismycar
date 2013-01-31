@@ -1,4 +1,3 @@
-/*global define: false */
 define(['./defer'], function (defer) {
     'use strict';
 

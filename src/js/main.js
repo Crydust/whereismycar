@@ -1,6 +1,3 @@
-/*jslint */
-/*global require:false */
-
 //>>excludeStart("prod", pragmas.prod);
 require.config({
     baseUrl: 'js/vendor',

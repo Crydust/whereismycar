@@ -1,4 +1,3 @@
-/*global define: false */
 define(['./defer', './objects', './dom', './model', './timeago'], function (defer, objects, dom, model, timeago) {
     'use strict';
     

@@ -1,6 +1,3 @@
-/*jslint browser: true, sloppy: true, vars: true */
-/*global define: false */
-
 define(['./defer', './network', './geography'], function (defer, network, geography) {
     'use strict';
 
