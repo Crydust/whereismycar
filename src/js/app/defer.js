@@ -2,7 +2,7 @@
 define(['promises-a'], function (defer) {
     'use strict';
     function deferWithResolve() {
-        var result = defer.apply(null, arguments);
+        var result = defer();
         result.resolve = result.fulfill;
         return result;
     }

@@ -2,6 +2,12 @@ define(['app/geometry'], function(geometry) {
 
     module('geometry');
 
+    test('Point', 2, function(){
+		var p = new geometry.Point(0, 1)
+        strictEqual(p.getX(), 0, 'getX');
+        strictEqual(p.getY(), 1, 'getY');
+    });
+
     test('toDeg', 5, function(){
         strictEqual(geometry.toDeg(0), 0, '0 is 0 deg');
         strictEqual(geometry.toDeg(Math.PI/2), 90, 'pi/2 is 90 deg');

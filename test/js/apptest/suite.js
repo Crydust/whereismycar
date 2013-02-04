@@ -1,4 +1,4 @@
 
-define(['./geometrytest', './objectstest'], function() {
+define(['./geometrytest', './objectstest', './defertest'], function() {
     return {};
 });

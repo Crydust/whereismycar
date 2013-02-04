@@ -23,7 +23,6 @@ thumbs.db
 # svn
 .svn/
 _svn/
-svnignore[.-]*
 
 # cvs
 CVS/
@@ -36,7 +35,6 @@ CVS/
 
 # dreamweaver
 _notes/
-
 
 # eclipse
 .refactorings/
@@ -66,5 +64,9 @@ node_modules/
 # volo
 src/js/vendor/
 
+# jscoverage
+testResults/
+
 # secrets
 secret.php
+

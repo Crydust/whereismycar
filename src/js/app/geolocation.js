@@ -31,7 +31,6 @@ nsIDOMGeoPositionCoords
 */
 
     var win = window;
-    var NOOP = function () {};
 
     function isGeolocationSupported() {
         return win.navigator.hasOwnProperty('geolocation');
@@ -82,10 +81,7 @@ nsIDOMGeoPositionCoords
     }
 
     function convertPositionToLatLng(position) {
-        var deferred = defer();
-        var latlng = new geography.LatLng(position.coords.latitude, position.coords.longitude);
-        deferred.resolve(latlng);
-        return deferred.promise;
+        return new geography.LatLng(position.coords.latitude, position.coords.longitude);
     }
 
     return {

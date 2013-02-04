@@ -17,7 +17,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
@@ -58,13 +57,22 @@ module.exports = function(grunt) {
                 'src/**/*.html', 'src/**/*.htm', 'src/**/*.js', 'src/**/*.css',
                 'test/**/*.html', 'test/**/*.htm', 'test/**/*.js', 'test/**/*.css'
             ],
-            tasks: ['jshint', 'reload']
+            tasks: ['jshint', 'qunit-cov', 'reload']
         },
         reload: {
             port: 6001,
             proxy: {
                 host: 'localhost',
                 port: 8888
+            }
+        },
+        'qunit-cov': {
+            test: {
+                minimum: 0.1,
+                srcDir: 'src',
+                depDirs: ['test'],
+                outDir: 'testResults',
+                testFiles: ['test/index.html']
             }
         }
     });
@@ -75,6 +83,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-reload');
+    grunt.loadNpmTasks('grunt-qunit-cov');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {

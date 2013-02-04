@@ -3,8 +3,6 @@ define(['./defer', './network', './geography'], function (defer, network, geogra
 
     /** @const @type {number} */
     var SIGNIFICANT_DIGITS_FOR_GEOCODE = 6;
-    /** @const @type {Function} */
-    var NOOP = function () {};
 
     function extractAddress(data) {
         var deferred = defer();

@@ -3,9 +3,6 @@ define(['./geometry'], function (geometry) {
 
     var toRad = geometry.toRad;
     var toDeg = geometry.toDeg;
-
-    /** @const @type {Function} */
-    var NOOP = function () {};
     
     /**
      * @constructor
@@ -51,7 +48,7 @@ define(['./geometry'], function (geometry) {
      * @param {LatLng} from
      * @param {LatLng} to
      * @param {number=} radius
-     * @return {number} distance in meters
+     * @return {string} distance in meters
      */
     function computeDistanceBetween(from, to, radius) {
         // earth radius  as used in gps systems (WGS-84)

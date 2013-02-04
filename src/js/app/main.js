@@ -46,8 +46,7 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
                 data.current.img = google.staticImageUrl(latlng);
                 //log(data);
             });
-            
-            
+
             // 3. show distance and heading
             
             
