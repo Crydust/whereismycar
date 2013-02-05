@@ -100,9 +100,9 @@ module.exports = function(grunt) {
         
         var replacement = grunt.file.read('publish/index.html');
         var jsFileName = renameFile('publish/js', 'main.js', '${hash}.main.cache.js');
-        replacement = replacement.replace('="js/main.js"', '="' + jsFileName + '"');
+        replacement = replacement.replace('="js/main.js"', '="js/' + jsFileName + '"');
         var cssFileName = renameFile('publish/css', 'style.css', '${hash}.style.cache.css');
-        replacement = replacement.replace('="css/style.css"', '="' + cssFileName + '"');
+        replacement = replacement.replace('="css/style.css"', '="css/' + cssFileName + '"');
         grunt.file.write('publish/index.html', replacement);
     });
     grunt.registerTask('replaceDataMainBySrc', function () {
