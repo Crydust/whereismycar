@@ -57,8 +57,8 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
                 data.current.address = address;
                 //log(data);
                 view.update(data);
-                window.console.log('updatePosition for done');
                 dom.byId('debug_output').innerHTML = 'Done.\n';
+                
                 isLoading = false;
             }, function (reason) {
                 dom.byId('debug_output').innerHTML += 'error ' + reason + '\n';

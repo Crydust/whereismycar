@@ -34,16 +34,6 @@ define([], function () {
             element.addEventListener(name, wrappedHandler, false);
         } else if (element.attachEvent) {
             element.attachEvent('on' + name, wrappedHandler);
-        } else {
-            var oldHandler = element['on' + name];
-            if (oldHandler) {
-                element['on' + name] = function () {
-                    oldHandler.apply(this, arguments);
-                    return wrappedHandler.apply(this, arguments);
-                };
-            } else {
-                element['on' + name] = wrappedHandler;
-            }
         }
     }
     

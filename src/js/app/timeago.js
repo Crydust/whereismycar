@@ -37,13 +37,14 @@ define([], function () {
     /**
      * difference between a date and now
      * @param {Date} date
+     * @param {Date} now
      * @return {number} milliseconds
      */
-    function distance(date) {
+    function distance(date, now) {
         if (date === null) {
             return null;
         }
-        return (new Date().getTime() - date.getTime());
+        return (now.getTime() - date.getTime());
     }
 
     /**
@@ -56,9 +57,11 @@ define([], function () {
     
     /**
      * @param {Date|number} timestamp
+     * @param {Date?} now
      * @return {string}
      */
-    function inWords(timestamp) {
+    function inWords(timestamp, now) {
+        now = now || new Date();
         var date;
         if (timestamp === null) {
             return null;
@@ -67,7 +70,7 @@ define([], function () {
         } else {
             date = timestamp;
         }
-        var distanceMillis = distance(date);
+        var distanceMillis = distance(date, now);
     
         var prefix = strings.prefixAgo;
         var suffix = strings.suffixAgo;

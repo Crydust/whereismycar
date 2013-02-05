@@ -9,6 +9,9 @@ require.config({
     urlArgs: "bust=" + (+new Date())
 });
 
-require(['apptest/suite'], function(){
+require(['apptest/suite', 'domReady!'], function(){
+    QUnit.config.autostart = false;
+    QUnit.config.requireExpects = true;
+    QUnit.load();
     QUnit.start();
 });

@@ -10,7 +10,7 @@ define(['./defer'], function (defer) {
                     deferred.resolve(output);
                 }, function (reason) {
                     //>>excludeStart("prod", pragmas.prod);
-                    window.console.log('again because ', reason);
+                    //window.console.log('again because ', reason);
                     //>>excludeEnd("prod");
                     remainingTries -= 1;
                     if (remainingTries > 0) {

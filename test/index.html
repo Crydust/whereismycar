@@ -5,14 +5,23 @@
     <title>QUnit Test Suite</title>
     <link rel="stylesheet" href="qunit/qunit.css">
     <script src="qunit/qunit.js"></script>
+    <script src="qunit/qunit-close-enough.js"></script>
     <script>
-    QUnit.config.autostart = false;
-    QUnit.config.requireExpects = true;
+    (function removeEvent(elem, type, fn) {
+        if (elem.removeEventListener) {
+            elem.removeEventListener(type, fn, false);
+        } else {
+            elem.detachEvent('on' + type, fn);
+        }
+    }(window, 'load', QUnit.load));
     </script>
     <script data-main="js/main.js" src="../src/js/vendor/require.js"></script>
 </head>
 <body>
 <div id="qunit"></div>
-<div id="qunit-fixture">test markup</div>
+<div id="qunit-fixture">
+<span id="dummy"></span>
+</div>
 </body>
 </html>
+

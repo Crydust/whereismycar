@@ -57,7 +57,7 @@ module.exports = function(grunt) {
                 'src/**/*.html', 'src/**/*.htm', 'src/**/*.js', 'src/**/*.css',
                 'test/**/*.html', 'test/**/*.htm', 'test/**/*.js', 'test/**/*.css'
             ],
-            tasks: ['jshint', 'qunit-cov', 'reload']
+            tasks: ['jshint', 'reload']
         },
         reload: {
             port: 6001,
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
         },
         'qunit-cov': {
             test: {
-                minimum: 0.1,
+                minimum: 0.01,
                 srcDir: 'src',
                 depDirs: ['test'],
                 outDir: 'testResults',
@@ -113,7 +113,7 @@ module.exports = function(grunt) {
         grunt.file.write('publish/index.html', replacement);
     });
     
-    grunt.registerTask('test', ['connect:server', 'qunit:all']);
+    grunt.registerTask('test', ['connect:server', 'qunit:all', 'qunit-cov']);
     grunt.registerTask('default', ['jshint', 'test']);
     grunt.registerTask('publish', ['default', 'requirejs:compile', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('publishAlmond', ['default', 'requirejs:compile', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
