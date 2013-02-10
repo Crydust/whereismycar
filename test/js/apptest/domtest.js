@@ -15,12 +15,14 @@ define(['app/dom'], function(dom) {
         equal(dummy, 'expected', 'fakeDocument');
     });
 
-    test('on', 1, function(){
+    test('on', 1, function(done){
         stop();
-        var dummy = dom.byId('dummy');
+        fixtures.load('dummy.html');
+        var dummy = dom.byId('dummy', fixtures.window().document);
         dom.on(dummy, 'click', function(){
             ok(true);
-            start();
+            fixtures.cleanUp();
+            (typeof done === 'function' ? done : start)();
             return false;
         });
         (function fireEvent(element, event) {

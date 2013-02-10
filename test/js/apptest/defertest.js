@@ -9,9 +9,9 @@ define(['app/defer'], function(defer) {
         var promise = deferrable.promise;
         promise.then(function (value) {
             strictEqual(value, expected);
-            start();
+            (typeof done === 'function' ? done : start)();
         }, function () {
-            start();
+            (typeof done === 'function' ? done : start)();
         });
         deferrable.resolve(expected);
     });
@@ -22,10 +22,10 @@ define(['app/defer'], function(defer) {
         var deferrable = defer();
         var promise = deferrable.promise;
         promise.then(function () {
-            start();
+            (typeof done === 'function' ? done : start)();
         }, function (reason) {
             strictEqual(reason, expected);
-            start();
+            (typeof done === 'function' ? done : start)();
         });
         deferrable.reject(expected);
     });
@@ -41,9 +41,9 @@ define(['app/defer'], function(defer) {
             return value + expectedPart2;
         }).then(function (value) {
             strictEqual(value, expected);
-            start();
+            (typeof done === 'function' ? done : start)();
         }, function () {
-            start();
+            (typeof done === 'function' ? done : start)();
         });
         deferrable.resolve(expectedPart1);
     });
@@ -56,10 +56,10 @@ define(['app/defer'], function(defer) {
             throw 'error';
             return value;
         }).then(function () {
-            start();
+            (typeof done === 'function' ? done : start)();
         }, function () {
             ok(true);
-            start();
+            (typeof done === 'function' ? done : start)();
         });
         deferrable.resolve('unexpected');
     });

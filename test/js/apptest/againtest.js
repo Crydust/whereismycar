@@ -21,10 +21,10 @@ define(['app/again', 'app/defer'], function(again, defer) {
         wrappedFunc().then(function () {
             equal(counter, 0, 'zero remaining');
             ok(true, 'done recieved');
-            start();
+            (typeof done === 'function' ? done : start)();
         }, function () {
             ok(false, 'unexpected');
-            start();
+            (typeof done === 'function' ? done : start)();
         });
     });
     
@@ -46,11 +46,11 @@ define(['app/again', 'app/defer'], function(again, defer) {
         var wrappedFunc = again(funcToRun, 3);
         wrappedFunc().then(function () {
             ok(false, 'done recieved unexpected');
-            start();
+            (typeof done === 'function' ? done : start)();
         }, function () {
             equal(counter, 7, 'seven remaining');
             ok(true, 'not done, as expected');
-            start();
+            (typeof done === 'function' ? done : start)();
         });
     });
     
