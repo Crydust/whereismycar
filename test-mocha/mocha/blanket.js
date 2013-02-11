@@ -4445,7 +4445,7 @@ if (typeof window["__blanket_old_define"] !== "undefined"){
     window["define"] = window["__blanket_old_define"];
 }
 blanket.defaultReporter = function(coverage){
-    var cssSytle = "#blanket-main {margin:2px;background:#D2E0E6;color:#528CE0;clear:both;font-family: 'Helvetica Neue Light', 'HelveticaNeue-Light', 'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;} #blanket-main a {color:#333;text-decoration:none;}  #blanket-main a:hover {text-decoration:underline;} .blanket {margin:0;padding:5px;clear:both;border-bottom: 1px solid #FFFFFF;} .bl-error {color: #000000; background-color: #EE5757;}.bl-success {color:#5E7D00;} .bl-file{width:auto;} .bl-cl{float:left;} .blanket div.rs {margin-left:50px; width:150px; float:right} .bl-nb {padding-right:10px;width:2.5em;font-weight:normal;display: inline-block;text-align:right;} #blanket-main a.bl-logo {color: #EB1764;cursor: pointer;font-weight: bold;text-decoration: none} .bl-source{ overflow-x:scroll; background-color: #FFFFFF; border: 1px solid #CBCBCB; color: #363636; margin: 25px 20px; width: 80%;} .bl-source div{white-space: pre;font-family: monospace;} .bl-source > div > span:first-child{background-color: #EAEAEA;color: #949494;display: inline-block;padding: 0 10px;text-align: center;width: 30px;} .bl-source .miss{background-color:#e6c3c7} .bl-source span.branchWarning{color:#000;background-color:yellow;} .bl-source span.branchOkay{color:#000;background-color:transparent;} .bl-cl {font-size: small; font-weight: bold;}",
+    var cssSytle = "#blanket-main {margin:2px;background:#EEE;color:#333;clear:both;font-family:'Helvetica Neue Light', 'HelveticaNeue-Light', 'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif; font-size:17px;} #blanket-main a {color:#333;text-decoration:none;}  #blanket-main a:hover {text-decoration:underline;} .blanket {margin:0;padding:5px;clear:both;border-bottom: 1px solid #FFFFFF;} .bl-error {color:red;}.bl-success {color:#5E7D00;} .bl-file{width:auto;} .bl-cl{float:left;} .blanket div.rs {margin-left:50px; width:150px; float:right} .bl-nb {padding-right:10px;} #blanket-main a.bl-logo {color: #EB1764;cursor: pointer;font-weight: bold;text-decoration: none} .bl-source{ overflow-x:scroll; background-color: #FFFFFF; border: 1px solid #CBCBCB; color: #363636; margin: 25px 20px; width: 80%;} .bl-source div{white-space: pre;font-family: monospace;} .bl-source > div > span:first-child{background-color: #EAEAEA;color: #949494;display: inline-block;padding: 0 10px;text-align: center;width: 30px;} .bl-source .miss{background-color:#e6c3c7} .bl-source span.branchWarning{color:#000;background-color:yellow;} .bl-source span.branchOkay{color:#000;background-color:transparent;}",
         successRate = 60,
         head = document.head,
         fileNumber = 0,
@@ -4591,29 +4591,9 @@ blanket.defaultReporter = function(coverage){
             return typeof item !== 'undefined';
       };
 
-    var normalizeFileName = function (filename) {
-        var current = '';
-        var next = filename;
-        while (next !== current) {
-            current = next;
-            next = next
-                .replace(/\/\w+\/\.\.\//, '/')
-                .replace(/\/\.\//, '/')
-                .replace(/\?.*$/, '');
-        }
-        return next;
-    };
-    var sortedFileNames = Object.keys(coverage.files).sort(function(a, b){
-        var an = normalizeFileName(a);
-        var bn = normalizeFileName(b);
-        return an < bn ? -1 : an > bn ? 1 : 0;
-    });
-    
     var files = coverage.files;
-    for(var l=0, len=sortedFileNames.length; l<len; l++) {
-        var file = sortedFileNames[l];
-    //for(var file in files)
-    //{
+    for(var file in files)
+    {
         fileNumber++;
 
         var statsForFile = files[file],
@@ -4678,7 +4658,7 @@ blanket.defaultReporter = function(coverage){
         }
         var result = percentage(numberOfFilesCovered, totalSmts);
 
-        var output = fileTemplate.replace("{{file}}", normalizeFileName(file))
+        var output = fileTemplate.replace("{{file}}", file)
                                  .replace("{{percentage}}",result)
                                  .replace("{{numberCovered}}", numberOfFilesCovered)
                                  .replace(/\{\{fileNumber\}\}/g, fileNumber)
@@ -4862,6 +4842,7 @@ requirejs.load = function (context, moduleName, url) {
                         //to completeLoad or the error might be
                         //missed.
                         context.completeLoad(moduleName);
+                        _blanket.requiringFile(url,true);
                     }else{
                         throw new Error("Error parsing instrumented code: "+err);
                     }

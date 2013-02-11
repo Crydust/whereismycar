@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <title>QUnit Test Suite</title>
     <link rel="stylesheet" href="qunit/qunit.css">
     <script src="qunit/qunit.js"></script>
-    <script src="mocha/chai.js"></script>
-    <script src="mocha/fixtures.js"></script>
+    <script src="qunit/qunit-close-enough.js"></script>
     <script src="../src/js/vendor/require.js"></script>
     <script>
-    fixtures.path = './fixtures';
-    var suite = module;
-    var assert = chai.assert;
+    QUnit.config.autostart = false;
+    QUnit.config.requireExpects = true;
     
     (function removeEvent(elem, type, fn) {
         if (elem.removeEventListener) {
@@ -21,17 +19,14 @@
         }
     }(window, 'load', QUnit.load));
     
-    require.config({
+    require({
         baseUrl: '../src/js/vendor',
         paths: {
             'app': '../app',
-            'apptest': '../../../test/js/apptest'
+            'apptest': '../../../test-qunit/js/apptest'
         },
-        urlArgs: "bust=" + (+new Date())
-    });
-
-    require(['apptest/suite', 'domReady!'], function(){
-        QUnit.config.autostart = false;
+        urlArgs: 'bust=' + (+new Date())
+    }, ['apptest/suite', 'domReady!'], function(){
         QUnit.load();
         QUnit.start();
     });

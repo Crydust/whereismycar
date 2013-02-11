@@ -4591,29 +4591,9 @@ blanket.defaultReporter = function(coverage){
             return typeof item !== 'undefined';
       };
 
-    var normalizeFileName = function (filename) {
-        var current = '';
-        var next = filename;
-        while (next !== current) {
-            current = next;
-            next = next
-                .replace(/\/\w+\/\.\.\//, '/')
-                .replace(/\/\.\//, '/')
-                .replace(/\?.*$/, '');
-        }
-        return next;
-    };
-    var sortedFileNames = Object.keys(coverage.files).sort(function(a, b){
-        var an = normalizeFileName(a);
-        var bn = normalizeFileName(b);
-        return an < bn ? -1 : an > bn ? 1 : 0;
-    });
-    
     var files = coverage.files;
-    for(var l=0, len=sortedFileNames.length; l<len; l++) {
-        var file = sortedFileNames[l];
-    //for(var file in files)
-    //{
+    for(var file in files)
+    {
         fileNumber++;
 
         var statsForFile = files[file],
@@ -4678,7 +4658,7 @@ blanket.defaultReporter = function(coverage){
         }
         var result = percentage(numberOfFilesCovered, totalSmts);
 
-        var output = fileTemplate.replace("{{file}}", normalizeFileName(file))
+        var output = fileTemplate.replace("{{file}}", file)
                                  .replace("{{percentage}}",result)
                                  .replace("{{numberCovered}}", numberOfFilesCovered)
                                  .replace(/\{\{fileNumber\}\}/g, fileNumber)
@@ -4862,6 +4842,7 @@ requirejs.load = function (context, moduleName, url) {
                         //to completeLoad or the error might be
                         //missed.
                         context.completeLoad(moduleName);
+                        _blanket.requiringFile(url,true);
                     }else{
                         throw new Error("Error parsing instrumented code: "+err);
                     }

@@ -13,7 +13,7 @@ module.exports = function(grunt) {
         qunit: {
             all: {
                 options: {
-                    urls: ['http://localhost:8888/test/index.html?noglobals=true']
+                    urls: ['http://localhost:8888/test-qunit/qunit-runner.html?noglobals=true']
                 }
             }
         },
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
             files: [
                 'GruntFile.js',
                 'src/**/*.html', 'src/**/*.htm', 'src/**/*.js', 'src/**/*.css',
-                'test/**/*.html', 'test/**/*.htm', 'test/**/*.js', 'test/**/*.css'
+                'test-*/**/*.html', 'test-*/**/*.htm', 'test-*/**/*.js', 'test-*/**/*.css'
             ],
             tasks: ['jshint', 'reload']
         },
@@ -70,9 +70,9 @@ module.exports = function(grunt) {
             test: {
                 minimum: 0.01,
                 srcDir: 'src',
-                depDirs: ['test'],
+                depDirs: ['test-qunit'],
                 outDir: 'testResults',
-                testFiles: ['test/index.html']
+                testFiles: ['test-qunit/qunit-runner.html']
             }
         }
     });

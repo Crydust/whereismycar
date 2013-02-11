@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>QUnit Test Suite</title>
+    <link rel="stylesheet" href="qunit/qunit.css">
+    <script src="qunit/qunit.js"></script>
+    <script src="qunit/chai-qunit.js"></script>
+    <script src="mocha/fixtures.js"></script>
+    <script src="../src/js/vendor/require.js"></script>
+    <script>
+    fixtures.path = './fixtures';
+    var suite = module;
+    var assert = chai.assert;
+    
+    (function removeEvent(elem, type, fn) {
+        if (elem.removeEventListener) {
+            elem.removeEventListener(type, fn, false);
+        } else {
+            elem.detachEvent('on' + type, fn);
+        }
+    }(window, 'load', QUnit.load));
+    
+    require.config({
+        baseUrl: '../src/js/vendor',
+        paths: {
+            'app': '../app',
+            'apptest': '../../../test-qunitmochahybrid/js/apptest'
+        },
+        urlArgs: "bust=" + (+new Date())
+    });
+
+    require(['apptest/suite', 'domReady!'], function(){
+        QUnit.config.autostart = false;
+        QUnit.load();
+        QUnit.start();
+    });
+    </script>
+    <script src="qunit/blanket.js"></script>
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture">
+<span id="dummy"></span>
+</div>
+</body>
+</html>
+
