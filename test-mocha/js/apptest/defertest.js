@@ -2,7 +2,7 @@ define(['app/defer'], function(defer) {
 
     suite('defer');
 
-    test('resolve', function(){
+    test('resolve', function(done){
         var expected = 'expected';
         var deferrable = defer();
         var promise = deferrable.promise;
@@ -15,7 +15,7 @@ define(['app/defer'], function(defer) {
         deferrable.resolve(expected);
     });
 
-    test('reject', function(){
+    test('reject', function(done){
         var expected = 'expected';
         var deferrable = defer();
         var promise = deferrable.promise;
@@ -28,7 +28,7 @@ define(['app/defer'], function(defer) {
         deferrable.reject(expected);
     });
     
-    test('chain', function(){
+    test('chain', function(done){
         var expectedPart1 = 'expectedPart1';
         var expectedPart2 = 'expectedPart1';
         var expected = expectedPart1 + expectedPart2;
@@ -45,7 +45,7 @@ define(['app/defer'], function(defer) {
         deferrable.resolve(expectedPart1);
     });
     
-    test('throw', function(){
+    test('throw', function(done){
         var deferrable = defer();
         var promise = deferrable.promise;
         promise.then(function (value) {
