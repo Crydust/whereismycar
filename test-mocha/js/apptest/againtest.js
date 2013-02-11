@@ -2,7 +2,7 @@ define(['app/again', 'app/defer'], function(again, defer) {
 
     suite('again');
 
-    test('sucess', function(done){
+    test('success', function(done){
         var counter = 2;
         var funcToRun = function(){
             var deferred = defer();

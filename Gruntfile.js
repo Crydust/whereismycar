@@ -55,7 +55,9 @@ module.exports = function(grunt) {
             files: [
                 'GruntFile.js',
                 'src/**/*.html', 'src/**/*.htm', 'src/**/*.js', 'src/**/*.css',
-                'test-*/**/*.html', 'test-*/**/*.htm', 'test-*/**/*.js', 'test-*/**/*.css'
+                'test-qunit/**/*.html', 'test-qunit/**/*.htm', 'test-qunit/**/*.js', 'test-qunit/**/*.css',
+                'test-mocha/**/*.html', 'test-mocha/**/*.htm', 'test-mocha/**/*.js', 'test-mocha/**/*.css',
+                'test-jasmine/**/*.html', 'test-jasmine/**/*.htm', 'test-jasmine/**/*.js', 'test-jasmine/**/*.css',
             ],
             tasks: ['jshint', 'reload']
         },

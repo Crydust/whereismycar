@@ -2,17 +2,17 @@ define(['app/again', 'app/defer'], function(again, defer) {
 
     module('again');
 
-    test('sucess', 4, function(){
+    test('success', 4, function(){
         stop();
         var counter = 2;
         var funcToRun = function(){
             var deferred = defer();
             counter--;
             if (counter <= 0) {
-                ok(true, 'not done yet');
+                ok(true, 'done');
                 deferred.resolve(true);
             } else {
-                ok(true, 'done');
+                ok(true, 'not done yet');
                 deferred.reject(false);
             }
             return deferred.promise;

@@ -2,7 +2,7 @@ define(['app/again', 'app/defer'], function(again, defer) {
 
     module('again');
 
-    test('sucess', 4, function(){
+    test('success', 4, function(){
         stop();
         var counter = 2;
         var funcToRun = function(){

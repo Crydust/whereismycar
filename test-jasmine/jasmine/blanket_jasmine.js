@@ -1,6 +1,5 @@
 /*! blanket - v1.0.5 */ 
 
-if (typeof QUnit !== 'undefined'){ QUnit.config.autostart = false; }
 /*
   Copyright (C) 2012 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2012 Mathias Bynens <mathias@qiwi.be>
@@ -4959,79 +4958,90 @@ requirejs.cget = function (url, callback, errback, onXhr) {
 };
 })(blanket);
 
-(function(){
-if (typeof QUnit !== 'undefined'){
-    //check to make sure requirejs is completed before we start the test runner
-    var allLoaded = function() {
-        return window.QUnit.config.queue.length > 0 && blanket.noConflict().requireFilesLoaded();
+(function() {
+
+    if (! jasmine) {
+        throw new Exception("jasmine library does not exist in global namespace!");
+    }
+
+    function elapsed(startTime, endTime) {
+        return (endTime - startTime)/1000;
+    }
+
+    function ISODateString(d) {
+        function pad(n) { return n < 10 ? '0'+n : n; }
+
+        return d.getFullYear() + '-' +
+            pad(d.getMonth()+1) + '-' +
+            pad(d.getDate()) + 'T' +
+            pad(d.getHours()) + ':' +
+            pad(d.getMinutes()) + ':' +
+            pad(d.getSeconds());
+    }
+
+    function trim(str) {
+        return str.replace(/^\s+/, "" ).replace(/\s+$/, "" );
+    }
+
+    function escapeInvalidXmlChars(str) {
+        return str.replace(/\&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/\>/g, "&gt;")
+            .replace(/\"/g, "&quot;")
+            .replace(/\'/g, "&apos;");
+    }
+
+    /**
+     * based on https://raw.github.com/larrymyers/jasmine-reporters/master/src/jasmine.junit_reporter.js
+     */
+    var BlanketReporter = function(savePath, consolidate, useDotNotation) {
+        
+        blanket.setupCoverage();
+    };
+    BlanketReporter.finished_at = null; // will be updated after all files have been written
+
+    BlanketReporter.prototype = {
+        reportSpecStarting: function(spec) {
+            blanket.onTestStart();
+        },
+
+        reportSpecResults: function(suite) {
+            var results = suite.results();
+
+            blanket.onTestDone(results.totalCount,results.passed());
+        },
+
+        reportRunnerResults: function(runner) {
+            blanket.onTestsDone();
+        },
+
+        log: function(str) {
+            var console = jasmine.getGlobal().console;
+
+            if (console && console.log) {
+                console.log(str);
+            }
+        }
     };
 
-    if (!QUnit.config.urlConfig[0].tooltip){
-        //older versions we run coverage automatically
-        //and we change how events are binded
-        QUnit.begin=function(){
-            blanket.noConflict().setupCoverage();
-        };
-        
-        QUnit.done=function(failures, total) {
-            blanket.noConflict().onTestsDone();
-        };
-        QUnit.moduleStart=function( details ) {
-            blanket.noConflict().onModuleStart();
-        };
-        QUnit.testStart=function( details ) {
-            blanket.noConflict().onTestStart();
-        };
-        QUnit.testDone=function( details ) {
-            blanket.noConflict().onTestDone(details.total,details.passed);
-        };
-        blanket.beforeStartTestRunner({
-            condition: allLoaded,
-            callback: QUnit.start
-        });
-    }else{
-        QUnit.config.urlConfig.push({
-            id: "coverage",
-            label: "Enable coverage",
-            tooltip: "Enable code coverage."
-        });
+
+    // export public
+    jasmine.BlanketReporter = BlanketReporter;
+
+    //override existing jasmine execute
+    jasmine.getEnv().execute = function(){ console.log("waiting for blanket..."); };
     
-        if ( QUnit.urlParams.coverage || blanket.options("autoStart") ) {
-            QUnit.begin(function(){
-                blanket.noConflict().setupCoverage();
-            });
-            
-            QUnit.done(function(failures, total) {
-                blanket.noConflict().onTestsDone();
-            });
-            QUnit.moduleStart(function( details ) {
-                blanket.noConflict().onModuleStart();
-            });
-            QUnit.testStart(function( details ) {
-                blanket.noConflict().onTestStart();
-            });
-            QUnit.testDone(function( details ) {
-                blanket.noConflict().onTestDone(details.total,details.passed);
-            });
-            blanket.noConflict().beforeStartTestRunner({
-                condition: allLoaded,
-                callback: function(){
-                    if (!(blanket.options("existingRequireJS") && !blanket.options("autoStart"))){
-                        QUnit.start();
-                    }
-                }
-            });
-        }else{
-            blanket.noConflict().beforeStartTestRunner({
-                condition: allLoaded,
-                callback: function(){
-                    if (!(blanket.options("existingRequireJS") && !blanket.options("autoStart"))){
-                        QUnit.start();
-                    }
-                },
-                coverage:false
-            });
-        }
-    }
-}
+    //check to make sure requirejs is completed before we start the test runner
+    var allLoaded = function() {
+        return window.jasmine.getEnv().currentRunner().specs().length > 0 && blanket.requireFilesLoaded();
+    };
+
+    blanket.beforeStartTestRunner({
+        checkRequirejs:true,
+        condition: allLoaded,
+        callback:function(){
+            jasmine.getEnv().addReporter(new jasmine.BlanketReporter());
+            window.jasmine.getEnv().currentRunner().execute();
+            jasmine.getEnv().execute = jasmine.getEnv().currentRunner().execute;     }
+    });
 })();
