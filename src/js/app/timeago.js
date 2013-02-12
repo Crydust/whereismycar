@@ -41,9 +41,6 @@ define([], function () {
      * @return {number} milliseconds
      */
     function distance(date, now) {
-        if (date === null) {
-            return null;
-        }
         return (now.getTime() - date.getTime());
     }
 

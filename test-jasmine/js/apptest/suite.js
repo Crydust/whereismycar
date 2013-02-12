@@ -4,8 +4,8 @@ define([/*'./geometrytest',
     './defertest',
     './domtest',
     './geographytest',
-    './stringstest',
-    './timeagotest',*/
+    './stringstest',*/
+    './timeagotest',
     './againtest'], function() {
     return {};
 });

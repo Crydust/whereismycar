@@ -32,7 +32,7 @@ define(['app/again', 'app/defer'], function(again, defer) {
             });
         });
 
-        it('three times, no more, no less', function() {
+        it('should try no more than three times', function() {
             var isDone = false;
             var counter = 10;
             runs(function() {
