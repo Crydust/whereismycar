@@ -52,14 +52,20 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            files: [
-                'GruntFile.js',
-                'src/**/*.html', 'src/**/*.htm', 'src/**/*.js', 'src/**/*.css',
-                'test-qunit/**/*.html', 'test-qunit/**/*.htm', 'test-qunit/**/*.js', 'test-qunit/**/*.css',
-                'test-mocha/**/*.html', 'test-mocha/**/*.htm', 'test-mocha/**/*.js', 'test-mocha/**/*.css',
-                'test-jasmine/**/*.html', 'test-jasmine/**/*.htm', 'test-jasmine/**/*.js', 'test-jasmine/**/*.css',
-            ],
-            tasks: ['jshint', 'reload']
+            dev: {
+                files: [
+                    'GruntFile.js',
+                    'src/**/*.html', 'src/**/*.htm', 'src/**/*.js', 'src/**/*.css',
+                    'test-qunit/**/*.html', 'test-qunit/**/*.htm', 'test-qunit/**/*.js', 'test-qunit/**/*.css',
+                    'test-mocha/**/*.html', 'test-mocha/**/*.htm', 'test-mocha/**/*.js', 'test-mocha/**/*.css',
+                    'test-jasmine/**/*.html', 'test-jasmine/**/*.htm', 'test-jasmine/**/*.js', 'test-jasmine/**/*.css',
+                ],
+                tasks: ['jshint', 'reload']
+            },
+            devts: {
+                files: ['src/ts/**/*.ts'],
+                tasks: ['typescript', 'reload']
+            }
         },
         reload: {
             port: 6001,
@@ -76,6 +82,19 @@ module.exports = function(grunt) {
                 outDir: 'testResults',
                 testFiles: ['test-qunit/qunit-runner.html']
             }
+        },
+        typescript: {
+            base: {
+                src: ['src/ts/**/*.ts'],
+                dest: 'src/ts',
+                options: {
+                    module: 'amd', //or commonjs
+                    target: 'es3', //or es5
+                    base_path: 'src/ts',
+                    sourcemap: true,
+                    declaration: true
+                }
+            }
         }
     });
 
@@ -86,6 +105,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-reload');
     grunt.loadNpmTasks('grunt-qunit-cov');
+    grunt.loadNpmTasks('grunt-typescript');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
@@ -119,6 +139,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['jshint', 'test']);
     grunt.registerTask('publish', ['default', 'requirejs:compile', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('publishAlmond', ['default', 'requirejs:compile', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
-    grunt.registerTask('dev', ['connect:server', 'reload', 'watch']);
+    grunt.registerTask('dev', ['connect:server', 'reload', 'watch:dev']);
+    grunt.registerTask('devts', ['connect:server', 'reload', 'watch:devts']);
     
 };

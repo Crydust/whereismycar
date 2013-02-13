@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Where is my car</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="dns-prefetch" href="http://maps.googleapis.com" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!--
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="icon-ipad.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="icon-iphone4.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="icon-iphone.png" />
+        <link rel="apple-touch-startup-image" href="startup-image.png">
+        -->
+    </head>
+    <body>
+        <!--
+        <object id="radar" type="image/svg+xml" data="img/radar.svg" width="320" height="320"></object>
+        -->
+        <table>
+            <colgroup>
+                <col style="width: 152px;" />
+                <col style="width: 152px;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Current</th>
+                    <th id="stored_position_timestamp"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <img id="current_position_img" class="position" width="160" height="104" alt="" src="img/spacer.gif" />
+                    </td>
+                    <td>
+                        <img id="stored_position_img" class="position" width="160" height="104" alt="" src="img/spacer.gif" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="current_position_formatted_address"></td>
+                    <td id="stored_position_formatted_address"></td>
+                </tr>
+            </tbody>
+        </table>
+        <p><a href="#" id="update_current_location_button" class="action action-reload">reload</a><a href="#" id="store_current_location_button" class="action action-save">save</a></p>
+        <!--
+        <p><a href="#" id="get_walking_directions_button">Get walking directions</a></p>
+        -->
+        <!--
+        <object id="compass" type="image/svg+xml" data="img/compass.svg" width="200" height="330"></object>
+        -->
+        <pre id="debug_output" class="debug_output"></pre>
+        
+        <!-- scripts concatenated and minified via ant build script-->
+        <script data-main="js/main.js" src="js/vendor/require.js"></script>
+        <!-- end scripts-->
+    </body>
+</html>
