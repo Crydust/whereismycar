@@ -1,4 +1,4 @@
-define(['./defer', './objects', './dom', './model', './timeago'], function (defer, objects, dom, model, timeago) {
+define(['./defer', './objects', './dom', './model', './timeago', './geography'], function (defer, objects, dom, model, timeago, geography) {
     'use strict';
     
     var win = window;
@@ -60,7 +60,17 @@ define(['./defer', './objects', './dom', './model', './timeago'], function (defe
             }
 
             //compass
-            //TODO
+            if (currentData.stored.latitude !== newData.stored.latitude ||
+                    currentData.stored.longitude !== newData.stored.longitude ||
+                    currentData.current.latitude !== newData.current.latitude ||
+                    currentData.current.longitude !== newData.current.longitude) {
+                var storedLatLng = new geography.LatLng(newData.stored.latitude, newData.stored.longitude);
+                var currentLatLng = new geography.LatLng(newData.current.latitude, newData.current.longitude);
+                var distance = geography.computeDistanceBetween(currentLatLng, storedLatLng);
+                var heading = geography.computeHeading(currentLatLng, storedLatLng);
+                var direction = geography.computeCompassDirection(heading);
+                dom.byId('direction_current_to_stored').innerHTML = distance + 'm ' + direction;
+            }
 
             currentData = newData;
             deferred.resolve(true);

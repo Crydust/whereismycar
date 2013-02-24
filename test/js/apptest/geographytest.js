@@ -51,6 +51,21 @@ define(['app/geography'], function(geography) {
         QUnit.close(geography.computeHeading(marcusGaveyPark, newYorkPublicLibrary), 208, 5);
     });
     
+    test('computeCompassDirection', 13, function(){
+        equal(geography.computeCompassDirection(0), 'North');
+        equal(geography.computeCompassDirection(90), 'East');
+        equal(geography.computeCompassDirection(180), 'South');
+        equal(geography.computeCompassDirection(270), 'West');
+        equal(geography.computeCompassDirection(45), 'Northeast');
+        equal(geography.computeCompassDirection(135), 'Southeast');
+        equal(geography.computeCompassDirection(225), 'Southwest');
+        equal(geography.computeCompassDirection(315), 'Northwest');
+        equal(geography.computeCompassDirection(-1), 'North');
+        equal(geography.computeCompassDirection(1), 'North');
+        equal(geography.computeCompassDirection(359), 'North');
+        equal(geography.computeCompassDirection(360), 'North');
+        equal(geography.computeCompassDirection(405), 'Northeast');
+    });
     
     return {};
 

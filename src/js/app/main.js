@@ -6,13 +6,14 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
         if (objects.betterTypeof(message) !== 'string') {
             message = JSON3.stringify(message, null, 4);
         }
-        dom.byId('debug_output').innerHTML = message;
+        dom.byId('debug_output').innerHTML += message;
         window.console.log(message);
         //>>excludeEnd("prod");
     }
     
     function main() {
         var data = model.get();
+        view.update(data);
         var isLoading = false;
         
         function updatePosition() {
@@ -46,18 +47,15 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
                 data.current.img = google.staticImageUrl(latlng);
                 //log(data);
             });
-
-            // 3. show distance and heading
             
-            
-            // 4. do reverse geolocation
+            // do reverse geolocation
             latlngPromise
             .then(google.reverseGeocode)
             .then(function (address) {
                 data.current.address = address;
                 //log(data);
                 view.update(data);
-                dom.byId('debug_output').innerHTML = 'Done.\n';
+                dom.byId('debug_output').innerHTML += 'Done.\n';
                 
                 isLoading = false;
             }, function (reason) {

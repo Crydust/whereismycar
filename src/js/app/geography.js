@@ -95,10 +95,15 @@ define(['./geometry'], function (geometry) {
         return (toDeg(brng) + 360) % 360;
     }
     
+    function computeCompassDirection(angle) {
+        return ['North', 'Northeast', 'East', 'Southeast', 'South', 'Southwest', 'West', 'Northwest'][Math.floor(((angle + 22.5) % 360) / 45)];
+    }
+    
     return {
         'LatLng': LatLng,
         'computeDistanceBetween': computeDistanceBetween,
-        'computeHeading': computeHeading
+        'computeHeading': computeHeading,
+        'computeCompassDirection': computeCompassDirection
     };
 
 });

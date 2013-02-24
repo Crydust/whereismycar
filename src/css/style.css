@@ -18,12 +18,12 @@ th {
 .position {
     vertical-align: bottom;
     background: #EAE6DC url("../img/checkered.png");
-    /*
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAJ0lEQVR4XsWOsQ0AAAjCwK/8P9GzdBBf0C4lTGVgcNmwnB4sjfztaAcBAuQ/nn/hAAAAAElFTkSuQmCC");
-    */
+}
+.direction {
+    color: #999;
 }
 .action {
-	background-image: url("../img/sprite.png");
+    background-image: url("../img/sprite.png");
     background-clip: content-box;
     background-origin: content-box;
     background-repeat: no-repeat;
@@ -35,10 +35,10 @@ th {
     text-indent: -500px;
 }
 .action-reload {
-	background-position: 0 0;
+    background-position: 0 0;
 }
 .action-save {
-	background-position: -64px 0;
+    background-position: -64px 0;
 }
 .debug_output {
     font-size: 10px;
