@@ -1,4 +1,6 @@
-module.exports = function(grunt) {
+/*global module:false */
+module.exports = function (grunt) {
+    'use strict';
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -13,7 +15,7 @@ module.exports = function(grunt) {
         qunit: {
             all: {
                 options: {
-                    urls: ['http://localhost:8888/test-qunit/qunit-runner.html?noglobals=true']
+                    urls: ['http://localhost:8888/test/index.html']
                 }
             }
         },
@@ -21,7 +23,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '.jshintrc'
             },
-            files: ['grunt.js', 'src/js/*.js', 'src/js/app/**/*.js']
+            files: ['Gruntfile.js', 'src/js/*.js', 'src/js/app/**/*.js']
         },
         requirejs: {
             compile: {
@@ -54,17 +56,11 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: [
-                    'GruntFile.js',
-                    'src/**/*.html', 'src/**/*.htm', 'src/**/*.js', 'src/**/*.css',
-                    'test-qunit/**/*.html', 'test-qunit/**/*.htm', 'test-qunit/**/*.js', 'test-qunit/**/*.css',
-                    'test-mocha/**/*.html', 'test-mocha/**/*.htm', 'test-mocha/**/*.js', 'test-mocha/**/*.css',
-                    'test-jasmine/**/*.html', 'test-jasmine/**/*.htm', 'test-jasmine/**/*.js', 'test-jasmine/**/*.css',
+                    'Gruntfile.js',
+                    'src/**/*.html', 'src/**/*.js', 'src/**/*.css',
+                    'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
                 ],
                 tasks: ['jshint', 'reload']
-            },
-            devts: {
-                files: ['src/ts/**/*.ts'],
-                tasks: ['typescript', 'reload']
             }
         },
         reload: {
@@ -78,22 +74,9 @@ module.exports = function(grunt) {
             test: {
                 minimum: 0.01,
                 srcDir: 'src',
-                depDirs: ['test-qunit'],
+                depDirs: ['test'],
                 outDir: 'testResults',
-                testFiles: ['test-qunit/qunit-runner.html']
-            }
-        },
-        typescript: {
-            base: {
-                src: ['src/ts/**/*.ts'],
-                dest: 'src/ts',
-                options: {
-                    module: 'amd', //or commonjs
-                    target: 'es3', //or es5
-                    base_path: 'src/ts',
-                    sourcemap: true,
-                    declaration: true
-                }
+                testFiles: ['test/index.html']
             }
         }
     });
@@ -105,12 +88,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-reload');
     grunt.loadNpmTasks('grunt-qunit-cov');
-    grunt.loadNpmTasks('grunt-typescript');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
             var crypto = require('crypto');
-            var hash = crypto.createHash('md5');
             var text = grunt.file.read(dir + '/' + from);
             var hash = crypto.createHash('md5');
             hash.update(text);
@@ -135,11 +116,11 @@ module.exports = function(grunt) {
         grunt.file.write('publish/index.html', replacement);
     });
     
-    grunt.registerTask('test', ['connect:server', 'qunit:all', 'qunit-cov']);
+    grunt.registerTask('test', ['connect:server', 'qunit:all']);
+    grunt.registerTask('testCov', ['test', 'qunit-cov']);
     grunt.registerTask('default', ['jshint', 'test']);
     grunt.registerTask('publish', ['default', 'requirejs:compile', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('publishAlmond', ['default', 'requirejs:compile', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('dev', ['connect:server', 'reload', 'watch:dev']);
-    grunt.registerTask('devts', ['connect:server', 'reload', 'watch:devts']);
     
 };

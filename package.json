@@ -14,16 +14,14 @@
   "readmeFilename": "README.txt",
   "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.4.0rc7",
-    "grunt-contrib-requirejs": "~0.4.0rc7",
+    "grunt": "~0.4.0",
+    "grunt-contrib-requirejs": "~0.4.0",
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-watch": "~0.2.0rc7",
     "grunt-contrib-qunit": "~0.1.1rc6",
-    "grunt-contrib-uglify": "~0.1.0",
     "grunt-contrib-connect": "~0.1.0",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
-    "grunt-qunit-cov": "git://github.com/Crydust/grunt-qunit-cov.git",
-    "grunt-typescript": "0.0.9"
+    "grunt-qunit-cov": "git://github.com/Crydust/grunt-qunit-cov.git"
   },
   "amd": {},
   "volo": {
