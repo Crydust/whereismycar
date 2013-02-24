@@ -14,9 +14,14 @@ define(['./defer', './network', './geography'], function (defer, network, geogra
         return deferred.promise;
     }
 
+    var reverseGeocodeTime = 0;
     function reverseGeocode(latlng) {
         var deferred = defer();
-        if (latlng instanceof geography.LatLng) {
+        var currentTime = new Date().getTime();
+        if (currentTime - reverseGeocodeTime < 5000) {
+            deferred.reject(new Error('Calling reverseGeocode too soon'));
+        } else if (latlng instanceof geography.LatLng) {
+            reverseGeocodeTime = currentTime;
             // it seems this url no longer returns a jsonp reply
             // so we use a proxy
             //var url = 'http://maps.google.com/maps/geo'

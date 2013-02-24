@@ -26,7 +26,8 @@ define(['store', './objects'], function (store, objects) {
         'compass': null, //compass heading deg
         'updateViewCount': 0,
         'updateImageCount': 0,
-        'updateAdressCount': 0
+        'updateAdressCount': 0,
+        'status': ''
     };
     
     var defaults = objects.copy(model);
