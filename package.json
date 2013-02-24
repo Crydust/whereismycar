@@ -1,0 +1,38 @@
+{
+  "name": "whereismycar",
+  "version": "0.0.0",
+  "description": "An HTML 5 \"where is my car\" application that stores your current location and helps you get back to a previously stored location.",
+  "author": {
+    "name": "Kristof Neirynck"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "readmeFilename": "README.txt",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-contrib-jshint": "~0.1.0",
+    "grunt-contrib-watch": "~0.2.0rc7",
+    "grunt-contrib-qunit": "~0.1.1rc6",
+    "grunt-contrib-connect": "~0.1.0",
+    "grunt-reload": "git://github.com/webxl/grunt-reload.git",
+    "grunt-qunit-cov": "git://github.com/Crydust/grunt-qunit-cov.git"
+  },
+  "amd": {},
+  "volo": {
+    "baseUrl": "src/js/vendor",
+    "dependencies": {
+      "require": "github:jrburke/requirejs/2.1.4",
+      "almond": "github:jrburke/almond/0.2.3",
+      "domReady": "github:requirejs/domReady/2.0.1",
+      "json3": "github:bestiejs/json3/v3.2.4",
+      "promises-a": "github:ForbesLindesay/promises-a/2.3.0",
+      "store": "github:marcuswestin/store.js/v1.3.6"
+    }
+  }
+}

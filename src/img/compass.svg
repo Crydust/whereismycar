@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200px" height="330px" viewBox="0 0 200 330" version="1.1">
+<rect x="2px" y="2px" width="196px" height="326px" fill="#FFF" stroke="#000" stroke-width="4px"/>
+<g fill="none" stroke="#000" stroke-width="4px">
+<path d="m13,0v12m12-12v12m12-12v12m26-12v12m12-12v12m12-12v12m26-12v12m12-12v12m12-12v12m26-12v12m12-12v12m12-12v12"/>
+<path d="m50,0v25m0,15v110m0,158v20"/>
+<path d="m100,0v25"/>
+<path d="m150,0v25m0,15v110m0,158v20"/>
+</g>
+<path d="m100,137v-93m-12,23,12-23,12,23" fill="none" stroke="#F00" stroke-width="8px"/>
+<g id="dial">
+<path d="m100,140a90,90,0,0,0,0,180a90,90,0,0,0,0-180m0,30a60,60,0,0,1,0,120a60,60,0,0,1,0-120" fill="#11A" stroke="none"/>
+<g font-family="sans-serif" font-size="20px" fill="#FFF" stroke="none">
+<text x="93px" y="162px">N</text>
+<text x="168px" y="240px">E</text>
+<text x="93px" y="312px">S</text>
+<text x="17px" y="240px">W</text>
+</g>
+<g fill="none" stroke="#000" stroke-width="2px">
+<path d="m44,210v40"/>
+<path d="m63,184v92"/>
+<path d="m82,175v111"/>
+<path d="m118,175v111"/>
+<path d="m137,184v92"/>
+<path d="m156,210v40"/>
+</g>
+<g fill="none" stroke="#F00" stroke-width="4px">
+<path d="m93,179v109h14v-109"/>
+<path d="m84,185,16-13,16,13"/>
+</g>
+</g>
+<g id="needle">
+<path d="m96,230v50l4,4,4-4v-50h-8" fill="#FFF" stroke="#000" stroke-width="2px"/>
+<path d="m96,230v-50l4-4,4,4v50h-8" fill="#F00" stroke="#000" stroke-width="2px"/>
+<circle cx="100px" cy="230px" r="4px" fill="#FFF" stroke="#000" stroke-width="2px"/>
+</g>
+</svg>

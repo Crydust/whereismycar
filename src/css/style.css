@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+th, td {
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+th {
+    text-align: left;
+}
+.position {
+    vertical-align: bottom;
+    background: #EAE6DC url("../img/checkered.png");
+}
+.direction {
+    color: #999;
+}
+.action {
+    background-image: url("../img/sprite.png");
+    background-clip: content-box;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    padding-left: 48px;
+    padding-right: 48px;
+    text-indent: -500px;
+}
+.action-reload {
+    background-position: 0 0;
+}
+.action-save {
+    background-position: -64px 0;
+}
+.debug_output {
+    font-size: 10px;
+}
