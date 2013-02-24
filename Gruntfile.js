@@ -20,10 +20,22 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            options: {
-                jshintrc: '.jshintrc'
+            src: {
+                options: {
+                    jshintrc: '.jshintrc'
+                },
+                files: {
+                    src: ['Gruntfile.js', 'src/js/*.js', 'src/js/app/**/*.js']
+                }
             },
-            files: ['Gruntfile.js', 'src/js/*.js', 'src/js/app/**/*.js']
+            test: {
+                options: {
+                    jshintrc: 'test/.jshintrc'
+                },
+                files: {
+                    src: ['test/js/**/*.js']
+                }
+            }
         },
         requirejs: {
             compile: {
@@ -78,6 +90,13 @@ module.exports = function (grunt) {
                 outDir: 'testResults',
                 testFiles: ['test/index.html']
             }
+        },
+        jssemicoloned: {
+            files: [
+                'Gruntfile.js',
+                'src/js/*.js', 'src/js/app/*.js',
+                'test/js/**/*.js'
+            ]
         }
     });
 
@@ -88,6 +107,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-reload');
     grunt.loadNpmTasks('grunt-qunit-cov');
+    grunt.loadNpmTasks('grunt-jssemicoloned');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
@@ -118,7 +138,7 @@ module.exports = function (grunt) {
     
     grunt.registerTask('test', ['connect:server', 'qunit:all']);
     grunt.registerTask('testCov', ['test', 'qunit-cov']);
-    grunt.registerTask('default', ['jshint', 'test']);
+    grunt.registerTask('default', ['jssemicoloned', 'jshint', 'test']);
     grunt.registerTask('publish', ['default', 'requirejs:compile', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('publishAlmond', ['default', 'requirejs:compile', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('dev', ['connect:server', 'reload', 'watch:dev']);
