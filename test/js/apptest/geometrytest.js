@@ -3,7 +3,7 @@ define(['app/geometry'], function(geometry) {
     module('geometry');
 
     test('Point', 2, function(){
-		var p = new geometry.Point(0, 1)
+        var p = new geometry.Point(0, 1);
         strictEqual(p.getX(), 0, 'getX');
         strictEqual(p.getY(), 1, 'getY');
     });

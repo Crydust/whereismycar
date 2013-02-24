@@ -1,0 +1,40 @@
+{
+	"bitwise": true,
+	"curly": true,
+	"eqeqeq": true,
+	"forin": true,
+	"immed": true,
+	"indent": 4,
+	"latedef": true,
+	"newcap": true,
+	"noarg": true,
+	"noempty": true,
+	"quotmark": "single",
+	"undef": true,
+	"strict": false,
+	"trailing": true,
+	"maxparams": 10,
+	"maxdepth": 3,
+	"maxstatements": 50,
+	"maxcomplexity": 12,
+
+	"browser": true,
+
+	"nomen": true,
+
+	"white": false,
+
+    "globals": {
+        "require": false,
+        "define": false,
+        "module": false,
+        "test": false,
+        "QUnit": false,
+        "start": false,
+        "stop": false,
+        "ok": false,
+        "equal": false,
+        "strictEqual": false,
+        "deepEqual": false
+    }
+}

@@ -54,7 +54,6 @@ define(['app/defer'], function(defer) {
         var promise = deferrable.promise;
         promise.then(function (value) {
             throw 'error';
-            return value;
         }).then(function () {
             start();
         }, function () {
