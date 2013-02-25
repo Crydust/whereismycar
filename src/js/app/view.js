@@ -1,4 +1,4 @@
-define(['./defer', './objects', './dom', './model', './timeago', './geography', './svg', './geometry'], function (defer, objects, dom, model, timeago, geography, svg, geometry) {
+define(['./objects', './dom', './model', './timeago', './geography', './svg', './geometry', './google'], function (objects, dom, model, timeago, geography, svg, geometry, google) {
     'use strict';
 
     var defaultTimestamp = 0;
@@ -60,9 +60,18 @@ define(['./defer', './objects', './dom', './model', './timeago', './geography', 
 
         //current img
         if (currentTime - updateCurrentImageTime > 5000 &&
-                currentData.current.img !== newData.current.img) {
-            updateCurrentImageTime = currentTime;
-            dom.byId('current_position_img').src = newData.current.img;
+                data.current.accuracy < 150) {
+            var currentLatLng = new geography.LatLng(currentData.current.latitude, data.current.longitude);
+            var newLatLng = new geography.LatLng(newData.current.latitude, data.current.longitude);
+            var distance = geography.computeDistanceBetween(currentLatLng, newLatLng);
+            var newImg = google.staticImageUrl(newLatLng);
+            if (currentData.current.img === defaultImage ||
+                    currentData.current.img !== newImg &&
+                    distance > 30) {
+                newData.current.img = newImg;
+                updateCurrentImageTime = currentTime;
+                dom.byId('current_position_img').src = newData.current.img;
+            }
         }
 
         //stored img

@@ -57,12 +57,12 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
             //use position to compute distance and bearing
             var currentLatLng = new geography.LatLng(data.current.latitude, data.current.longitude);
             var storedLatLng = new geography.LatLng(data.stored.latitude, data.stored.longitude);
+            geography.computeDistanceBetween(currentLatLng, storedLatLng);
             data.distance = geography.computeDistanceBetween(currentLatLng, storedLatLng);
             data.bearing = geography.computeHeading(currentLatLng, storedLatLng);
-            data.current.img = google.staticImageUrl(currentLatLng);
             updateView();
             // do reverse geolocation
-            if (!isReverseGeoCoding) {
+            if (!isReverseGeoCoding && data.current.accuracy < 150) {
                 data.current.address = null;
                 isReverseGeoCoding = true;
                 google.reverseGeocode(currentLatLng)
