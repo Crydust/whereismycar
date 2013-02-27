@@ -19,9 +19,10 @@ define(['./dom', './geometry'], function (dom, geometry) {
     /**
      * @param {Element} element
      * @param {number} degrees
+     * @param {Point?} center
      */
-    function setSvgElementRotate(element, degrees) {
-        var center = calcSvgElementCenter(element);
+    function setSvgElementRotate(element, degrees, center) {
+        center = center || calcSvgElementCenter(element);
         element.setAttribute('transform', 'rotate(' + degrees + ',' + center.x + ',' + center.y + ')');
     }
     

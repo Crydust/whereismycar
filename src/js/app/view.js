@@ -53,16 +53,18 @@ define(['./objects', './dom', './model', './timeago', './geography', './svg', '.
         var newData = cleanData(data);
         var currentTime = new Date().getTime();
         
-        //current img
+        //status
         if (currentData.status !== newData.status) {
             dom.byId('debug_output').innerHTML = newData.status;
         }
 
         //current img
         if (currentTime - updateCurrentImageTime > 5000 &&
-                data.current.accuracy < 150) {
+                data.current.accuracy < 150 &&
+                newData.current.latitude !== null &&
+                newData.current.longitude !== null) {
             var currentLatLng = new geography.LatLng(currentData.current.latitude, data.current.longitude);
-            var newLatLng = new geography.LatLng(newData.current.latitude, data.current.longitude);
+            var newLatLng = new geography.LatLng(newData.current.latitude, newData.current.longitude);
             var distance = geography.computeDistanceBetween(currentLatLng, newLatLng);
             var newImg = google.staticImageUrl(newLatLng);
             if (currentData.current.img === defaultImage ||

@@ -1,4 +1,4 @@
-define(['./model', './dom', 'json3', './geolocation', './google', './objects', './view', './geography', 'domReady!'], function (model, dom, JSON3, geolocation, google, objects, view, geography) {
+define(['./model', './dom', 'json3', './geolocation', './google', './objects', './view', './geography', './svg', './geometry', 'domReady!'], function (model, dom, JSON3, geolocation, google, objects, view, geography, svg, geometry) {
     'use strict';
     
     function log(message) {
@@ -16,15 +16,21 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
         var data = model.get();
         var isReverseGeoCoding = false;
         
-        var raf = null;
-        function updateView() {
-            if (raf === null) {
-                raf = window.requestAnimationFrame(function () {
-                    view.update(data);
-                    raf = null;
-                });
+        var isDirty = true;
+        var radarContentDocument = svg.getSvgContentDocumentById('radar');
+        var sweeper = dom.byId('sweeper', radarContentDocument);
+        var sweeperCenter = new geometry.Point(160, 160);
+        function step(timestamp) {
+            if (isDirty) {
+                isDirty = false;
+                view.update(data);
             }
+            if (radarContentDocument !== null) {
+                svg.setSvgElementRotate(sweeper, ((timestamp % 6000) / 6000) * 360, sweeperCenter);
+            }
+            window.requestAnimationFrame(step);
         }
+        step(0);
         
         function onDeviceorientation(event) {
             var success = false;
@@ -40,7 +46,7 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
                 success = true;
             }
             if (success) {
-                updateView();
+                isDirty = true;
             }
         }
         
@@ -60,32 +66,29 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
             geography.computeDistanceBetween(currentLatLng, storedLatLng);
             data.distance = geography.computeDistanceBetween(currentLatLng, storedLatLng);
             data.bearing = geography.computeHeading(currentLatLng, storedLatLng);
-            updateView();
+            isDirty = true;
             // do reverse geolocation
             if (!isReverseGeoCoding && data.current.accuracy < 150) {
-                data.current.address = null;
                 isReverseGeoCoding = true;
                 google.reverseGeocode(currentLatLng)
                 .then(function (address) {
                     data.current.address = address;
-                    log(data);
                     data.status = 'Done.';
-                    updateView();
+                    log(data);
+                    isDirty = true;
                     isReverseGeoCoding = false;
                 }, function (reason) {
                     data.status = 'error ' + reason + '\n';
-                    updateView();
+                    isDirty = true;
                     isReverseGeoCoding = false;
                 });
             }
         }
         
-        updateView();
-        
         function updatePosition() {
             data.status = 'Loading ...\n';
+            isDirty = true;
             isReverseGeoCoding = false;
-            updateView();
 
             geolocation.getCurrentPosition()
             .then(handlePosition)
@@ -112,7 +115,7 @@ define(['./model', './dom', 'json3', './geolocation', './google', './objects', '
             data.stored = objects.copy(data.current);
             //log(data);
             model.store();
-            updateView();
+            isDirty = true;
             return false;
         });
         //update
