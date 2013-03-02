@@ -1,19 +1,16 @@
-define(['./defer'], function (defer) {
-    'use strict';
-
+define(["require", "exports"], function(require, exports) {
+    
     function again(func, maxTries) {
+        if (typeof maxTries === "undefined") { maxTries = 3; }
         return function (input) {
-            var deferred = defer();
-            var remainingTries = maxTries || 3;
+            var deferred = deferModule.defer();
+            var remainingTries = maxTries;
             function run() {
                 func(input).then(function (output) {
                     deferred.resolve(output);
                 }, function (reason) {
-                    //>>excludeStart("prod", pragmas.prod);
-                    //window.console.log('again because ', reason);
-                    //>>excludeEnd("prod");
                     remainingTries -= 1;
-                    if (remainingTries > 0) {
+                    if(remainingTries > 0) {
                         run();
                     } else {
                         deferred.reject(reason);
@@ -24,6 +21,5 @@ define(['./defer'], function (defer) {
             return deferred.promise;
         };
     }
-
-    return again;
-});
+})
+//@ sourceMappingURL=again.js.map

@@ -73,6 +73,15 @@ module.exports = function (grunt) {
                     'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
                 ],
                 tasks: ['jshint', 'reload']
+            },
+            devts: {
+                files: [
+                    'Gruntfile.js',
+                    'src/**/*.html', 'src/**/*.css',
+                    'src/**/*.ts',
+                    'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
+                ],
+                tasks: ['typescript']
             }
         },
         reload: {
@@ -97,6 +106,19 @@ module.exports = function (grunt) {
                 'src/js/*.js', 'src/js/app/*.js',
                 'test/js/**/*.js'
             ]
+        },
+        typescript: {
+            base: {
+                src: ['src/ts/**/*.ts'],
+                dest: 'src/js',
+                options: {
+                    module: 'amd', //or commonjs
+                    target: 'es3', //or es5
+                    base_path: 'src/ts',
+                    sourcemap: true,
+                    declaration: true
+                }
+            }
         }
     });
 
@@ -108,6 +130,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-reload');
     grunt.loadNpmTasks('grunt-qunit-cov');
     grunt.loadNpmTasks('grunt-jssemicoloned');
+    grunt.loadNpmTasks('grunt-typescript');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
@@ -142,5 +165,6 @@ module.exports = function (grunt) {
     grunt.registerTask('publish', ['default', 'requirejs:compile', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('publishAlmond', ['default', 'requirejs:compile', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('dev', ['connect:server', 'reload', 'watch:dev']);
+    grunt.registerTask('devts', ['typescript', 'connect:server', 'watch:devts']);
     
 };
