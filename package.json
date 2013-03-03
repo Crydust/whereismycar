@@ -21,13 +21,14 @@
     "grunt-contrib-qunit": "~0.1.1",
     "grunt-contrib-connect": "~0.1.0",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
-    "grunt-qunit-cov": "0.3.2",
-    "grunt-jssemicoloned": "0.0.6",
-    "grunt-typescript": "0.0.12"
+    "grunt-qunit-cov": "~0.3.2",
+    "grunt-jssemicoloned": "~0.0.6",
+    "grunt-typescript": "~0.1.0",
+    "grunt-contrib-copy": "~0.4.0"
   },
   "amd": {},
   "volo": {
-    "baseUrl": "src/js/vendor",
+    "baseUrl": "src/ts/vendor",
     "dependencies": {
       "require": "github:jrburke/requirejs/2.1.4",
       "almond": "github:jrburke/almond/0.2.3",

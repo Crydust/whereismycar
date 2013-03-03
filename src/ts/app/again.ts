@@ -1,7 +1,7 @@
 import deferModule = module('./defer');
 
-function again(func:Function, maxTries:number = 3) {
-    return (input) => {
+export function again(func:Function, maxTries:number = 3):Function {
+    return function (input):deferModule.Promise {
         var deferred = deferModule.defer();
         var remainingTries = maxTries;
         function run() {

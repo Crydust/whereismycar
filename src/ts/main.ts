@@ -1,13 +1,4 @@
-/// <reference path="require.d.ts" />
-
-//>>excludeStart("prod", pragmas.prod);
-require.config({
-    baseUrl: 'js/vendor',
-    paths: {
-        'app': '../../js/app'
-    }
-});
-//>>excludeEnd("prod");
+/// <reference path="vendor/require.d.ts" />
 
 // requestAnimationFrame polyfill
 // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
@@ -38,6 +29,7 @@ require.config({
         };
     }
 }());
+
 
 require(['app/main'], function (main) {
     'use strict';
