@@ -73,7 +73,7 @@ module.exports = function (grunt) {
                     pragmas: {
                         prod: true
                     },
-                    optimize: 'none',
+                    optimize: 'uglify2',
                     optimizeCss: 'standard'
                 }
             },
@@ -86,7 +86,7 @@ module.exports = function (grunt) {
                     pragmas: {
                         prod: true
                     },
-                    optimize: 'none'
+                    optimize: 'uglify2'
                 }
             }
         },
