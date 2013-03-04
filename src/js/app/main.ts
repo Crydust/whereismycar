@@ -12,13 +12,11 @@ import geometry = module('./geometry');
 
 function log(message) {
     //>>excludeStart("prod", pragmas.prod);
-    /*
     if (objects.betterTypeof(message) !== 'string') {
         message = JSON3.stringify(message, null, 4);
     }
     (<HTMLElement>dom.byId('debug_output')).innerHTML += message;
     window.console.log(message);
-    */
     //>>excludeEnd("prod");
 }
 
@@ -28,15 +26,21 @@ export function main() {
     var isReverseGeoCoding = false;
     
     var isDirty = true;
-    var radarContentDocument = svg.getSvgContentDocumentById('radar');
-    var sweeper = <SVGSVGElement>dom.byId('sweeper', radarContentDocument);
+    var radarContentDocument = null;
+    var sweeper = null;
     var sweeperCenter = new geometry.Point(160, 160);
     function step(timestamp) {
         if (isDirty) {
             isDirty = false;
             view.update(data);
         }
-        if (radarContentDocument !== null) {
+        if (radarContentDocument === null) {
+            radarContentDocument = svg.getSvgContentDocumentById('radar');
+        }
+        if (sweeper === null) {
+            sweeper = <SVGSVGElement>dom.byId('sweeper', radarContentDocument);
+        }
+        if (sweeper !== null) {
             svg.setSvgElementRotate(sweeper, ((timestamp % 6000) / 6000) * 360, sweeperCenter);
         }
         window.requestAnimationFrame(step);

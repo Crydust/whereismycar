@@ -140,8 +140,9 @@ module.exports = function (grunt) {
                     module: 'amd', //or commonjs
                     target: 'es3', //or es5
                     base_path: 'src/ts',
-                    sourcemap: true,
-                    declaration: true
+                    sourcemap: false,
+                    declaration: false,
+                    comments: true
                 }
             }
         }
