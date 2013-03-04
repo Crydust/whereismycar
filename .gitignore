@@ -61,12 +61,14 @@ npm-debug.log
 # grunt
 node_modules/
 
-# volo
-src/js/vendor/
-
 # jscoverage
 testResults/
 
 # secrets
 secret.php
 
+# ignore generated files
+*.d.ts
+*.js.map
+src/js/*.js
+src/js/**/*.js
