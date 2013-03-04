@@ -28,21 +28,21 @@
 		storage
 
 	store.disabled = false
-	store.set = function(key, value) {}
-	store.get = function(key) {}
+	store.write = function(key, value) {}
+	store.read = function(key) {}
 	store.remove = function(key) {}
 	store.clear = function() {}
 	store.transact = function(key, defaultVal, transactionFn) {
-		var val = store.get(key)
+		var val = store.read(key)
 		if (transactionFn == null) {
 			transactionFn = defaultVal
 			defaultVal = null
 		}
 		if (typeof val == 'undefined') { val = defaultVal || {} }
 		transactionFn(val)
-		store.set(key, val)
+		store.write(key, val)
 	}
-	store.getAll = function() {}
+	store.readAll = function() {}
 
 	store.serialize = function(value) {
 		return JSON.stringify(value)
@@ -63,19 +63,19 @@
 
 	if (isLocalStorageNameSupported()) {
 		storage = win[localStorageName]
-		store.set = function(key, val) {
+		store.write = function(key, val) {
 			if (val === undefined) { return store.remove(key) }
 			storage.setItem(key, store.serialize(val))
 			return val
 		}
-		store.get = function(key) { return store.deserialize(storage.getItem(key)) }
+		store.read = function(key) { return store.deserialize(storage.getItem(key)) }
 		store.remove = function(key) { storage.removeItem(key) }
 		store.clear = function() { storage.clear() }
-		store.getAll = function() {
+		store.readAll = function() {
 			var ret = {}
 			for (var i=0; i<storage.length; ++i) {
 				var key = storage.key(i)
-				ret[key] = store.get(key)
+				ret[key] = store.read(key)
 			}
 			return ret
 		}
@@ -125,14 +125,14 @@
 		function ieKeyFix(key) {
 			return key.replace(forbiddenCharsRegex, '___')
 		}
-		store.set = withIEStorage(function(storage, key, val) {
+		store.write = withIEStorage(function(storage, key, val) {
 			key = ieKeyFix(key)
 			if (val === undefined) { return store.remove(key) }
 			storage.setAttribute(key, store.serialize(val))
 			storage.save(localStorageName)
 			return val
 		})
-		store.get = withIEStorage(function(storage, key) {
+		store.read = withIEStorage(function(storage, key) {
 			key = ieKeyFix(key)
 			return store.deserialize(storage.getAttribute(key))
 		})
@@ -149,20 +149,20 @@
 			}
 			storage.save(localStorageName)
 		})
-		store.getAll = withIEStorage(function(storage) {
+		store.readAll = withIEStorage(function(storage) {
 			var attributes = storage.XMLDocument.documentElement.attributes
 			storage.load(localStorageName)
 			var ret = {}
 			for (var i=0, attr; attr=attributes[i]; ++i) {
-				ret[attr] = store.get(attr)
+				ret[attr] = store.read(attr)
 			}
 			return ret
 		})
 	}
 
 	try {
-		store.set(namespace, namespace)
-		if (store.get(namespace) != namespace) { store.disabled = true }
+		store.write(namespace, namespace)
+		if (store.read(namespace) != namespace) { store.disabled = true }
 		store.remove(namespace)
 	} catch(e) {
 		store.disabled = true

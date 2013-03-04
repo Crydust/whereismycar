@@ -63,6 +63,33 @@ module.exports = function (grunt) {
                     },
                     optimize: 'uglify2'
                 }
+            },
+            compileTs: {
+                options: {
+                    mainConfigFile: 'src/js/main.js',
+                    baseUrl: 'js',
+                    appDir: 'src',
+                    dir: 'publish',
+                    name: 'main',
+                    pragmas: {
+                        prod: true
+                    },
+                    optimize: 'uglify2',
+                    optimizeCss: 'standard'
+                }
+            },
+            compileAlmondTs: {
+                options: {
+                    mainConfigFile: 'src/js/main.js',
+                    baseUrl: 'src/js',
+                    out: 'publish/js/main.js',
+                    name: 'vendor/almond',
+                    include: 'main',
+                    pragmas: {
+                        prod: true
+                    },
+                    optimize: 'uglify2'
+                }
             }
         },
         watch: {
@@ -175,5 +202,7 @@ module.exports = function (grunt) {
     grunt.registerTask('publishAlmond', ['default', 'requirejs:compile', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('dev', ['connect:server', 'reload', 'watch:dev']);
     grunt.registerTask('devts', ['typescript', 'copy:devts', 'connect:server', 'watch:devts']);
+    grunt.registerTask('publishTs', ['typescript', 'copy:devts', 'test', 'requirejs:compileTs']);
+    grunt.registerTask('publishAlmondTs', ['typescript', 'copy:devts', 'test', 'requirejs:compileTs', 'requirejs:compileAlmondTs', 'simpleHashres', 'replaceDataMainBySrc']);
     
 };

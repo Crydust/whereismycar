@@ -1,7 +1,9 @@
 import objectsModule = module('./objects');
-//import store = module('vendor/store');
+import storeModule = module('vendor/store');
 
-var model = {
+var store = storeModule.store;
+
+var modelData = {
     'current': {
         'timestamp': null,
         'latitude': null,
@@ -28,14 +30,14 @@ var model = {
     'status': ''
 };
 
-export var defaults = objectsModule.copy(model);
+export var defaults = objectsModule.copy(modelData);
 
-//var storedModel = store.get('storedModel');
-//model.stored = objectsModule.nullToDefault(storedModel, objectsModule.copy(modelData.stored));
+var storedModel = store.read('storedModel');
+modelData.stored = objectsModule.nullToDefault(storedModel, objectsModule.copy(modelData.stored));
 
-export function get() {
-    return model;
+export function read() {
+    return modelData;
 }
-export function store() {
-    //store.set('storedModel', modelData.stored);
+export function write() {
+    store.write('storedModel', modelData.stored);
 }

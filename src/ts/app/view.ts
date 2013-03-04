@@ -50,7 +50,7 @@ function updateCompass(bearing_deg:number, compassHeading_deg:number):void {
     }
 }
 
-var currentData = cleanData(modelModuledefaults);
+var currentData = cleanData(modelModule.defaults);
 
 var updateCurrentImageTime = 0;
 var updateStoredImageTime = 0;

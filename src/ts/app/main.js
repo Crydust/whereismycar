@@ -13,7 +13,7 @@ define(['./model', './dom', 'vendor/json3', './geolocation', './google', './obje
     
     
     function main() {
-        var data = model.get();
+        var data = model.read();
         var isReverseGeoCoding = false;
         
         var isDirty = true;
@@ -114,7 +114,7 @@ define(['./model', './dom', 'vendor/json3', './geolocation', './google', './obje
         dom.on(dom.byId('store_current_location_button'), 'click', function () {
             data.stored = objects.copy(data.current);
             //log(data);
-            model.store();
+            model.write();
             isDirty = true;
             return false;
         });
