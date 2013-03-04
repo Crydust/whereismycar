@@ -66,7 +66,6 @@ module.exports = function (grunt) {
             },
             compileTs: {
                 options: {
-                    mainConfigFile: 'src/js/main.js',
                     baseUrl: 'js',
                     appDir: 'src',
                     dir: 'publish',
@@ -74,13 +73,12 @@ module.exports = function (grunt) {
                     pragmas: {
                         prod: true
                     },
-                    optimize: 'uglify2',
+                    optimize: 'none',
                     optimizeCss: 'standard'
                 }
             },
             compileAlmondTs: {
                 options: {
-                    mainConfigFile: 'src/js/main.js',
                     baseUrl: 'src/js',
                     out: 'publish/js/main.js',
                     name: 'vendor/almond',
@@ -88,7 +86,7 @@ module.exports = function (grunt) {
                     pragmas: {
                         prod: true
                     },
-                    optimize: 'uglify2'
+                    optimize: 'none'
                 }
             }
         },
@@ -105,10 +103,10 @@ module.exports = function (grunt) {
                 files: [
                     'Gruntfile.js',
                     'src/**/*.html', 'src/**/*.css',
-                    'src/ts/**/*.ts', 'src/ts/**/*.js',
+                    'src/js/**/*.ts', '!src/js/**/*.d.ts',
                     'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
                 ],
-                tasks: ['typescript', 'copy:devts']
+                tasks: ['typescript']
             }
         },
         reload: {
@@ -136,7 +134,7 @@ module.exports = function (grunt) {
         },
         typescript: {
             base: {
-                src: ['src/ts/**/*.ts'],
+                src: ['src/js/**/*.ts'],
                 dest: 'src/js',
                 options: {
                     module: 'amd', //or commonjs
@@ -145,14 +143,6 @@ module.exports = function (grunt) {
                     sourcemap: true,
                     declaration: true
                 }
-            }
-        },
-        copy: {
-            devts: {
-                files: [
-                    {expand: true, cwd: 'src/ts/', src: ['**/*.js', '**/*.ts'], dest: 'src/js/', filter: 'isFile'}
-                    
-                ]
             }
         }
     });
@@ -166,7 +156,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-qunit-cov');
     grunt.loadNpmTasks('grunt-jssemicoloned');
     grunt.loadNpmTasks('grunt-typescript');
-    grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
@@ -201,8 +190,8 @@ module.exports = function (grunt) {
     grunt.registerTask('publish', ['default', 'requirejs:compile', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('publishAlmond', ['default', 'requirejs:compile', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
     grunt.registerTask('dev', ['connect:server', 'reload', 'watch:dev']);
-    grunt.registerTask('devts', ['typescript', 'copy:devts', 'connect:server', 'watch:devts']);
-    grunt.registerTask('publishTs', ['typescript', 'copy:devts', 'test', 'requirejs:compileTs']);
-    grunt.registerTask('publishAlmondTs', ['typescript', 'copy:devts', 'test', 'requirejs:compileTs', 'requirejs:compileAlmondTs', 'simpleHashres', 'replaceDataMainBySrc']);
+    grunt.registerTask('devts', ['typescript', 'connect:server', 'watch:devts']);
+    grunt.registerTask('publishTs', ['typescript', 'test', 'requirejs:compileTs']);
+    grunt.registerTask('publishAlmondTs', ['typescript', 'test', 'requirejs:compileTs', 'requirejs:compileAlmondTs', 'simpleHashres', 'replaceDataMainBySrc']);
     
 };

@@ -31,7 +31,7 @@
 }());
 
 
-require(['app/main'], function (main) {
+require(['app/main', 'vendor/domReady!'], function (main) {
     'use strict';
     main.main();
 });
