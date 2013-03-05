@@ -72,11 +72,8 @@ export function update(data:any):void {
         var currentLatLng = new geography.LatLng(currentData.current.latitude, data.current.longitude);
         var newLatLng = new geography.LatLng(newData.current.latitude, newData.current.longitude);
         var distance = parseFloat(geography.computeDistanceBetween(currentLatLng, newLatLng));
-        var newImg = google.staticImageUrl(newLatLng);
-        if (currentData.current.img === defaultImage ||
-                currentData.current.img !== newImg &&
+        if (currentData.current.img !== newData.current.img &&
                 distance > 30) {
-            newData.current.img = newImg;
             updateCurrentImageTime = currentTime;
             (<HTMLImageElement>dom.byId('current_position_img')).src = newData.current.img;
         }

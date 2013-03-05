@@ -81,6 +81,7 @@ export function main() {
         geography.computeDistanceBetween(currentLatLng, storedLatLng);
         data.distance = <any>geography.computeDistanceBetween(currentLatLng, storedLatLng);
         data.bearing = <any>geography.computeHeading(currentLatLng, storedLatLng);
+        data.current.img = google.staticImageUrl(currentLatLng);
         isDirty = true;
         // do reverse geolocation
         if (!isReverseGeoCoding && data.current.accuracy < 150) {
