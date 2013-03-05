@@ -145,6 +145,19 @@ module.exports = function (grunt) {
                     comments: true
                 }
             }
+        },
+        copy: {
+            devts: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/',
+                        src: ['**/*.*', '!**/*.ts', '!**/*.js'],
+                        dest: 'publish/',
+                        filter: 'isFile'
+                    }
+                ]
+            }
         }
     });
 
@@ -157,6 +170,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-qunit-cov');
     grunt.loadNpmTasks('grunt-jssemicoloned');
     grunt.loadNpmTasks('grunt-typescript');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
@@ -193,6 +207,6 @@ module.exports = function (grunt) {
     grunt.registerTask('dev', ['connect:server', 'reload', 'watch:dev']);
     grunt.registerTask('devts', ['typescript', 'connect:server', 'watch:devts']);
     grunt.registerTask('publishTs', ['typescript', 'test', 'requirejs:compileTs']);
-    grunt.registerTask('publishAlmondTs', ['typescript', 'test', 'requirejs:compileTs', 'requirejs:compileAlmondTs', 'simpleHashres', 'replaceDataMainBySrc']);
+    grunt.registerTask('publishAlmondTs', ['typescript', 'test', 'copy:devts', 'requirejs:compileAlmondTs', 'simpleHashres', 'replaceDataMainBySrc']);
     
 };
