@@ -1,18 +1,18 @@
 define(['app/geolocation', 'app/geography'], function(geolocation, geography) {
 
-    module('geolocation');
+    QUnit.module('geolocation');
 
-    test('convertPositionToLatLng', 4, function(){
+    QUnit.test('convertPositionToLatLng', 4, function(assert){
         var latlng = geolocation.convertPositionToLatLng({
             coords: {
                 latitude: 1,
                 longitude: 2
             }
         });
-        ok(latlng !== null);
-        ok(latlng instanceof geography.LatLng);
-        equal(latlng.lat(), 1);
-        equal(latlng.lng(), 2);
+        assert.ok(latlng !== null);
+        assert.ok(latlng instanceof geography.LatLng);
+        assert.equal(latlng.lat(), 1);
+        assert.equal(latlng.lng(), 2);
     });
     
     return {};

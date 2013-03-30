@@ -1,5 +1,6 @@
 
-define(['./againtest',
+define([
+    './againtest',
     './defertest',
     './domtest',
     './geographytest',
