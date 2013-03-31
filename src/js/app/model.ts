@@ -1,7 +1,5 @@
 import objectsModule = module('./objects');
-import storeModule = module('vendor/store');
-
-var store = storeModule.store;
+import store = module('vendor/store');
 
 var modelData = {
     'current': {
@@ -32,12 +30,12 @@ var modelData = {
 
 export var defaults = objectsModule.copy(modelData);
 
-var storedModel = store.read('storedModel');
+var storedModel = store.get('storedModel');
 modelData.stored = objectsModule.nullToDefault(storedModel, objectsModule.copy(modelData.stored));
 
 export function read() {
     return modelData;
 }
 export function write() {
-    store.write('storedModel', modelData.stored);
+    store.set('storedModel', modelData.stored);
 }

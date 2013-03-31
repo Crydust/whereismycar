@@ -14,11 +14,11 @@
   "readmeFilename": "README.txt",
   "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.4.0",
+    "grunt": "~0.4.1",
     "grunt-contrib-requirejs": "~0.4.0",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-watch": "~0.2.0",
-    "grunt-contrib-qunit": "~0.1.1",
+    "grunt-contrib-qunit": "~0.2.0",
     "grunt-contrib-connect": "~0.1.0",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
     "grunt-qunit-cov": "~0.3.2",
@@ -28,7 +28,7 @@
   },
   "amd": {},
   "volo": {
-    "baseUrl": "src/ts/vendor",
+    "baseUrl": "src/js/vendor",
     "dependencies": {
       "require": "github:jrburke/requirejs/2.1.4",
       "almond": "github:jrburke/almond/0.2.3",

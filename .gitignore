@@ -63,12 +63,13 @@ node_modules/
 
 # jscoverage
 testResults/
+jscoverage.exe
 
 # secrets
 secret.php
 
 # ignore generated files
-*.d.ts
+!src/js/vendor/*.d.ts
 *.js.map
 src/js/*.js
 src/js/**/*.js

@@ -1,4 +1,3 @@
-///<reference path="../vendor/promises-a.d.ts" />
 /*
 This is a dummy file, which compiles to nothingness and is replaced by the js file in the same folder.
 I realise that is lame, but I need to move on.

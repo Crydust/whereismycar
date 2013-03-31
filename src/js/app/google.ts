@@ -20,6 +20,8 @@ function extractAddress(data) {
 var reverseGeocodeTime = 0;
 export function reverseGeocode(latlng) {
     var deferred = defer();
+    deferred.resolve('Earth, third rock from the sun');
+    /*
     var currentTime = new Date().getTime();
     if (currentTime - reverseGeocodeTime < 5000) {
         deferred.reject(new Error('Calling reverseGeocode too soon'));
@@ -47,6 +49,7 @@ export function reverseGeocode(latlng) {
     } else {
         deferred.reject(new Error('latlng is of wrong type'));
     }
+    */
     return deferred.promise;
 }
 

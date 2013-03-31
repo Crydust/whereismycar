@@ -38,32 +38,6 @@ module.exports = function (grunt) {
             }
         },
         requirejs: {
-            compile: {
-                options: {
-                    mainConfigFile: 'src/js/main.js',
-                    appDir: 'src',
-                    dir: 'publish',
-                    name: '../main',
-                    pragmas: {
-                        prod: true
-                    },
-                    optimize: 'uglify2',
-                    optimizeCss: 'standard'
-                }
-            },
-            compileAlmond: {
-                options: {
-                    mainConfigFile: 'src/js/main.js',
-                    baseUrl: 'src/js/vendor',
-                    out: 'publish/js/main.js',
-                    name: 'almond',
-                    include: '../main',
-                    pragmas: {
-                        prod: true
-                    },
-                    optimize: 'uglify2'
-                }
-            },
             compileTs: {
                 options: {
                     baseUrl: 'js',
@@ -91,22 +65,14 @@ module.exports = function (grunt) {
             }
         },
         watch: {
-            dev: {
-                files: [
-                    'Gruntfile.js',
-                    'src/**/*.html', 'src/**/*.js', 'src/**/*.css',
-                    'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
-                ],
-                tasks: ['jshint', 'reload']
-            },
-            devts: {
+            devTs: {
                 files: [
                     'Gruntfile.js',
                     'src/**/*.html', 'src/**/*.css',
-                    'src/js/**/*.ts', '!src/js/**/*.d.ts',
+                    'src/js/**/*.ts',
                     'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
                 ],
-                tasks: ['typescript']
+                tasks: ['typescript', 'reload']
             }
         },
         reload: {
@@ -133,21 +99,28 @@ module.exports = function (grunt) {
             ]
         },
         typescript: {
-            base: {
-                src: ['src/js/**/*.ts'],
-                dest: 'src/js',
+            options: {
+                module: 'amd', //or commonjs
+                target: 'es3', //or es5
+                base_path: 'src/js',
+                sourcemap: false,
+                declaration: false,
+                comments: true
+            },
+            devTs: {
                 options: {
-                    module: 'amd', //or commonjs
-                    target: 'es3', //or es5
-                    base_path: 'src/ts',
-                    sourcemap: false,
-                    declaration: false,
-                    comments: true
-                }
+                    sourcemap: true
+                },
+                src: ['src/js/**/*.ts'],
+                dest: 'src/js'
+            },
+            publishTs: {
+                src: ['src/js/**/*.ts'],
+                dest: 'src/js'
             }
         },
         copy: {
-            devts: {
+            devTs: {
                 files: [
                     {
                         expand: true,
@@ -198,15 +171,23 @@ module.exports = function (grunt) {
             '<script src="$1"></script>');
         grunt.file.write('publish/index.html', replacement);
     });
+    grunt.registerTask('cleanTs', function () {
+        grunt.file['delete']('publish/');
+        grunt.file.expand('src/js/**/*.js.map').forEach(function (element) {
+            grunt.file['delete'](element);
+        });
+        grunt.file.expand('src/js/**/*.js').forEach(function (element) {
+            if (grunt.file.exists(element.replace(/\.js$/, '.ts'))) {
+                grunt.file['delete'](element);
+            }
+        });
+    });
     
-    grunt.registerTask('test', ['connect:server', 'qunit:all']);
+    grunt.registerTask('test', ['default', 'connect:server', 'qunit:all']);
     grunt.registerTask('testCov', ['test', 'qunit-cov']);
-    grunt.registerTask('default', ['jssemicoloned', 'jshint', 'test']);
-    grunt.registerTask('publish', ['default', 'requirejs:compile', 'simpleHashres', 'replaceDataMainBySrc']);
-    grunt.registerTask('publishAlmond', ['default', 'requirejs:compile', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
-    grunt.registerTask('dev', ['connect:server', 'reload', 'watch:dev']);
-    grunt.registerTask('devts', ['typescript', 'connect:server', 'watch:devts']);
-    grunt.registerTask('publishTs', ['typescript', 'test', 'requirejs:compileTs']);
-    grunt.registerTask('publishAlmondTs', ['typescript', 'test', 'copy:devts', 'requirejs:compileAlmondTs', 'simpleHashres', 'replaceDataMainBySrc']);
+    grunt.registerTask('default', ['cleanTs', 'jssemicoloned', 'jshint', 'typescript:devTs']);
+    grunt.registerTask('dev', ['default', 'connect:server', 'reload', 'watch:devTs']);
+    grunt.registerTask('publish', ['cleanTs', 'typescript:publishTs', 'test', 'requirejs:compileTs']);
+    grunt.registerTask('publishAlmond', ['test', 'cleanTs', 'typescript:publishTs', 'copy:devTs', 'requirejs:compileAlmondTs', 'simpleHashres', 'replaceDataMainBySrc']);
     
 };

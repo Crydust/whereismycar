@@ -2,7 +2,7 @@ define(['app/google', 'app/geography'], function(google, geography) {
 
     module('google');
 
-    test('bla', 4, function(){
+    test('staticImageUrl', 4, function(){
         var url = google.staticImageUrl(new geography.LatLng(1, 2));
         ok(url !== null);
         ok(url !== undefined);
