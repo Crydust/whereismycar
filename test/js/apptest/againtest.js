@@ -1,5 +1,8 @@
-define(['app/again', 'app/defer'], function(again, defer) {
+define(['app/again', 'app/defer'], function(againModule, deferModule) {
 
+    var again = againModule.again;
+    var defer = deferModule.defer;
+    
     module('again');
 
     test('success', 4, function(){

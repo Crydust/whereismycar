@@ -1,12 +1,14 @@
 //20.994 bytes
-define(['promises-a'], function (defer) {
+define(['vendor/promises-a'], function (defer) {
     'use strict';
     function deferWithResolve() {
         var result = defer();
         result.resolve = result.fulfill;
         return result;
     }
-    return deferWithResolve;
+    return {
+        defer: deferWithResolve
+    };
 });
 /*
 //32.138 bytes

@@ -20,13 +20,13 @@
     }(window, 'load', QUnit.load));
     
     require({
-        baseUrl: '../src/js/vendor',
+        baseUrl: '../src/js',
         paths: {
-            'app': '../app',
-            'apptest': '../../../test/js/apptest'
+            'app': 'app',
+            'apptest': '../../test/js/apptest'
         },
         urlArgs: 'bust=' + (+new Date())
-    }, ['apptest/suite', 'domReady!'], function(){
+    }, ['apptest/suite', 'vendor/domReady!'], function(){
         QUnit.load();
         QUnit.start();
     });

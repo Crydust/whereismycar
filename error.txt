@@ -1,0 +1,33 @@
+C:\Projects\whereismycar>grunt typescript --stack
+Running "typescript:base" (typescript) task
+>> Cannot read property 'call' of null
+Warning: Cannot read property 'call' of null Use --force to continue.
+TypeError: Cannot read property 'call' of null
+    at preCollectFuncDeclTypes (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescript\bin\types
+cript.js:17783:104)
+    at AstWalker.preCollectTypes [as pre] (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescrip
+t\bin\typescript.js:17824:18)
+    at AstWalker.walk (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescript\bin\typescript.js:
+3325:31)
+    at Array.walkListChildren [as 92] (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescript\bi
+n\typescript.js:3507:52)
+    at AstWalker.walk (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescript\bin\typescript.js:
+3332:51)
+    at walkRecordChildren (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescript\bin\typescript
+.js:3718:41)
+    at Array.walkModuleDeclChildren [as 96] (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescr
+ipt\bin\typescript.js:3753:13)
+    at AstWalker.walk (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescript\bin\typescript.js:
+3332:51)
+    at Array.walkListChildren [as 92] (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescript\bi
+n\typescript.js:3507:52)
+    at AstWalker.walk (C:\Projects\whereismycar\node_modules\grunt-typescript\node_modules\typescript\bin\typescript.js:
+3332:51)
+
+Aborted due to warnings.
+
+
+
+
+reason is store.d.ts
+

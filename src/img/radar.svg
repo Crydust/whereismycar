@@ -17,11 +17,13 @@
 <circle cx="160px" cy="160px" r="90px"/>
 <circle cx="160px" cy="160px" r="45px"/>
 </g>
-<g fill="url(#lg)">
+<g id="sweeper" fill="url(#lg)">
 <path d="m160,160 v-135 a135,135 0 0,0 -120,73"/>
+<!--
 <animateTransform attributeName="transform" attributeType="XML"
 type="rotate" from="0 160,160" by="360 0,0"
 repeatCount="indefinite" dur="6s"/>
+-->
 </g>
 <g fill="url(#rg)">
 <circle id="dot" cx="160px" cy="160px" r="20px"/>

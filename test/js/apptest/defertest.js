@@ -1,5 +1,7 @@
-define(['app/defer'], function(defer) {
-
+define(['app/defer'], function(deferModule) {
+    
+    var defer = deferModule.defer;
+    
     module('defer');
 
     test('resolve', 1, function(){
