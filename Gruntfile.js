@@ -72,7 +72,7 @@ module.exports = function (grunt) {
                     'src/js/**/*.ts',
                     'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
                 ],
-                tasks: ['typescript', 'reload']
+                tasks: ['typescript:devTs', 'reload']
             }
         },
         reload: {
@@ -156,7 +156,7 @@ module.exports = function (grunt) {
             grunt.file.copy(dir + '/' + from, dir + '/' + newName);
             return newName;
         };
-        
+
         var replacement = grunt.file.read('publish/index.html');
         var jsFileName = renameFile('publish/js', 'main.js', '${hash}.main.cache.js');
         replacement = replacement.replace('="js/main.js"', '="js/' + jsFileName + '"');
@@ -172,7 +172,9 @@ module.exports = function (grunt) {
         grunt.file.write('publish/index.html', replacement);
     });
     grunt.registerTask('cleanTs', function () {
-        grunt.file['delete']('publish/');
+        if (grunt.file.exists('publish/')) {
+            grunt.file['delete']('publish/');
+        }
         grunt.file.expand('src/js/**/*.js.map').forEach(function (element) {
             grunt.file['delete'](element);
         });
@@ -182,12 +184,12 @@ module.exports = function (grunt) {
             }
         });
     });
-    
+
     grunt.registerTask('test', ['default', 'connect:server', 'qunit:all']);
     grunt.registerTask('testCov', ['test', 'qunit-cov']);
     grunt.registerTask('default', ['cleanTs', 'jssemicoloned', 'jshint', 'typescript:devTs']);
     grunt.registerTask('dev', ['default', 'connect:server', 'reload', 'watch:devTs']);
     grunt.registerTask('publish', ['cleanTs', 'typescript:publishTs', 'test', 'requirejs:compileTs']);
     grunt.registerTask('publishAlmond', ['test', 'cleanTs', 'typescript:publishTs', 'copy:devTs', 'requirejs:compileAlmondTs', 'simpleHashres', 'replaceDataMainBySrc']);
-    
+
 };

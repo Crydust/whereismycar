@@ -1,62 +1,62 @@
-define(['app/again', 'app/defer'], function(againModule, deferModule) {
+define(['app/again', 'app/defer'], function (againModule, deferModule) {
 
     var again = againModule.again;
     var defer = deferModule.defer;
-    
-    module('again');
 
-    test('success', 4, function(){
-        stop();
+    QUnit.module('again');
+
+    QUnit.test('success', 4, function (assert) {
+        QUnit.stop();
         var counter = 2;
-        var funcToRun = function(){
+        var funcToRun = function () {
             var deferred = defer();
             counter--;
             if (counter <= 0) {
-                ok(true, 'done');
+                assert.ok(true, 'done');
                 deferred.resolve(true);
             } else {
-                ok(true, 'not done yet');
+                assert.ok(true, 'not done yet');
                 deferred.reject(false);
             }
             return deferred.promise;
         };
         var wrappedFunc = again(funcToRun, 3);
         wrappedFunc().then(function () {
-            equal(counter, 0, 'zero remaining');
-            ok(true, 'done recieved');
-            start();
+            assert.equal(counter, 0, 'zero remaining');
+            assert.ok(true, 'done recieved');
+            QUnit.start();
         }, function () {
-            ok(false, 'unexpected');
-            start();
+            assert.ok(false, 'unexpected');
+            QUnit.start();
         });
     });
-    
-    test('fail', 5, function(){
-        stop();
+
+    QUnit.test('fail', 5, function (assert) {
+        QUnit.stop();
         var counter = 10;
-        var funcToRun = function(){
+        var funcToRun = function () {
             var deferred = defer();
             counter--;
             if (counter <= 0) {
-                ok(false, 'done unexpected');
+                assert.ok(false, 'done unexpected');
                 deferred.resolve(true);
             } else {
-                ok(true, 'not done yet');
+                assert.ok(true, 'not done yet');
                 deferred.reject(false);
             }
             return deferred.promise;
         };
         var wrappedFunc = again(funcToRun, 3);
         wrappedFunc().then(function () {
-            ok(false, 'done recieved unexpected');
-            start();
+            assert.ok(false, 'done recieved unexpected');
+            QUnit.start();
         }, function () {
-            equal(counter, 7, 'seven remaining');
-            ok(true, 'not done, as expected');
-            start();
+            assert.equal(counter, 7, 'seven remaining');
+            assert.ok(true, 'not done, as expected');
+            QUnit.start();
         });
     });
-    
+
     return {};
 
 });

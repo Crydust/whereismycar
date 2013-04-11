@@ -22,19 +22,11 @@
 
 	"nomen": true,
 
-	"white": false,
+	"white": true,
 
     "globals": {
         "require": false,
         "define": false,
-        "module": false,
-        "test": false,
-        "QUnit": false,
-        "start": false,
-        "stop": false,
-        "ok": false,
-        "equal": false,
-        "strictEqual": false,
-        "deepEqual": false
+        "QUnit": false
     }
 }

@@ -1,42 +1,42 @@
-define(['app/objects'], function(objects) {
+define(['app/objects'], function (objects) {
 
-    module('objects');
+    QUnit.module('objects');
 
-    test('nullToDefault', 6, function(){
-        strictEqual(objects.nullToDefault(null, 'default'), 'default', 'null obviously defaults');
-        strictEqual(objects.nullToDefault(undefined, 'default'), 'default', 'undefined is kinda null');
-        strictEqual(objects.nullToDefault(NaN, 'default'), 'default', 'NaN is kinda null');
-        strictEqual(objects.nullToDefault(false, 'default'), false, 'false is not null');
-        strictEqual(objects.nullToDefault(0, 'default'), 0, 'zero is not null');
-        strictEqual(objects.nullToDefault(null), 'Unknown', 'default undefined then expect Unknown');
+    QUnit.test('nullToDefault', 6, function (assert) {
+        assert.strictEqual(objects.nullToDefault(null, 'default'), 'default', 'null obviously defaults');
+        assert.strictEqual(objects.nullToDefault(undefined, 'default'), 'default', 'undefined is kinda null');
+        assert.strictEqual(objects.nullToDefault(NaN, 'default'), 'default', 'NaN is kinda null');
+        assert.strictEqual(objects.nullToDefault(false, 'default'), false, 'false is not null');
+        assert.strictEqual(objects.nullToDefault(0, 'default'), 0, 'zero is not null');
+        assert.strictEqual(objects.nullToDefault(null), 'Unknown', 'default undefined then expect Unknown');
     });
 
-    test('betterTypeof', 7, function(){
-        strictEqual(objects.betterTypeof(''), 'string', 'string');
-        strictEqual(objects.betterTypeof(0), 'number', 'number');
-        strictEqual(objects.betterTypeof(true), 'boolean', 'boolean');
-        strictEqual(objects.betterTypeof([]), 'array', 'array');
-        strictEqual(objects.betterTypeof({}), 'object', 'object');
-        strictEqual(objects.betterTypeof(null), 'null', 'null');
-        strictEqual(objects.betterTypeof(undefined), 'undefined', 'undefined');
+    QUnit.test('betterTypeof', 7, function (assert) {
+        assert.strictEqual(objects.betterTypeof(''), 'string', 'string');
+        assert.strictEqual(objects.betterTypeof(0), 'number', 'number');
+        assert.strictEqual(objects.betterTypeof(true), 'boolean', 'boolean');
+        assert.strictEqual(objects.betterTypeof([]), 'array', 'array');
+        assert.strictEqual(objects.betterTypeof({}), 'object', 'object');
+        assert.strictEqual(objects.betterTypeof(null), 'null', 'null');
+        assert.strictEqual(objects.betterTypeof(undefined), 'undefined', 'undefined');
     });
-    
-    test('copy', 10, function(){
-        strictEqual(objects.copy(''), '', 'string');
-        strictEqual(objects.copy(0), 0, 'number');
-        strictEqual(objects.copy(true), true, 'boolean');
-        deepEqual(objects.copy([]), [], 'array');
-        deepEqual(objects.copy({}), {}, 'object');
-        strictEqual(objects.copy(null), null, 'null');
-        strictEqual(objects.copy(undefined), undefined, 'undefined');
-        deepEqual(objects.copy(['', 0, true, [], {}, null, undefined]),
+
+    QUnit.test('copy', 10, function (assert) {
+        assert.strictEqual(objects.copy(''), '', 'string');
+        assert.strictEqual(objects.copy(0), 0, 'number');
+        assert.strictEqual(objects.copy(true), true, 'boolean');
+        assert.deepEqual(objects.copy([]), [], 'array');
+        assert.deepEqual(objects.copy({}), {}, 'object');
+        assert.strictEqual(objects.copy(null), null, 'null');
+        assert.strictEqual(objects.copy(undefined), undefined, 'undefined');
+        assert.deepEqual(objects.copy(['', 0, true, [], {}, null, undefined]),
             ['', 0, true, [], {}, null, undefined], 'array nonempty');
-        deepEqual(objects.copy({a:'', b:0, c:true, e:[], f:{}, g:null, h:undefined}),
-            {a:'', b:0, c:true, e:[], f:{}, g:null, h:undefined}, 'object nonempty');
-        deepEqual(objects.copy({a:'', b:0, c:true, e:['', 0, true, [], {}, null, undefined], f:{a:'', b:0, c:true, e:[], f:{}, g:null, h:undefined}, g:null, h:undefined}),
-            {a:'', b:0, c:true, e:['', 0, true, [], {}, null, undefined], f:{a:'', b:0, c:true, e:[], f:{}, g:null, h:undefined}, g:null, h:undefined}, 'object kitchen sink');
+        assert.deepEqual(objects.copy({a: '', b: 0, c: true, e: [], f: {}, g: null, h: undefined}),
+            {a: '', b: 0, c: true, e: [], f: {}, g: null, h: undefined}, 'object nonempty');
+        assert.deepEqual(objects.copy({a: '', b: 0, c: true, e: ['', 0, true, [], {}, null, undefined], f: {a: '', b: 0, c: true, e: [], f: {}, g: null, h: undefined}, g: null, h: undefined}),
+            {a: '', b: 0, c: true, e: ['', 0, true, [], {}, null, undefined], f: {a: '', b: 0, c: true, e: [], f: {}, g: null, h: undefined}, g: null, h: undefined}, 'object kitchen sink');
     });
-    
+
     return {};
 
 });
