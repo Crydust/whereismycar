@@ -19,7 +19,7 @@
     </script>
     <script>
     QUnit.config.autostart = false;
-    //QUnit.config.requireExpects = true;
+    QUnit.config.requireExpects = true;
     
     (function removeEvent(elem, type, fn) {
         if (elem.removeEventListener) {
@@ -30,12 +30,12 @@
     }(window, 'load', QUnit.load));
     
     require({
+        //urlArgs: 'bust=' + (+new Date()),
         baseUrl: '../src/js',
         paths: {
             'app': 'app',
             'apptest': '../../test/js/apptest'
-        },
-        urlArgs: 'bust=' + (+new Date())
+        }
     }, ['apptest/suite', 'vendor/domReady!'], function(){
         QUnit.load();
         QUnit.start();

@@ -1,4 +1,3 @@
-/*global console: false */
 define(['app/again', 'app/defer'], function (againModule, deferModule) {
 
     var again = againModule.again;
@@ -7,7 +6,7 @@ define(['app/again', 'app/defer'], function (againModule, deferModule) {
 
     QUnit.module('again');
 
-    QUnit.test('success', function (assert) {
+    QUnit.test('success', 6, function (assert) {
         QUnit.stop();
         var counter = 2;
         var funcToRun = function () {
@@ -61,7 +60,8 @@ define(['app/again', 'app/defer'], function (againModule, deferModule) {
         QUnit.stop();
         var counter = 2;
         var funcToRun = function () {
-            if (counter-- <= 0) {
+            counter--;
+            if (counter <= 0) {
                 return fulfilled(true);
             } else {
                 return rejected(false);
@@ -76,7 +76,6 @@ define(['app/again', 'app/defer'], function (againModule, deferModule) {
 
     QUnit.test('fail default', 1, function (assert) {
         QUnit.stop();
-        var counter = 10;
         var funcToRun = function () {
             return rejected(false);
         };

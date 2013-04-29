@@ -54,7 +54,7 @@ define(['app/defer'], function (deferModule) {
         QUnit.stop();
         var deferrable = defer();
         var promise = deferrable.promise;
-        promise.then(function (value) {
+        promise.then(function () {
             throw 'error';
         }).then(function () {
             QUnit.start();

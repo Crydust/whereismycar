@@ -14,18 +14,17 @@ define(['app/geography'], function (geography) {
         var pontDeNeuilly = new geography.LatLng(48.8867, 2.2547);
         var placeCharlesDeGaulle = new geography.LatLng(48.8735, 2.2958);
         var placeDeLaConcorde = new geography.LatLng(48.8655, 2.3207);
-        QUnit.close(geography.computeDistanceBetween(placeCharlesDeGaulle, placeDeLaConcorde), 2000, 50);
-        QUnit.close(geography.computeDistanceBetween(pontDeNeuilly, placeCharlesDeGaulle), 3350, 50);
-        QUnit.close(geography.computeDistanceBetween(pontDeNeuilly, placeDeLaConcorde), 5350, 50);
+        assert.close(geography.computeDistanceBetween(placeCharlesDeGaulle, placeDeLaConcorde), 2000, 50);
+        assert.close(geography.computeDistanceBetween(pontDeNeuilly, placeCharlesDeGaulle), 3350, 50);
+        assert.close(geography.computeDistanceBetween(pontDeNeuilly, placeDeLaConcorde), 5350, 50);
         //greenwich
         var cuttySarkSubway = new geography.LatLng(51.4814, -0.0102);
         var charltonWay = new geography.LatLng(51.4751, 0.0103);
-        QUnit.close(geography.computeDistanceBetween(cuttySarkSubway, charltonWay), 1609, 50);
+        assert.close(geography.computeDistanceBetween(cuttySarkSubway, charltonWay), 1609, 50);
         //new york
         var newYorkPublicLibrary = new geography.LatLng(40.75278, -73.9814);
         var marcusGaveyPark = new geography.LatLng(40.80323, -73.94459);
-        QUnit.close(geography.computeDistanceBetween(newYorkPublicLibrary, marcusGaveyPark), 6400, 50);
-
+        assert.close(geography.computeDistanceBetween(newYorkPublicLibrary, marcusGaveyPark), 6400, 50);
     });
 
     QUnit.test('computeHeading', 10, function (assert) {
@@ -33,22 +32,22 @@ define(['app/geography'], function (geography) {
         var pontDeNeuilly = new geography.LatLng(48.8867, 2.2547);
         var placeCharlesDeGaulle = new geography.LatLng(48.8735, 2.2958);
         var placeDeLaConcorde = new geography.LatLng(48.8655, 2.3207);
-        QUnit.close(geography.computeHeading(placeCharlesDeGaulle, placeDeLaConcorde), 116, 5);
-        QUnit.close(geography.computeHeading(pontDeNeuilly, placeCharlesDeGaulle), 116, 5);
-        QUnit.close(geography.computeHeading(pontDeNeuilly, placeDeLaConcorde), 116, 5);
-        QUnit.close(geography.computeHeading(placeDeLaConcorde, placeCharlesDeGaulle), 296, 5);
-        QUnit.close(geography.computeHeading(placeCharlesDeGaulle, pontDeNeuilly), 296, 5);
-        QUnit.close(geography.computeHeading(placeDeLaConcorde, pontDeNeuilly), 296, 5);
+        assert.close(geography.computeHeading(placeCharlesDeGaulle, placeDeLaConcorde), 116, 5);
+        assert.close(geography.computeHeading(pontDeNeuilly, placeCharlesDeGaulle), 116, 5);
+        assert.close(geography.computeHeading(pontDeNeuilly, placeDeLaConcorde), 116, 5);
+        assert.close(geography.computeHeading(placeDeLaConcorde, placeCharlesDeGaulle), 296, 5);
+        assert.close(geography.computeHeading(placeCharlesDeGaulle, pontDeNeuilly), 296, 5);
+        assert.close(geography.computeHeading(placeDeLaConcorde, pontDeNeuilly), 296, 5);
         //greenwich
         var cuttySarkSubway = new geography.LatLng(51.4814, -0.0102);
         var charltonWay = new geography.LatLng(51.4751, 0.0103);
-        QUnit.close(geography.computeHeading(cuttySarkSubway, charltonWay), 116, 5);
-        QUnit.close(geography.computeHeading(charltonWay, cuttySarkSubway), 296, 5);
+        assert.close(geography.computeHeading(cuttySarkSubway, charltonWay), 116, 5);
+        assert.close(geography.computeHeading(charltonWay, cuttySarkSubway), 296, 5);
         //new york
         var newYorkPublicLibrary = new geography.LatLng(40.75278, -73.9814);
         var marcusGaveyPark = new geography.LatLng(40.80323, -73.94459);
-        QUnit.close(geography.computeHeading(newYorkPublicLibrary, marcusGaveyPark), 28, 5);
-        QUnit.close(geography.computeHeading(marcusGaveyPark, newYorkPublicLibrary), 208, 5);
+        assert.close(geography.computeHeading(newYorkPublicLibrary, marcusGaveyPark), 28, 5);
+        assert.close(geography.computeHeading(marcusGaveyPark, newYorkPublicLibrary), 208, 5);
     });
 
     QUnit.test('computeCompassDirection', 13, function (assert) {
