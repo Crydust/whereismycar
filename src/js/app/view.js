@@ -25,8 +25,12 @@ define(function (require) {
         return data;
     }
 
-    function calculateRadarDotCoordinates(distanceInMeters, headingInDegrees, bearingInDegrees, centerXInPixels, centerYInPixels, maxDistanceInMeters, maxDistanceInPixels) {
-        var radiusInPixels = Math.min(maxDistanceInPixels, distanceInMeters * maxDistanceInPixels / maxDistanceInMeters);
+    function calculateRadarDotCoordinates(
+            distanceInMeters, headingInDegrees, bearingInDegrees, centerXInPixels, centerYInPixels,
+            maxDistanceInMeters, maxDistanceInPixels) {
+        var radiusInPixels = Math.min(
+                maxDistanceInPixels,
+                distanceInMeters * maxDistanceInPixels / maxDistanceInMeters);
         var angleInDegrees = (270 + headingInDegrees + bearingInDegrees) % 360;
         var angleInRadians = geometry.toRad(angleInDegrees);
         var x = Math.round(centerXInPixels + (radiusInPixels * Math.cos(angleInRadians)));
@@ -107,7 +111,8 @@ define(function (require) {
         //direction
         if (currentData.bearing !== newData.bearing ||
                 currentData.distance !== newData.distance) {
-            (dom.byId('direction_current_to_stored')).innerHTML = newData.distance + 'm ' + geography.computeCompassDirection(newData.bearing);
+            (dom.byId('direction_current_to_stored')).innerHTML =
+                    newData.distance + 'm ' + geography.computeCompassDirection(newData.bearing);
         }
 
         //radar

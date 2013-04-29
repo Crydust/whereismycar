@@ -86,7 +86,12 @@ define(function (require) {
     }
 
     function computeCompassDirection(angle) {
-        return ['North', 'Northeast', 'East', 'Southeast', 'South', 'Southwest', 'West', 'Northwest'][Math.floor(((angle + 22.5) % 360) / 45)];
+        return [
+            'North', 'Northeast',
+            'East', 'Southeast',
+            'South', 'Southwest',
+            'West', 'Northwest'
+        ][Math.floor(((angle + 22.5) % 360) / 45)];
     }
 
     return {
