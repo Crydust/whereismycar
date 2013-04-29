@@ -4,7 +4,7 @@ define(function (require) {
     var deferModule = require('./defer');
     var geography = require('./geography');
 
-    var defer = deferModule.defer;
+    var defer = deferModule.pending;
 
     function isSupported() {
         return window.navigator.hasOwnProperty('geolocation');
@@ -19,7 +19,7 @@ define(function (require) {
             };
             var successHandler = function (geoPosition) {
                 window.clearTimeout(timeoutid);
-                deferred.resolve(geoPosition);
+                deferred.fulfill(geoPosition);
             };
             var errorHandler = function (geoPositionError) {
                 window.clearTimeout(timeoutid);
@@ -35,7 +35,7 @@ define(function (require) {
         } else {
             /*
             window.setTimeout(function () {
-                deferred.resolve({
+                deferred.fulfill({
                     'timestamp': 1359302664666,
                     'coords': {
                         'speed': null,

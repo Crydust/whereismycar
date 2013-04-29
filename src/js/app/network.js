@@ -4,7 +4,7 @@ define(function (require) {
     var deferModule = require('./defer');
     var JSON3 = require('vendor/json3');
 
-    var defer = deferModule.defer;
+    var defer = deferModule.pending;
 
     var NOOP = function () {};
 
@@ -33,7 +33,7 @@ define(function (require) {
                 if (request.readyState === 4 && request.status === 200) {
                     window.clearTimeout(timeoutid);
                     request.onreadystatechange = NOOP;
-                    deferred.resolve(request.responseText);
+                    deferred.fulfill(request.responseText);
                 }
             };
             timeoutid = window.setTimeout(timeoutHandler, 5000);
@@ -82,7 +82,7 @@ define(function (require) {
             };
             var callback = function (val) {
                 cleanup();
-                deferred.resolve(val);
+                deferred.fulfill(val);
             };
             script.onerror = errorHandler;
             timeoutid = window.setTimeout(timeoutHandler, 5000);

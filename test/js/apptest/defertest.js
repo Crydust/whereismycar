@@ -1,6 +1,6 @@
 define(['app/defer'], function (deferModule) {
 
-    var defer = deferModule.defer;
+    var defer = deferModule.pending;
 
     QUnit.module('defer');
 
@@ -15,7 +15,7 @@ define(['app/defer'], function (deferModule) {
         }, function () {
             QUnit.start();
         });
-        deferrable.resolve(expected);
+        deferrable.fulfill(expected);
     });
 
     QUnit.test('reject', 1, function (assert) {
@@ -47,7 +47,7 @@ define(['app/defer'], function (deferModule) {
         }, function () {
             QUnit.start();
         });
-        deferrable.resolve(expectedPart1);
+        deferrable.fulfill(expectedPart1);
     });
 
     QUnit.test('throw', 1, function (assert) {
@@ -62,7 +62,7 @@ define(['app/defer'], function (deferModule) {
             assert.ok(true);
             QUnit.start();
         });
-        deferrable.resolve('unexpected');
+        deferrable.fulfill('unexpected');
     });
 
     return {};

@@ -5,7 +5,7 @@ define(function (require) {
     var network = require('./network');
     var geography = require('./geography');
 
-    var defer = deferModule.defer;
+    var defer = deferModule.pending;
 
     /** @const @type {number} */
     var SIGNIFICANT_DIGITS_FOR_GEOCODE = 6;
@@ -13,7 +13,7 @@ define(function (require) {
     function extractAddress(data) {
         var deferred = defer();
         if (data && data.Status && data.Status.code === 200) {
-            deferred.resolve(data.Placemark[0].address);
+            deferred.fulfill(data.Placemark[0].address);
         } else {
             deferred.reject(new Error('could not read address'));
         }
@@ -23,7 +23,7 @@ define(function (require) {
     var reverseGeocodeTime = 0;
     function reverseGeocode(latlng) {
         var deferred = defer();
-        deferred.resolve('Earth, third rock from the sun');
+        deferred.fulfill('Earth, third rock from the sun');
         /*
         var currentTime = new Date().getTime();
         if (currentTime - reverseGeocodeTime < 5000) {
@@ -40,12 +40,12 @@ define(function (require) {
                 url = 'http://www.crydust.be/lab/whereismycar/geo/' +
                     '?output=jsonp&callback=?&q=' +
                     latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE);
-                deferred.resolve(network.getJsonp(url).then(extractAddress));
+                deferred.fulfill(network.getJsonp(url).then(extractAddress));
             } else {
             //>>excludeEnd("prod");
                 url = 'geo/?output=json&q=' +
                     latlng.toUrlValue(SIGNIFICANT_DIGITS_FOR_GEOCODE);
-                deferred.resolve(network.getJson(url).then(extractAddress));
+                deferred.fulfill(network.getJson(url).then(extractAddress));
             //>>excludeStart("prod", pragmas.prod);
             }
             //>>excludeEnd("prod");

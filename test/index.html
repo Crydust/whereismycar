@@ -13,13 +13,13 @@
     </script>
     <script src="../src/js/vendor/require.js"></script>
     <script>
-	if (location.hash !== '#testem') {
+	if (false && location.hash !== '#testem') {
     	document.write('<script src="qunit/blanket.js" data-cover-only="/app/"><\/script>');
 	}
     </script>
     <script>
     QUnit.config.autostart = false;
-    QUnit.config.requireExpects = true;
+    //QUnit.config.requireExpects = true;
     
     (function removeEvent(elem, type, fn) {
         if (elem.removeEventListener) {

@@ -3,38 +3,33 @@ define(function (require) {
     'use strict';
 
     var deferModule = require('./defer');
+    var defer = deferModule.pending;
 
     function again(func, maxTries) {
-        console.log('again');
         if (typeof maxTries === 'undefined') {
             maxTries = 3;
         }
-        console.log('maxTries = ', maxTries);
         return function (input) {
-            var deferred = deferModule.defer();
+            var deferred = defer();
             var remainingTries = maxTries;
+            function runAgain(reason) {
+                remainingTries--;
+                if (remainingTries > 0) {
+                    run();
+                } else {
+                    deferred.reject(reason);
+                }
+            }
             function run() {
-                console.log('run');
                 try {
                     func(input).then(function (output) {
-                        deferred.resolve(output);
+                        deferred.fulfill(output);
                     }, function (reason) {
-                        remainingTries--;
-                        if (remainingTries > 0) {
-                            run();
-                        } else {
-                            deferred.reject(reason);
-                        }
+                        runAgain(reason);
                     });
-                } catch (e) {
-                    remainingTries--;
-                    if (remainingTries > 0) {
-                        run();
-                    } else {
-                        deferred.reject(e);
-                    }
+                } catch (reason) {
+                    runAgain(reason);
                 }
-                console.log('end run');
             }
             run();
             return deferred.promise;
