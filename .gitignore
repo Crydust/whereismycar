@@ -69,7 +69,4 @@ jscoverage.exe
 secret.php
 
 # ignore generated files
-!src/js/vendor/*.d.ts
 *.js.map
-src/js/*.js
-src/js/**/*.js

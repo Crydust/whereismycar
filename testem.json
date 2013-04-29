@@ -1,8 +1,6 @@
 {
   "framework": "qunit",
   "test_page": "test/index.html",
-  "src_files": "src/**/*.ts test/**/*.js",
-  "launch_in_dev": ["Firefox", "Chrome", "Safari", "PhantomJS"],
-  "before_tests": "grunt typescript:devTs --force",
-  "after_tests": "grunt typescript:cleanTs --force"
+  "src_files": "src/**/*.js test/**/*.js",
+  "launch_in_dev": ["PhantomJS"]
 }

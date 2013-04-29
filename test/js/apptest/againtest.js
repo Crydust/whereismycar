@@ -1,3 +1,4 @@
+/*global console: false */
 define(['app/again', 'app/defer'], function (againModule, deferModule) {
 
     var again = againModule.again;
@@ -20,8 +21,7 @@ define(['app/again', 'app/defer'], function (againModule, deferModule) {
             }
             return deferred.promise;
         };
-        var wrappedFunc = again(funcToRun, 3);
-        wrappedFunc().then(function () {
+        (again(funcToRun, 3)()).then(function () {
             assert.equal(counter, 0, 'zero remaining');
             assert.ok(true, 'done recieved');
             QUnit.start();
@@ -46,12 +46,46 @@ define(['app/again', 'app/defer'], function (againModule, deferModule) {
             }
             return deferred.promise;
         };
-        var wrappedFunc = again(funcToRun, 3);
-        wrappedFunc().then(function () {
+        (again(funcToRun, 3)()).then(function () {
             assert.ok(false, 'done recieved unexpected');
             QUnit.start();
         }, function () {
             assert.equal(counter, 7, 'seven remaining');
+            assert.ok(true, 'not done, as expected');
+            QUnit.start();
+        });
+    });
+
+    QUnit.test('success default', 1, function (assert) {
+        QUnit.stop();
+        var counter = 2;
+        var funcToRun = function () {
+            var deferred = defer();
+            if (counter-- <= 0) {
+                deferred.resolve(true);
+            } else {
+                deferred.reject(false);
+            }
+            return deferred.promise;
+        };
+        var retryingPromise = (again(funcToRun)());
+        retryingPromise.then(function () {
+            assert.ok(true, 'done recieved');
+            QUnit.start();
+        });
+    });
+
+    QUnit.test('fail default', 1, function (assert) {
+        QUnit.stop();
+        var counter = 10;
+        var funcToRun = function () {
+            throw new Error('allways fail');
+        };
+        var retryingPromise = (again(funcToRun)());
+        retryingPromise.then(function () {
+            assert.ok(false, 'done recieved unexpected');
+            QUnit.start();
+        }, function () {
             assert.ok(true, 'not done, as expected');
             QUnit.start();
         });
