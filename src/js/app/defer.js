@@ -1,26 +1,31 @@
-//20.994 bytes
-define(['vendor/promises-a'], function (defer) {
+define(function (require) {
     'use strict';
-    function deferWithResolve() {
-        var result = defer();
-        result.resolve = result.fulfill;
-        return result;
-    }
+
+    var Promise = require('vendor/promise');
+
     return {
-        defer: deferWithResolve
+        pending: function () {
+            var resolve, reject;
+            var promise = new Promise(function (_resolve, _reject) {
+                resolve = _resolve;
+                reject = _reject;
+            });
+            return {
+                promise: promise,
+                fulfill: resolve,
+                reject: reject
+            };
+        },
+        fulfilled: function (value) {
+            return new Promise(function (resolve) {
+                resolve(value);
+            });
+        },
+        rejected: function (value) {
+            return new Promise(function (resolve, reject) {
+                reject(value);
+            });
+        }
     };
+
 });
-/*
-//32.138 bytes
-define(['q'], function (q) {
-    'use strict';
-    return q.defer;
-});
-*/
-/*
-//23.634 bytes
-define(['when'], function (when) {
-    'use strict';
-    return when.defer;
-});
-*/

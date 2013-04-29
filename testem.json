@@ -1,0 +1,6 @@
+{
+  "framework": "qunit",
+  "test_page": "test/index.html",
+  "src_files": "src/**/*.js test/**/*.js",
+  "launch_in_dev": ["PhantomJS"]
+}

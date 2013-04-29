@@ -1,10 +1,10 @@
-define(['app/dom'], function(dom) {
+define(['app/dom'], function (dom) {
 
-    module('domtest');
+    QUnit.module('domtest');
 
-    test('byId', 2, function(){
+    QUnit.test('byId', 2, function (assert) {
         var dummy = dom.byId('dummy');
-        equal(dummy, document.getElementById('dummy'), 'dummy');
+        assert.ok(dummy === document.getElementById('dummy'), 'dummy');
 
         var fakeDocument = {
             getElementById: function () {
@@ -12,15 +12,16 @@ define(['app/dom'], function(dom) {
             }
         };
         dummy = dom.byId('dummy', fakeDocument);
-        equal(dummy, 'expected', 'fakeDocument');
+        assert.equal(dummy, 'expected', 'fakeDocument');
+
     });
 
-    test('on', 1, function(){
-        stop();
+    QUnit.test('on', 1, function (assert) {
+        QUnit.stop();
         var dummy = dom.byId('dummy');
-        dom.on(dummy, 'click', function(){
-            ok(true);
-            start();
+        dom.on(dummy, 'click', function () {
+            assert.ok(true);
+            QUnit.start();
             return false;
         });
         (function fireEvent(element, event) {
@@ -34,7 +35,7 @@ define(['app/dom'], function(dom) {
             }
         }(dummy, 'click'));
     });
-    
+
     return {};
 
 });

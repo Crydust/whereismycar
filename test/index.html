@@ -6,7 +6,17 @@
     <link rel="stylesheet" href="qunit/qunit.css">
     <script src="qunit/qunit.js"></script>
     <script src="qunit/qunit-close-enough.js"></script>
+    <script>
+	if (location.hash === '#testem') {
+    	document.write('<script src="/testem.js"><\/script>');
+	}
+    </script>
     <script src="../src/js/vendor/require.js"></script>
+    <script>
+	if (location.hash !== '#testem') {
+    	document.write('<script src="qunit/blanket.js" data-cover-only="/app/"><\/script>');
+	}
+    </script>
     <script>
     QUnit.config.autostart = false;
     QUnit.config.requireExpects = true;
@@ -20,18 +30,17 @@
     }(window, 'load', QUnit.load));
     
     require({
+        //urlArgs: 'bust=' + (+new Date()),
         baseUrl: '../src/js',
         paths: {
             'app': 'app',
             'apptest': '../../test/js/apptest'
-        },
-        urlArgs: 'bust=' + (+new Date())
+        }
     }, ['apptest/suite', 'vendor/domReady!'], function(){
         QUnit.load();
         QUnit.start();
     });
     </script>
-    <script src="qunit/blanket.js"></script>
 </head>
 <body>
 <div id="qunit"></div>

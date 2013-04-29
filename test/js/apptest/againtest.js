@@ -1,62 +1,94 @@
-define(['app/again', 'app/defer'], function(againModule, deferModule) {
+define(['app/again', 'app/defer'], function (againModule, deferModule) {
 
     var again = againModule.again;
-    var defer = deferModule.defer;
-    
-    module('again');
+    var fulfilled = deferModule.fulfilled;
+    var rejected = deferModule.rejected;
 
-    test('success', 4, function(){
-        stop();
+    QUnit.module('again');
+
+    QUnit.test('success', 6, function (assert) {
+        QUnit.stop();
         var counter = 2;
-        var funcToRun = function(){
-            var deferred = defer();
+        var funcToRun = function () {
             counter--;
             if (counter <= 0) {
-                ok(true, 'done');
-                deferred.resolve(true);
+                assert.ok(true, 'done');
+                return fulfilled(true);
             } else {
-                ok(true, 'not done yet');
-                deferred.reject(false);
+                assert.ok(true, 'not done yet');
+                return rejected(false);
             }
-            return deferred.promise;
         };
-        var wrappedFunc = again(funcToRun, 3);
-        wrappedFunc().then(function () {
-            equal(counter, 0, 'zero remaining');
-            ok(true, 'done recieved');
-            start();
+        var retryingPromiseFactory = again(funcToRun, 3);
+        assert.equal(typeof retryingPromiseFactory, 'function', 'retryingPromiseFactory is a function');
+        var retryingPromise = retryingPromiseFactory();
+        assert.equal(typeof retryingPromise.then, 'function', 'retryingPromise has a then function');
+        retryingPromise.then(function () {
+            assert.equal(counter, 0, 'zero remaining');
+            assert.ok(true, 'done recieved');
+            QUnit.start();
         }, function () {
-            ok(false, 'unexpected');
-            start();
+            assert.ok(false, 'unexpected');
+            QUnit.start();
         });
     });
-    
-    test('fail', 5, function(){
-        stop();
+
+    QUnit.test('fail', 5, function (assert) {
+        QUnit.stop();
         var counter = 10;
-        var funcToRun = function(){
-            var deferred = defer();
+        var funcToRun = function () {
             counter--;
             if (counter <= 0) {
-                ok(false, 'done unexpected');
-                deferred.resolve(true);
+                assert.ok(false, 'done unexpected');
+                return fulfilled(true);
             } else {
-                ok(true, 'not done yet');
-                deferred.reject(false);
+                assert.ok(true, 'not done yet');
+                return rejected(false);
             }
-            return deferred.promise;
         };
-        var wrappedFunc = again(funcToRun, 3);
-        wrappedFunc().then(function () {
-            ok(false, 'done recieved unexpected');
-            start();
+        (again(funcToRun, 3)()).then(function () {
+            assert.ok(false, 'done recieved unexpected');
+            QUnit.start();
         }, function () {
-            equal(counter, 7, 'seven remaining');
-            ok(true, 'not done, as expected');
-            start();
+            assert.equal(counter, 7, 'seven remaining');
+            assert.ok(true, 'not done, as expected');
+            QUnit.start();
         });
     });
-    
+
+    QUnit.test('success default', 1, function (assert) {
+        QUnit.stop();
+        var counter = 2;
+        var funcToRun = function () {
+            counter--;
+            if (counter <= 0) {
+                return fulfilled(true);
+            } else {
+                return rejected(false);
+            }
+        };
+        var retryingPromise = (again(funcToRun)());
+        retryingPromise.then(function () {
+            assert.ok(true, 'done recieved');
+            QUnit.start();
+        });
+    });
+
+    QUnit.test('fail default', 1, function (assert) {
+        QUnit.stop();
+        var funcToRun = function () {
+            return rejected(false);
+        };
+        var retryingPromise = (again(funcToRun)());
+        retryingPromise.then(function () {
+            assert.ok(false, 'done recieved unexpected');
+            QUnit.start();
+        }, function () {
+            assert.ok(true, 'not done, as expected');
+            QUnit.start();
+        });
+    });
+
     return {};
 
 });

@@ -1,5 +1,6 @@
 
-define(['./againtest',
+define([
+    './againtest',
     './defertest',
     './domtest',
     './geographytest',
@@ -8,6 +9,7 @@ define(['./againtest',
     './googletest',
     './objectstest',
     './stringstest',
-    './timeagotest'], function() {
+    './timeagotest'
+], function () {
     return {};
 });
