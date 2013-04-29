@@ -60,7 +60,7 @@ define(function (require) {
         }
         var result = input;
         var index = 0;
-        result = input.replace(/%(\d*)((?:.\d+)?)([%bcdufosxX])/g, function (match, indexOverride, precision, type, offset, string) {
+        result = input.replace(/%(\d*)((?:.\d+)?)([%bcdufosxX])/g, function (match, indexOverride, precision, type) {
             if (type === '%') {
                 return '%';
             }

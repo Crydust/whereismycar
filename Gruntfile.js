@@ -72,6 +72,14 @@ module.exports = function (grunt) {
                     'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
                 ],
                 tasks: ['jshint', 'reload']
+            },
+            jshint: {
+                files: [
+                    'Gruntfile.js',
+                    'src/**/*.html', 'src/**/*.js', 'src/**/*.css',
+                    'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
+                ],
+                tasks: ['jshint']
             }
         },
         reload: {
@@ -106,7 +114,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-reload');
     grunt.loadNpmTasks('grunt-qunit-cov');
-    //grunt.loadNpmTasks('grunt-jssemicoloned');
+    grunt.loadNpmTasks('grunt-jssemicoloned');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {

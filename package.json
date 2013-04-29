@@ -34,7 +34,8 @@
       "almond": "github:jrburke/almond/0.2.5",
       "domReady": "github:requirejs/domReady/2.0.1",
       "json3": "github:bestiejs/json3/v3.2.4",
-      "promises-a": "github:ForbesLindesay/promises-a/2.3.0",
+      "promise": "github:then/promise/2.0.0",
+      "is-promise": "github:then/is-promise/master",
       "store": "github:marcuswestin/store.js/v1.3.7"
     }
   }

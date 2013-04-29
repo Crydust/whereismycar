@@ -2,7 +2,8 @@
 define(['app/again', 'app/defer'], function (againModule, deferModule) {
 
     var again = againModule.again;
-    var defer = deferModule.pending;
+    var fulfilled = deferModule.fulfilled;
+    var rejected = deferModule.rejected;
 
     QUnit.module('again');
 
@@ -10,16 +11,14 @@ define(['app/again', 'app/defer'], function (againModule, deferModule) {
         QUnit.stop();
         var counter = 2;
         var funcToRun = function () {
-            var deferred = defer();
             counter--;
             if (counter <= 0) {
                 assert.ok(true, 'done');
-                deferred.fulfill(true);
+                return fulfilled(true);
             } else {
                 assert.ok(true, 'not done yet');
-                deferred.reject(false);
+                return rejected(false);
             }
-            return deferred.promise;
         };
         var retryingPromiseFactory = again(funcToRun, 3);
         assert.equal(typeof retryingPromiseFactory, 'function', 'retryingPromiseFactory is a function');
@@ -39,16 +38,14 @@ define(['app/again', 'app/defer'], function (againModule, deferModule) {
         QUnit.stop();
         var counter = 10;
         var funcToRun = function () {
-            var deferred = defer();
             counter--;
             if (counter <= 0) {
                 assert.ok(false, 'done unexpected');
-                deferred.fulfill(true);
+                return fulfilled(true);
             } else {
                 assert.ok(true, 'not done yet');
-                deferred.reject(false);
+                return rejected(false);
             }
-            return deferred.promise;
         };
         (again(funcToRun, 3)()).then(function () {
             assert.ok(false, 'done recieved unexpected');
@@ -64,13 +61,11 @@ define(['app/again', 'app/defer'], function (againModule, deferModule) {
         QUnit.stop();
         var counter = 2;
         var funcToRun = function () {
-            var deferred = defer();
             if (counter-- <= 0) {
-                deferred.fulfill(true);
+                return fulfilled(true);
             } else {
-                deferred.reject(false);
+                return rejected(false);
             }
-            return deferred.promise;
         };
         var retryingPromise = (again(funcToRun)());
         retryingPromise.then(function () {
@@ -83,7 +78,7 @@ define(['app/again', 'app/defer'], function (againModule, deferModule) {
         QUnit.stop();
         var counter = 10;
         var funcToRun = function () {
-            throw new Error('allways fail');
+            return rejected(false);
         };
         var retryingPromise = (again(funcToRun)());
         retryingPromise.then(function () {

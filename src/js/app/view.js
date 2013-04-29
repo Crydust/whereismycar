@@ -8,7 +8,7 @@ define(function (require) {
     var geography = require('./geography');
     var svg = require('./svg');
     var geometry = require('./geometry');
-    var google = require('./google');
+    //var google = require('./google');
 
     var defaultTimestamp = 0;
     var defaultImage = 'img/spacer.gif';

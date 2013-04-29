@@ -1,8 +1,8 @@
-/*global console: false */
 define(function (require) {
     'use strict';
 
     var deferModule = require('./defer');
+
     var defer = deferModule.pending;
 
     function again(func, maxTries) {

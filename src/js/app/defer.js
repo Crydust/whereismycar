@@ -1,4 +1,3 @@
-/*jshint nomen: false */
 define(function (require) {
     'use strict';
 

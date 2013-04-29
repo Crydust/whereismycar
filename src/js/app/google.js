@@ -2,26 +2,27 @@ define(function (require) {
     'use strict';
 
     var deferModule = require('./defer');
-    var network = require('./network');
-    var geography = require('./geography');
+    //var network = require('./network');
+    //var geography = require('./geography');
 
     var defer = deferModule.pending;
 
     /** @const @type {number} */
-    var SIGNIFICANT_DIGITS_FOR_GEOCODE = 6;
+    //var SIGNIFICANT_DIGITS_FOR_GEOCODE = 6;
 
-    function extractAddress(data) {
-        var deferred = defer();
-        if (data && data.Status && data.Status.code === 200) {
-            deferred.fulfill(data.Placemark[0].address);
-        } else {
-            deferred.reject(new Error('could not read address'));
-        }
-        return deferred.promise;
-    }
+    //function extractAddress(data) {
+    //    var deferred = defer();
+    //    if (data && data.Status && data.Status.code === 200) {
+    //        deferred.fulfill(data.Placemark[0].address);
+    //    } else {
+    //        deferred.reject(new Error('could not read address'));
+    //    }
+    //    return deferred.promise;
+    //}
 
-    var reverseGeocodeTime = 0;
-    function reverseGeocode(latlng) {
+    //var reverseGeocodeTime = 0;
+    //function reverseGeocode(latlng) {
+    function reverseGeocode() {
         var deferred = defer();
         deferred.fulfill('Earth, third rock from the sun');
         /*
