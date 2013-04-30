@@ -1,3 +1,4 @@
+/*jshint camelcase: false */
 /*global module:false */
 module.exports = function (grunt) {
     'use strict';
@@ -104,6 +105,50 @@ module.exports = function (grunt) {
                 'src/js/*.js', 'src/js/app/*.js',
                 'test/js/**/*.js'
             ]
+        },
+        jsvalidate: {
+            files: [
+                'Gruntfile.js',
+                'src/js/**/*.js',
+                'test/js/**/*.js'
+            ]
+        },
+        jsbeautifier: {
+            options: {
+                indent_size: 4,
+                indent_char: ' ',
+                indent_level: 0,
+                indent_with_tabs: false,
+                preserve_newlines: true,
+                max_preserve_newlines: 10,
+                jslint_happy: true,
+                brace_style: 'collapse',
+                keep_array_indentation: false,
+                keep_function_indentation: false,
+                space_before_conditional: true,
+                break_chained_methods: false,
+                eval_code: false,
+                wrap_line_length: 120,
+                unescape_strings: false
+            },
+            gruntfile: {
+                options: {
+                    keep_array_indentation: true
+                },
+                files: {
+                    src: ['Gruntfile.js']
+                }
+            },
+            src: {
+                files: {
+                    src: ['src/**/*.js', '!src/js/vendor/**/*.js']
+                }
+            },
+            test: {
+                files: {
+                    src: ['test/**/*.js', '!test/qunit/**/*.js']
+                }
+            }
         }
     });
 
@@ -115,6 +160,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-reload');
     grunt.loadNpmTasks('grunt-qunit-cov');
     grunt.loadNpmTasks('grunt-jssemicoloned');
+    grunt.loadNpmTasks('grunt-jsvalidate');
+    grunt.loadNpmTasks('grunt-jsbeautifier');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
@@ -143,11 +190,11 @@ module.exports = function (grunt) {
         grunt.file.write('publish/index.html', replacement);
     });
 
-    grunt.registerTask('test', ['jshint', 'connect:server', 'qunit:all']);
-    grunt.registerTask('testCov', ['jshint', 'test', 'qunit-cov']);
-    grunt.registerTask('default', ['jshint']);
-    grunt.registerTask('lint', ['jshint']);
-    grunt.registerTask('dev', ['jshint', 'connect:server', 'reload', 'watch:dev']);
+    grunt.registerTask('test', ['lint', 'connect:server', 'qunit:all']);
+    grunt.registerTask('testCov', ['lint', 'test', 'qunit-cov']);
+    grunt.registerTask('default', ['lint']);
+    grunt.registerTask('lint', ['jsvalidate', 'jshint']);
+    grunt.registerTask('dev', ['lint', 'connect:server', 'reload', 'watch:dev']);
     grunt.registerTask('publish', ['test', 'requirejs:compile']);
     grunt.registerTask('publishAlmond', ['test', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
 

@@ -29,12 +29,65 @@ define(['app/objects'], function (objects) {
         assert.deepEqual(objects.copy({}), {}, 'object');
         assert.strictEqual(objects.copy(null), null, 'null');
         assert.strictEqual(objects.copy(undefined), undefined, 'undefined');
-        assert.deepEqual(objects.copy(['', 0, true, [], {}, null, undefined]),
-            ['', 0, true, [], {}, null, undefined], 'array nonempty');
-        assert.deepEqual(objects.copy({a: '', b: 0, c: true, e: [], f: {}, g: null, h: undefined}),
-            {a: '', b: 0, c: true, e: [], f: {}, g: null, h: undefined}, 'object nonempty');
-        assert.deepEqual(objects.copy({a: '', b: 0, c: true, e: ['', 0, true, [], {}, null, undefined], f: {a: '', b: 0, c: true, e: [], f: {}, g: null, h: undefined}, g: null, h: undefined}),
-            {a: '', b: 0, c: true, e: ['', 0, true, [], {}, null, undefined], f: {a: '', b: 0, c: true, e: [], f: {}, g: null, h: undefined}, g: null, h: undefined}, 'object kitchen sink');
+        assert.deepEqual(objects.copy(['', 0, true, [], {},
+            null, undefined
+        ]), ['', 0, true, [], {},
+            null, undefined
+        ], 'array nonempty');
+        assert.deepEqual(objects.copy({
+            a: '',
+            b: 0,
+            c: true,
+            e: [],
+            f: {},
+            g: null,
+            h: undefined
+        }), {
+            a: '',
+            b: 0,
+            c: true,
+            e: [],
+            f: {},
+            g: null,
+            h: undefined
+        }, 'object nonempty');
+        assert.deepEqual(objects.copy({
+            a: '',
+            b: 0,
+            c: true,
+            e: ['', 0, true, [], {},
+                null, undefined
+            ],
+            f: {
+                a: '',
+                b: 0,
+                c: true,
+                e: [],
+                f: {},
+                g: null,
+                h: undefined
+            },
+            g: null,
+            h: undefined
+        }), {
+            a: '',
+            b: 0,
+            c: true,
+            e: ['', 0, true, [], {},
+                null, undefined
+            ],
+            f: {
+                a: '',
+                b: 0,
+                c: true,
+                e: [],
+                f: {},
+                g: null,
+                h: undefined
+            },
+            g: null,
+            h: undefined
+        }, 'object kitchen sink');
     });
 
     return {};

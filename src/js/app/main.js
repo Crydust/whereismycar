@@ -32,6 +32,7 @@ define(function (require) {
         var radarContentDocument = null;
         var sweeper = null;
         var sweeperCenter = new geometry.Point(160, 160);
+
         function step(timestamp) {
             if (isDirty) {
                 isDirty = false;
@@ -53,10 +54,10 @@ define(function (require) {
         function onDeviceorientation(event) {
             var success = false;
             if (event.webkitCompassHeading !== undefined &&
-                    event.webkitCompassHeading !== null &&
-                    event.webkitCompassHeading > 0 &&
-                    event.webkitCompassAccuracy >= 0 &&
-                    event.webkitCompassAccuracy <= 30) {
+                event.webkitCompassHeading !== null &&
+                event.webkitCompassHeading > 0 &&
+                event.webkitCompassAccuracy >= 0 &&
+                event.webkitCompassAccuracy <= 30) {
                 data.compass = (360 - event.webkitCompassHeading);
                 success = true;
             } else if (event.alpha !== null && event.absolute) {
@@ -90,7 +91,7 @@ define(function (require) {
             if (!isReverseGeoCoding && data.current.accuracy < 150) {
                 isReverseGeoCoding = true;
                 google.reverseGeocode(currentLatLng)
-                .then(function (address) {
+                    .then(function (address) {
                     data.current.address = address;
                     data.status = 'Done.';
                     log(data);
@@ -110,20 +111,17 @@ define(function (require) {
             isReverseGeoCoding = false;
 
             geolocation.getCurrentPosition()
-            .then(handlePosition)
-            .then(function () {
+                .then(handlePosition)
+                .then(function () {
                 //listen to compass
                 dom.on(window, 'deviceorientation', onDeviceorientation);
                 //continously listen to position
                 navigator.geolocation.watchPosition(
-                    handlePosition,
-                    function noop() {},
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 5000, //ms
-                        maximumAge: 0 //ms
-                    }
-                );
+                    handlePosition, function noop() {}, {
+                    enableHighAccuracy: true,
+                    timeout: 5000, //ms
+                    maximumAge: 0 //ms
+                });
 
             });
 

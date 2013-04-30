@@ -10,7 +10,7 @@ define(function () {
             theDefault = 'Unknown';
         }
         if (theValue === null || theValue === undefined ||
-                (typeof theValue === 'number' && isNaN(theValue))) {
+            (typeof theValue === 'number' && isNaN(theValue))) {
             return theDefault;
         } else {
             return theValue;
@@ -18,6 +18,7 @@ define(function () {
     }
 
     var EMPY_OBJECT = {};
+
     function betterTypeof(obj) {
         if (obj === null) {
             return 'null';
@@ -52,7 +53,7 @@ define(function () {
             }
             break;
         case 'number':
-            result = + obj;
+            result = +obj;
             break;
         case 'boolean':
             result = !! obj;

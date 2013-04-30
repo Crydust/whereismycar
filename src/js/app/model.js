@@ -39,6 +39,7 @@ define(function (require) {
     function read() {
         return modelData;
     }
+
     function write() {
         store.set('storedModel', modelData.stored);
     }

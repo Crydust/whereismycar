@@ -12,6 +12,7 @@ define(function (require) {
         return function (input) {
             var deferred = defer();
             var remainingTries = maxTries;
+
             function runAgain(reason) {
                 remainingTries--;
                 if (remainingTries > 0) {
@@ -20,6 +21,7 @@ define(function (require) {
                     deferred.reject(reason);
                 }
             }
+
             function run() {
                 try {
                     func(input).then(function (output) {
