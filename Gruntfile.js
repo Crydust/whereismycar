@@ -1,3 +1,4 @@
+/*jshint camelcase: false */
 /*global module:false */
 module.exports = function (grunt) {
     'use strict';
@@ -111,6 +112,43 @@ module.exports = function (grunt) {
                 'src/js/**/*.js',
                 'test/js/**/*.js'
             ]
+        },
+        jsbeautifier: {
+            options: {
+                indent_size: 4,
+                indent_char: ' ',
+                indent_level: 0,
+                indent_with_tabs: false,
+                preserve_newlines: true,
+                max_preserve_newlines: 10,
+                jslint_happy: true,
+                brace_style: 'collapse',
+                keep_array_indentation: false,
+                keep_function_indentation: false,
+                space_before_conditional: true,
+                break_chained_methods: false,
+                eval_code: false,
+                wrap_line_length: 120,
+                unescape_strings: false
+            },
+            gruntfile: {
+                options: {
+                    keep_array_indentation: true
+                },
+                files: {
+                    src: ['Gruntfile.js']
+                }
+            },
+            src: {
+                files: {
+                    src: ['src/**/*.js', '!src/js/vendor/**/*.js']
+                }
+            },
+            test: {
+                files: {
+                    src: ['test/**/*.js', '!test/qunit/**/*.js']
+                }
+            }
         }
     });
 
@@ -123,6 +161,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-qunit-cov');
     grunt.loadNpmTasks('grunt-jssemicoloned');
     grunt.loadNpmTasks('grunt-jsvalidate');
+    grunt.loadNpmTasks('grunt-jsbeautifier');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {

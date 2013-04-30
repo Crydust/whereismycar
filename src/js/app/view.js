@@ -26,11 +26,11 @@ define(function (require) {
     }
 
     function calculateRadarDotCoordinates(
-            distanceInMeters, headingInDegrees, bearingInDegrees, centerXInPixels, centerYInPixels,
-            maxDistanceInMeters, maxDistanceInPixels) {
+        distanceInMeters, headingInDegrees, bearingInDegrees, centerXInPixels, centerYInPixels,
+        maxDistanceInMeters, maxDistanceInPixels) {
         var radiusInPixels = Math.min(
-                maxDistanceInPixels,
-                distanceInMeters * maxDistanceInPixels / maxDistanceInMeters);
+            maxDistanceInPixels,
+            distanceInMeters * maxDistanceInPixels / maxDistanceInMeters);
         var angleInDegrees = (270 + headingInDegrees + bearingInDegrees) % 360;
         var angleInRadians = geometry.toRad(angleInDegrees);
         var x = Math.round(centerXInPixels + (radiusInPixels * Math.cos(angleInRadians)));
@@ -43,8 +43,8 @@ define(function (require) {
         if (radarContentDocument !== null) {
             var dot = dom.byId('dot', radarContentDocument);
             var radarDotCoordinates = calculateRadarDotCoordinates(
-                    distanceInMeters, compassHeadingInDegrees, bearingInDegrees,
-                    160, 160, 300, 135);
+                distanceInMeters, compassHeadingInDegrees, bearingInDegrees,
+                160, 160, 300, 135);
             svg.setSvgCircleCenter(dot, radarDotCoordinates);
         }
     }
@@ -73,14 +73,14 @@ define(function (require) {
 
         //current img
         if (currentTime - updateCurrentImageTime > 5000 &&
-                data.current.accuracy < 150 &&
-                newData.current.latitude !== null &&
-                newData.current.longitude !== null) {
+            data.current.accuracy < 150 &&
+            newData.current.latitude !== null &&
+            newData.current.longitude !== null) {
             var currentLatLng = new geography.LatLng(currentData.current.latitude, data.current.longitude);
             var newLatLng = new geography.LatLng(newData.current.latitude, newData.current.longitude);
             var distance = parseFloat(geography.computeDistanceBetween(currentLatLng, newLatLng));
             if (currentData.current.img !== newData.current.img &&
-                    distance > 30) {
+                distance > 30) {
                 updateCurrentImageTime = currentTime;
                 (dom.byId('current_position_img')).src = newData.current.img;
             }
@@ -88,7 +88,7 @@ define(function (require) {
 
         //stored img
         if (currentTime - updateStoredImageTime > 5000 &&
-                currentData.stored.img !== newData.stored.img) {
+            currentData.stored.img !== newData.stored.img) {
             updateStoredImageTime = currentTime;
             (dom.byId('stored_position_img')).src = newData.stored.img;
         }
@@ -110,21 +110,21 @@ define(function (require) {
 
         //direction
         if (currentData.bearing !== newData.bearing ||
-                currentData.distance !== newData.distance) {
+            currentData.distance !== newData.distance) {
             (dom.byId('direction_current_to_stored')).innerHTML =
-                    newData.distance + 'm ' + geography.computeCompassDirection(newData.bearing);
+                newData.distance + 'm ' + geography.computeCompassDirection(newData.bearing);
         }
 
         //radar
         if (currentData.bearing !== newData.bearing ||
-                currentData.compass !== newData.compass ||
-                currentData.distance !== newData.distance) {
+            currentData.compass !== newData.compass ||
+            currentData.distance !== newData.distance) {
             updateRadar(data.bearing, data.compass, newData.distance);
         }
 
         //compass
         if (currentData.bearing !== newData.bearing ||
-                currentData.compass !== newData.compass) {
+            currentData.compass !== newData.compass) {
             updateCompass(data.bearing, data.compass);
         }
 

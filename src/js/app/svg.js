@@ -15,8 +15,7 @@ define(function (require) {
         var bbox = element.getBBox();
         return new Point(
             bbox.x + bbox.width / 2,
-            bbox.y + bbox.height / 2
-        );
+            bbox.y + bbox.height / 2);
     }
 
     /**

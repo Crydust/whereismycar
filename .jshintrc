@@ -27,8 +27,6 @@
 
     "browser": true,
 
-    "white": true,
-
     "globals": {
         "require": false,
         "define": false

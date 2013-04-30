@@ -12,7 +12,7 @@ define(function (require) {
 
     function getCurrentPosition() {
         var deferred = defer(),
-        timeoutid;
+            timeoutid;
         if (isSupported()) {
             var timeoutHandler = function () {
                 deferred.reject(new Error('Timed out'));

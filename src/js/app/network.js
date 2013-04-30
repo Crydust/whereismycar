@@ -21,8 +21,8 @@ define(function (require) {
 
     function getText(url) {
         var deferred = defer(),
-        request = createRequest(),
-        timeoutid;
+            request = createRequest(),
+            timeoutid;
         if (request !== null) {
             var timeoutHandler = function () {
                 request.onreadystatechange = NOOP;
@@ -56,12 +56,13 @@ define(function (require) {
     }
 
     var uniq = 0;
+
     function getJsonp(url) {
         uniq++;
         var deferred = defer(),
-        callbackname = 'jsonpcallbackb_' + (+new Date()) + '_' + uniq,
-        re = /([\?&]callback=)\?/,
-        timeoutid;
+            callbackname = 'jsonpcallbackb_' + (+new Date()) + '_' + uniq,
+            re = /([\?&]callback=)\?/,
+            timeoutid;
         if (re.test(url)) {
             var head = document.getElementsByTagName('head')[0];
             var script = document.createElement('script');
