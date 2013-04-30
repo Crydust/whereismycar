@@ -104,6 +104,13 @@ module.exports = function (grunt) {
                 'src/js/*.js', 'src/js/app/*.js',
                 'test/js/**/*.js'
             ]
+        },
+        jsvalidate: {
+            files: [
+                'Gruntfile.js',
+                'src/js/**/*.js',
+                'test/js/**/*.js'
+            ]
         }
     });
 
@@ -115,6 +122,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-reload');
     grunt.loadNpmTasks('grunt-qunit-cov');
     grunt.loadNpmTasks('grunt-jssemicoloned');
+    grunt.loadNpmTasks('grunt-jsvalidate');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
@@ -143,11 +151,11 @@ module.exports = function (grunt) {
         grunt.file.write('publish/index.html', replacement);
     });
 
-    grunt.registerTask('test', ['jshint', 'connect:server', 'qunit:all']);
-    grunt.registerTask('testCov', ['jshint', 'test', 'qunit-cov']);
-    grunt.registerTask('default', ['jshint']);
-    grunt.registerTask('lint', ['jshint']);
-    grunt.registerTask('dev', ['jshint', 'connect:server', 'reload', 'watch:dev']);
+    grunt.registerTask('test', ['lint', 'connect:server', 'qunit:all']);
+    grunt.registerTask('testCov', ['lint', 'test', 'qunit-cov']);
+    grunt.registerTask('default', ['lint']);
+    grunt.registerTask('lint', ['jsvalidate', 'jshint']);
+    grunt.registerTask('dev', ['lint', 'connect:server', 'reload', 'watch:dev']);
     grunt.registerTask('publish', ['test', 'requirejs:compile']);
     grunt.registerTask('publishAlmond', ['test', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
 
