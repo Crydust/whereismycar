@@ -149,7 +149,38 @@ module.exports = function (grunt) {
                     src: ['test/**/*.js', '!test/qunit/**/*.js']
                 }
             }
+        },
+        fixmyjs: {
+            gruntfile: {
+                files: {
+                    src: ['Gruntfile.js']
+                }
+            },
+            src: {
+                files: {
+                    src: ['src/**/*.js', '!src/js/vendor/**/*.js']
+                }
+            },
+            test: {
+                files: {
+                    src: ['test/**/*.js', '!test/qunit/**/*.js']
+                }
+            }
         }
+    });
+
+    grunt.registerMultiTask('fixmyjs', 'description', function () {
+
+        var q = grunt.util.async.queue(function (filepath, callback) {
+            grunt.util.spawn({
+                cmd: 'node_modules\\.bin\\fixmyjs.cmd',
+                args: ['-c', '.jshintrc', '-i', '-n', 'spaces', filepath]
+            }, callback);
+        }, 1);
+        q.push(grunt.file.expand(this.filesSrc));
+        q.process();
+
+        return true;
     });
 
     grunt.loadNpmTasks('grunt-contrib-connect');

@@ -26,7 +26,8 @@
     "grunt-typescript": "~0.1.4",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-jsvalidate": "~0.2.1",
-    "grunt-jsbeautifier": "git://github.com/Crydust/grunt-jsbeautifier"
+    "grunt-jsbeautifier": "git://github.com/Crydust/grunt-jsbeautifier",
+    "fixmyjs": "~0.7.2"
   },
   "amd": {},
   "volo": {

@@ -25,6 +25,8 @@
     "maxcomplexity": 13,
     "maxlen": 120,
 
+    "white": true,
+
     "browser": true,
 
     "globals": {
