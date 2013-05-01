@@ -166,6 +166,16 @@ module.exports = function (grunt) {
                     src: ['test/**/*.js', '!test/qunit/**/*.js']
                 }
             }
+        },
+        plato: {
+            options : {
+                jshint : grunt.file.readJSON('.jshintrc')
+            },
+            src: {
+                files: {
+                    plato: ['src/**/*.js', '!src/js/vendor/**/*.js']
+                }
+            }
         }
     });
 
@@ -193,6 +203,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jssemicoloned');
     grunt.loadNpmTasks('grunt-jsvalidate');
     grunt.loadNpmTasks('grunt-jsbeautifier');
+    grunt.loadNpmTasks('grunt-plato');
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
