@@ -37,33 +37,36 @@ CVS/
 _notes/
 
 # eclipse
-.refactorings/
-.settings/
+/.refactorings/
+/.settings/
 .classpath
 .project
 
 # intellij
-.idea/
+/.idea/
 
 # netbeans
-nbproject/
+/nbproject/
 
 # html5boilerplate
-build/config/css.build.js
-build/config/js.build.js
-build/config/project.properties
-intermediate/
-publish/
+/build/config/css.build.js
+/build/config/js.build.js
+/build/config/project.properties
+/intermediate/
+/publish/
 
 # npm
-npm-debug.log
+/npm-debug.log
 
 # grunt
-node_modules/
+/node_modules/
 
 # jscoverage
-testResults/
+/testResults/
 jscoverage.exe
+
+# plato
+/plato/
 
 # secrets
 secret.php
