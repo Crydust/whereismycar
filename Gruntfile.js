@@ -176,6 +176,12 @@ module.exports = function (grunt) {
                     plato: ['src/**/*.js', '!src/js/vendor/**/*.js']
                 }
             }
+        },
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js',
+                autoWatch: true
+            }
         }
     });
 
@@ -190,6 +196,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsvalidate');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-plato');
+    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerMultiTask('fixmyjs', 'description', function () {
 
