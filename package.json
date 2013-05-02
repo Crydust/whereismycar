@@ -28,6 +28,7 @@
     "grunt-jsvalidate": "~0.2.1",
     "grunt-jsbeautifier": "git://github.com/Crydust/grunt-jsbeautifier",
     "fixmyjs": "~0.7.2",
+    "shelljs": "~0.1.3",
     "grunt-plato": "~0.2.0"
   },
   "amd": {},

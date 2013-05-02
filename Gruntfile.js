@@ -74,13 +74,13 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['jshint', 'reload']
             },
-            jshint: {
+            lint: {
                 files: [
                     'Gruntfile.js',
                     'src/**/*.html', 'src/**/*.js', 'src/**/*.css',
                     'test/**/*.html', 'test/**/*.js', 'test/**/*.css'
                 ],
-                tasks: ['jshint']
+                tasks: ['lint']
             }
         },
         reload: {
@@ -179,20 +179,6 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerMultiTask('fixmyjs', 'description', function () {
-
-        var q = grunt.util.async.queue(function (filepath, callback) {
-            grunt.util.spawn({
-                cmd: 'node_modules\\.bin\\fixmyjs.cmd',
-                args: ['-c', '.jshintrc', '-i', '-n', 'spaces', filepath]
-            }, callback);
-        }, 1);
-        q.push(grunt.file.expand(this.filesSrc));
-        q.process();
-
-        return true;
-    });
-
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -204,6 +190,24 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsvalidate');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-plato');
+
+    grunt.registerMultiTask('fixmyjs', 'description', function () {
+
+        var shell = require('shelljs');
+        var path = require('path');
+
+        grunt.file.expand(this.filesSrc)
+                .forEach(function (filepath) {
+            shell.exec([
+                path.resolve('node_modules/.bin/fixmyjs.cmd'),
+                '-c', '.jshintrc', '-i', '-n', 'spaces',
+                path.resolve(filepath)
+            ].join(' '),
+            {fatal: true});
+        });
+
+        return true;
+    });
 
     grunt.registerTask('simpleHashres', function () {
         var renameFile = function (dir, from, to) {
@@ -224,6 +228,7 @@ module.exports = function (grunt) {
         replacement = replacement.replace('="css/style.css"', '="css/' + cssFileName + '"');
         grunt.file.write('publish/index.html', replacement);
     });
+
     grunt.registerTask('replaceDataMainBySrc', function () {
         var original = grunt.file.read('publish/index.html');
         var replacement = original.replace(
