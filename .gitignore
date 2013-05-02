@@ -68,6 +68,9 @@ jscoverage.exe
 # plato
 /plato/
 
+# karma
+/karma/
+
 # secrets
 secret.php
 
