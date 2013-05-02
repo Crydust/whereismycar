@@ -102,8 +102,8 @@ module.exports = function (grunt) {
         jssemicoloned: {
             files: [
                 'Gruntfile.js',
-                'src/js/*.js', 'src/js/app/*.js',
-                'test/js/**/*.js'
+                'src/**/*.js', '!src/js/vendor/**/*.js',
+                'test/**/*.js', '!test/qunit/**/*.js'
             ]
         },
         jsvalidate: {
@@ -236,6 +236,7 @@ module.exports = function (grunt) {
     grunt.registerTask('testCov', ['lint', 'test', 'qunit-cov']);
     grunt.registerTask('default', ['lint']);
     grunt.registerTask('lint', ['jsvalidate', 'jshint']);
+    grunt.registerTask('beautify', ['jsvalidate', 'jssemicoloned', 'fixmyjs', 'jshint']);
     grunt.registerTask('dev', ['lint', 'connect:server', 'reload', 'watch:dev']);
     grunt.registerTask('publish', ['test', 'requirejs:compile']);
     grunt.registerTask('publishAlmond', ['test', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
