@@ -1,5 +1,8 @@
 /*jshint camelcase: false */
 /*global module:false */
+
+var path = require('path');
+
 module.exports = function (grunt) {
     'use strict';
 
@@ -179,8 +182,9 @@ module.exports = function (grunt) {
         },
         karma: {
             unit: {
-                configFile: 'karma.conf.js',
-                autoWatch: true
+                configFile: path.resolve('.', 'karma.conf.js'),
+                singleRun: true,
+                browsers: ['PhantomJS']
             }
         }
     });
@@ -196,7 +200,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsvalidate');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-plato');
-    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-karma-0.9.1');
 
     grunt.registerMultiTask('fixmyjs', 'description', function () {
 
