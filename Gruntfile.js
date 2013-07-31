@@ -204,19 +204,26 @@ module.exports = function (grunt) {
 
     grunt.registerMultiTask('fixmyjs', 'description', function () {
 
-        var shell = require('shelljs');
-        var path = require('path');
+        var fixmyjs = require('fixmyjs');
 
-        grunt.file.expand(this.filesSrc)
-                .forEach(function (filepath) {
-            shell.exec([
-                path.resolve('node_modules/.bin/fixmyjs.cmd'),
-                '-c', '.jshintrc', '-i', '-n', 'spaces',
-                path.resolve(filepath)
-            ].join(' '),
-            {fatal: true});
+        var objectOfOptions = grunt.file.readJSON('.jshintrc');
+        
+        grunt.file.expand(this.filesSrc).forEach(function (filepath) {
+            grunt.log.write('Running fixmyjs  on ' + filepath + '  ');
+            var stringOriginalCode = grunt.file.read(filepath);
+            if (stringOriginalCode[0] === '#' && stringOriginalCode[1] === '!') {
+                grunt.log.ok('Skipped');
+            } else {
+                var stringFixedCode = fixmyjs.fix(stringOfCode, objectOfOptions);
+                if (stringOriginalCode !== stringFixedCode) {
+                    grunt.file.write(filepath, stringFixedCode);
+                    grunt.log.ok('Fixed');
+                } else {
+                grunt.log.ok();
+                }
+            }
         });
-
+        
         return true;
     });
 

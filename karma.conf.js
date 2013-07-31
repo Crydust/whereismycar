@@ -17,7 +17,8 @@ module.exports = function(config) {
       'test/qunit/qunit-close-enough.js',
       'test/karma.js',
       {pattern: 'src/js/**/*.js', included: false},
-      {pattern: 'test/js/**/*test.js', included: false}
+      {pattern: 'test/js/**/*test.js', included: false},
+      'test/fixture.html'
     ],
 
 
@@ -32,7 +33,7 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress', 'junit', 'coverage'],
+    reporters: ['dots', 'junit', 'coverage'],
 
 
     // web server port
@@ -71,15 +72,25 @@ module.exports = function(config) {
     // if true, it capture browsers, run tests and exit
     singleRun: false,
     
+    plugins: [
+        'karma-qunit',
+        'karma-requirejs',
+        'karma-junit-reporter',
+        'karma-coverage',
+        'karma-html2js-preprocessor',
+        'karma-phantomjs-launcher'
+    ],
+    
+    preprocessors: {
+        'src/js/**/*.js': ['coverage'],
+        'test/js/**/*.js': ['coverage'],
+        'test/fixture.html': ['html2js']
+    },
     
     junitReporter: {
         outputFile: 'karma/test-results.xml'
     },
 
-    preprocessors: {
-        'src/js/**/*.js': 'coverage',
-        'test/js/**/*.js': 'coverage'
-    },
     coverageReporter: {
         type: 'cobertura',
         dir: 'karma/coverage/',

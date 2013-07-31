@@ -31,10 +31,11 @@
     "shelljs": "~0.1.4",
     "grunt-plato": "~0.2.1",
     "grunt-karma-0.9.1": "~0.4.3",
-    "karma": "~0.9.6",
+    "karma": "~0.9",
     "karma-qunit": "~0.0.3",
     "karma-junit-reporter": "~0.0.2",
-    "karma-coverage": "~0.0.4"
+    "karma-coverage": "~0.0.4",
+    "karma-html2js-preprocessor": "~0.0.2"
   },
   "amd": {},
   "volo": {

@@ -7,15 +7,15 @@
     <script src="qunit/qunit.js"></script>
     <script src="qunit/qunit-close-enough.js"></script>
     <script>
-	if (location.hash === '#testem') {
-    	document.write('<script src="/testem.js"><\/script>');
-	}
+    if (location.hash === '#testem') {
+        document.write('<script src="/testem.js"><\/script>');
+    }
     </script>
     <script src="../src/js/vendor/require.js"></script>
     <script>
-	if (location.hash !== '#testem') {
-    	document.write('<script src="qunit/blanket.js" data-cover-only="/app/"><\/script>');
-	}
+    if (location.hash !== '#testem') {
+        document.write('<script src="qunit/blanket.js" data-cover-only="/app/"><\/script>');
+    }
     </script>
     <script>
     QUnit.config.autostart = false;
