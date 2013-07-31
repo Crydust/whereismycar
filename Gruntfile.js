@@ -203,27 +203,26 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma-0.9.1');
 
     grunt.registerMultiTask('fixmyjs', 'description', function () {
-
+        grunt.log.ok('Fixmyjs deletes comments from js files, for now, this is a NOOP.');
+        /*
         var fixmyjs = require('fixmyjs');
-
         var objectOfOptions = grunt.file.readJSON('.jshintrc');
-        
         grunt.file.expand(this.filesSrc).forEach(function (filepath) {
             grunt.log.write('Running fixmyjs  on ' + filepath + '  ');
             var stringOriginalCode = grunt.file.read(filepath);
             if (stringOriginalCode[0] === '#' && stringOriginalCode[1] === '!') {
                 grunt.log.ok('Skipped');
             } else {
-                var stringFixedCode = fixmyjs.fix(stringOfCode, objectOfOptions);
+                var stringFixedCode = fixmyjs.fix(stringOriginalCode, objectOfOptions);
                 if (stringOriginalCode !== stringFixedCode) {
                     grunt.file.write(filepath, stringFixedCode);
                     grunt.log.ok('Fixed');
                 } else {
-                grunt.log.ok();
+                    grunt.log.ok();
                 }
             }
         });
-        
+        */
         return true;
     });
 

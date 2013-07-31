@@ -18,7 +18,6 @@ define(['app/dom'], function (dom) {
 
     QUnit.test('on', 1, function (assert) {
         if (typeof window.__html__ === 'object') {
-            console.log('loading fixture');
             document.body.innerHTML = window.__html__['fixture.html'];
         }
         var dummy = dom.byId('dummy');
