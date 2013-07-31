@@ -1,6 +1,6 @@
 {
     "bitwise": true,
-    "camelcase": true,
+    "camelcase": false,
     "curly": true,
     "eqeqeq": true,
     "forin": true,
@@ -30,6 +30,7 @@
     "globals": {
         "require": false,
         "define": false,
-        "QUnit": false
+        "QUnit": false,
+        "simulateEvent": false
     }
 }

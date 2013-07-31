@@ -1,5 +1,8 @@
 /*jshint camelcase: false */
 /*global module:false */
+
+var path = require('path');
+
 module.exports = function (grunt) {
     'use strict';
 
@@ -179,8 +182,9 @@ module.exports = function (grunt) {
         },
         karma: {
             unit: {
-                configFile: 'karma.conf.js',
-                autoWatch: true
+                configFile: path.resolve('.', 'karma.conf.js'),
+                singleRun: true,
+                browsers: ['PhantomJS']
             }
         }
     });
@@ -196,23 +200,27 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsvalidate');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-plato');
-    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-karma-0.9.1');
 
     grunt.registerMultiTask('fixmyjs', 'description', function () {
-
-        var shell = require('shelljs');
-        var path = require('path');
-
-        grunt.file.expand(this.filesSrc)
-                .forEach(function (filepath) {
-            shell.exec([
-                path.resolve('node_modules/.bin/fixmyjs.cmd'),
-                '-c', '.jshintrc', '-i', '-n', 'spaces',
-                path.resolve(filepath)
-            ].join(' '),
-            {fatal: true});
+        //warning, this deletes all comments!
+        var fixmyjs = require('fixmyjs');
+        var objectOfOptions = grunt.file.readJSON('.jshintrc');
+        grunt.file.expand(this.filesSrc).forEach(function (filepath) {
+            grunt.log.write('Running fixmyjs  on ' + filepath + '  ');
+            var stringOriginalCode = grunt.file.read(filepath);
+            if (stringOriginalCode[0] === '#' && stringOriginalCode[1] === '!') {
+                grunt.log.ok('Skipped');
+            } else {
+                var stringFixedCode = fixmyjs.fix(stringOriginalCode, objectOfOptions);
+                if (stringOriginalCode !== stringFixedCode) {
+                    grunt.file.write(filepath, stringFixedCode);
+                    grunt.log.ok('Fixed');
+                } else {
+                    grunt.log.ok();
+                }
+            }
         });
-
         return true;
     });
 
@@ -248,7 +256,7 @@ module.exports = function (grunt) {
     grunt.registerTask('testCov', ['lint', 'test', 'qunit-cov']);
     grunt.registerTask('default', ['lint']);
     grunt.registerTask('lint', ['jsvalidate', 'jshint']);
-    grunt.registerTask('beautify', ['jsvalidate', 'jssemicoloned', 'fixmyjs', 'jshint']);
+    grunt.registerTask('beautify', ['jsvalidate', 'jssemicoloned', 'jshint']);
     grunt.registerTask('dev', ['lint', 'connect:server', 'reload', 'watch:dev']);
     grunt.registerTask('publish', ['test', 'requirejs:compile']);
     grunt.registerTask('publishAlmond', ['test', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);
