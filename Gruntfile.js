@@ -203,8 +203,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma-0.9.1');
 
     grunt.registerMultiTask('fixmyjs', 'description', function () {
-        grunt.log.ok('Fixmyjs deletes comments from js files, for now, this is a NOOP.');
-        /*
+        //warning, this deletes all comments!
         var fixmyjs = require('fixmyjs');
         var objectOfOptions = grunt.file.readJSON('.jshintrc');
         grunt.file.expand(this.filesSrc).forEach(function (filepath) {
@@ -222,7 +221,6 @@ module.exports = function (grunt) {
                 }
             }
         });
-        */
         return true;
     });
 
@@ -258,7 +256,7 @@ module.exports = function (grunt) {
     grunt.registerTask('testCov', ['lint', 'test', 'qunit-cov']);
     grunt.registerTask('default', ['lint']);
     grunt.registerTask('lint', ['jsvalidate', 'jshint']);
-    grunt.registerTask('beautify', ['jsvalidate', 'jssemicoloned', 'fixmyjs', 'jshint']);
+    grunt.registerTask('beautify', ['jsvalidate', 'jssemicoloned', 'jshint']);
     grunt.registerTask('dev', ['lint', 'connect:server', 'reload', 'watch:dev']);
     grunt.registerTask('publish', ['test', 'requirejs:compile']);
     grunt.registerTask('publishAlmond', ['test', 'requirejs:compileAlmond', 'simpleHashres', 'replaceDataMainBySrc']);

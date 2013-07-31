@@ -28,7 +28,6 @@
     "grunt-jsvalidate": "~0.2.1",
     "grunt-jsbeautifier": "~0.1.10",
     "fixmyjs": "~0.9.0",
-    "shelljs": "~0.1.4",
     "grunt-plato": "~0.2.1",
     "grunt-karma-0.9.1": "~0.4.3",
     "karma": "~0.9",
