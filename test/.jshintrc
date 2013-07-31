@@ -30,6 +30,7 @@
     "globals": {
         "require": false,
         "define": false,
-        "QUnit": false
+        "QUnit": false,
+        "simulateEvent": false
     }
 }

@@ -15,6 +15,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'test/qunit/qunit-close-enough.js',
+      'test/simulateEvent.js',
       'test/karma.js',
       {pattern: 'src/js/**/*.js', included: false},
       {pattern: 'test/js/**/*test.js', included: false},
