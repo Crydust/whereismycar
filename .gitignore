@@ -76,3 +76,4 @@ secret.php
 
 # ignore generated files
 *.js.map
+uploader.properties
